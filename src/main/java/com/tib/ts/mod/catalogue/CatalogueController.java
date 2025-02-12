@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/")
 @Tag(name = "Catalogue", description = "Get information about semantic artefact catalogue")
 public class CatalogueController {
-	
+		
 	@GetMapping("")
 	@Operation(summary = "Get information about semantic artefact catalogue", description = "Retrieves information about semantic artefact catalogue")
 	public String getCatalogue(

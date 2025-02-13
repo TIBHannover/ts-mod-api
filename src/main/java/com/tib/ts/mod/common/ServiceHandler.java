@@ -1,5 +1,6 @@
 package com.tib.ts.mod.common;
 
+import com.google.gson.JsonElement;
 import com.tib.ts.mod.entities.RequestDTO;
 
 /**
@@ -10,10 +11,10 @@ import com.tib.ts.mod.entities.RequestDTO;
 
 public interface ServiceHandler {
 	
-	public String PreHandler(RequestDTO request);
+	public String preHandler(RequestDTO request);
 	
-	public String execute(RequestDTO request);
+	public JsonElement execute(RequestDTO request);
 	
-	public String PostHandler();
+	public String postHandler(JsonElement response);
 
 }

@@ -1,4 +1,4 @@
-package com.tib.ts.mod.artefact;
+package com.tib.ts.mod.entities.enums;
 
 /**
  *@author Deepan Anbalagan
@@ -6,6 +6,7 @@ package com.tib.ts.mod.artefact;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
-interface ArtefactRepositoryOlsImpl extends ArtefactRepository {
-
+public enum ActionType {
+	ONTOLOGIES,
+	ONTOLOGYBYONTOLOGYID
 }

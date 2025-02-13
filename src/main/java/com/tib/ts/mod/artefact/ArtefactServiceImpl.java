@@ -1,7 +1,13 @@
 package com.tib.ts.mod.artefact;
 
+import org.apache.coyote.BadRequestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonElement;
+import com.tib.ts.mod.common.constants.ErrorMessage;
 import com.tib.ts.mod.entities.RequestDTO;
 
 /**
@@ -13,24 +19,44 @@ import com.tib.ts.mod.entities.RequestDTO;
 @Service
 class ArtefactServiceImpl implements ArtefactService {
 	
+	private static final Logger logger = LoggerFactory.getLogger(ArtefactService.class);
+	
+	@Autowired
+	GetAllArtefactHandler getAllArtefactHandler;
+	
+	@Autowired
+	GetArtefactHandler getArtefactHandler;
+	
 	@Override
-	public String getAllArtefact(RequestDTO request) {
-		GetAllArtefactHandler getAllArtefactHandler = new GetAllArtefactHandler();
+	public String getAllArtefact(RequestDTO request) throws BadRequestException {
+		logger.info("Received request to get all artefacts");
+
+		// invoke preHandler for validating the request
+		String validationMessage = getAllArtefactHandler.preHandler(request);
 		
-		getAllArtefactHandler.PreHandler(request);
-		getAllArtefactHandler.execute(request);
-		getAllArtefactHandler.PostHandler();
+		if (!validationMessage.isBlank()) {
+			logger.info(ErrorMessage.VALIDATION_EXCEPTION_MSG, validationMessage);
+			throw new BadRequestException(validationMessage);
+		}
 		
-		return null;
+		// invoke execute to retrieve the data
+		JsonElement olsResponse = getAllArtefactHandler.execute(request);
+		if (olsResponse == null) {
+			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+		}
+		
+		//invoke postHandler to process the response
+		String modResponse = getAllArtefactHandler.postHandler(olsResponse);
+
+		return modResponse;
 	}
 
 	@Override
-	public String getArtefactByArtefactId(RequestDTO request) {
-		GetArtefactHandler getArtefactHandler = new GetArtefactHandler();
+	public String getArtefactByArtefactId(RequestDTO request) throws BadRequestException{
 		
-		getArtefactHandler.PreHandler(request);
-		getArtefactHandler.execute(request);
-		getArtefactHandler.PostHandler();
+		getArtefactHandler.preHandler(request);
+		JsonElement olsResponse = getArtefactHandler.execute(request);
+		getArtefactHandler.postHandler(olsResponse);
 		return null;
 	}
 

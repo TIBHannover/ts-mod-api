@@ -1,6 +1,6 @@
 package com.tib.ts.mod.common;
 
-import com.tib.ts.mod.entities.RequestDTO;
+import org.springframework.stereotype.Component;
 
 /**
  *@author Deepan Anbalagan
@@ -8,11 +8,15 @@ import com.tib.ts.mod.entities.RequestDTO;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
+@Component
 public class Validation {
 	
-	public String RequestValidation(RequestDTO request) {
-		
-		return null;
+	public static boolean ValidatePage(Integer page, Integer pageSize) {
+		return page != null && pageSize != null && page >= 1 && pageSize >=1;
+	}
+	
+	public static boolean ValidateDisplay(String display) {		
+		return display != null && display.equalsIgnoreCase("all");
 	}
 
 }

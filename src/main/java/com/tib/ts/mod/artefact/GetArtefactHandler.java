@@ -1,5 +1,8 @@
 package com.tib.ts.mod.artefact;
 
+import org.springframework.stereotype.Service;
+
+import com.google.gson.JsonElement;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.entities.RequestDTO;
 
@@ -9,22 +12,23 @@ import com.tib.ts.mod.entities.RequestDTO;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
+@Service
 class GetArtefactHandler implements ServiceHandler {
 
 	@Override
-	public String PreHandler(RequestDTO request) {
+	public String preHandler(RequestDTO request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String execute(RequestDTO request) {
+	public JsonElement execute(RequestDTO request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String PostHandler() {
+	public String postHandler(JsonElement response) {
 		// TODO Auto-generated method stub
 		return null;
 	}

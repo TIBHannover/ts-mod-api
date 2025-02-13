@@ -1,5 +1,6 @@
 package com.tib.ts.mod.artefact;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tib.ts.mod.entities.RequestDTO;
+import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.entities.enums.FormatOption;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,10 +36,10 @@ public class ArtefactController {
 			@RequestParam(defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) {
+			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) throws BadRequestException {
 		
 		//Create a request DTO
-		RequestDTO request = new RequestDTO.Builder().setFormat(format).setPage(page).setPageSize(pagesize).setDisplay(display).build();
+		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES).setFormat(format).setPage(page).setPageSize(pagesize).setDisplay(display).build();
 		
 		//invoke service impl
 		service.getAllArtefact(request);

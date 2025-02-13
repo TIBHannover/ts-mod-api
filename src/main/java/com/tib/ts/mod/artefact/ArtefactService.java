@@ -1,5 +1,7 @@
 package com.tib.ts.mod.artefact;
 
+import org.apache.coyote.BadRequestException;
+
 import com.tib.ts.mod.entities.RequestDTO;
 
 /**
@@ -10,8 +12,8 @@ import com.tib.ts.mod.entities.RequestDTO;
 
 interface ArtefactService {
 	
-	public String getAllArtefact(RequestDTO request);
+	public String getAllArtefact(RequestDTO request) throws BadRequestException;
 	
-	public String getArtefactByArtefactId(RequestDTO request);
+	public String getArtefactByArtefactId(RequestDTO request) throws BadRequestException;
 
 }

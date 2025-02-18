@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.tib.ts.mod.common.constants.ErrorMessage;
-import com.tib.ts.mod.entities.RequestDTO;
+import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.dto.ResponseDTO;
 
 /**
  *@author Deepan Anbalagan
@@ -28,7 +29,7 @@ class ArtefactServiceImpl implements ArtefactService {
 	GetArtefactHandler getArtefactHandler;
 	
 	@Override
-	public String getAllArtefact(RequestDTO request) throws BadRequestException {
+	public ResponseDTO getAllArtefact(RequestDTO request) throws BadRequestException {
 		logger.info("Received request to get all artefacts");
 
 		// invoke preHandler for validating the request
@@ -40,13 +41,13 @@ class ArtefactServiceImpl implements ArtefactService {
 		}
 		
 		// invoke execute to retrieve the data
-		JsonElement olsResponse = getAllArtefactHandler.execute(request);
+		String olsResponse = getAllArtefactHandler.execute(request);
 		if (olsResponse == null) {
 			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
 		}
 		
 		//invoke postHandler to process the response
-		String modResponse = getAllArtefactHandler.postHandler(olsResponse);
+		ResponseDTO modResponse = getAllArtefactHandler.postHandler(olsResponse);
 
 		return modResponse;
 	}
@@ -55,7 +56,7 @@ class ArtefactServiceImpl implements ArtefactService {
 	public String getArtefactByArtefactId(RequestDTO request) throws BadRequestException{
 		
 		getArtefactHandler.preHandler(request);
-		JsonElement olsResponse = getArtefactHandler.execute(request);
+		String olsResponse = getArtefactHandler.execute(request);
 		getArtefactHandler.postHandler(olsResponse);
 		return null;
 	}

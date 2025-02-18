@@ -1,0 +1,25 @@
+mappings:
+  semanticArtefactId:
+    - jsonPath: "$.ontologyId"
+      priority: 1
+  contactPoint:
+    - jsonPath: "$.config.mailingList"
+      keys: "@id, @type, vcard:fn, vcard:nickname"
+      type: "vcard:Kind"
+      priority: 1
+  creator:
+    - jsonPath: "$.config.creators"
+      type: "foaf:agent"
+      priority: 1
+  description:
+    - jsonPath: "$.config.description"
+      type: "dcterms:identifier"
+      priority: 1
+  identifier:
+    - jsonPath: "$.config.identifier"
+      type: "dcterms:identifier"
+      priority: 1
+  isReferencedBy:
+    - jsonPath: "$.config.annotations.Is Referenced By"
+      type: "dcterms:isReferencedBy"
+      priority: 1

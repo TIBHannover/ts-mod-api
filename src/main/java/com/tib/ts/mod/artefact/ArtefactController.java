@@ -1,14 +1,22 @@
 package com.tib.ts.mod.artefact;
 
+
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tib.ts.mod.entities.RequestDTO;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.entities.enums.FormatOption;
 
@@ -30,9 +38,9 @@ public class ArtefactController {
 	@Autowired
 	private ArtefactService service;
 	
-	@GetMapping
+	@GetMapping(produces = "application/ld+json")
 	@Operation(summary = "Get information about all ontology", description = "Retrieves a collection of all ontology")
-	private String getAllArtefacts(
+	private ResponseEntity<ResponseDTO> getAllArtefacts(
 			@RequestParam(defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -42,9 +50,12 @@ public class ArtefactController {
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES).setFormat(format).setPage(page).setPageSize(pagesize).setDisplay(display).build();
 		
 		//invoke service impl
-		service.getAllArtefact(request);
+		ResponseDTO response = service.getAllArtefact(request);
 		
-		return "All Artefacts";
+		HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf("application/ld+json"));
+        		
+		return new ResponseEntity<ResponseDTO>(response, headers, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{artefactID}")

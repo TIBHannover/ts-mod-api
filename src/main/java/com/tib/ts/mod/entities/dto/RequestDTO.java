@@ -1,4 +1,4 @@
-package com.tib.ts.mod.entities;
+package com.tib.ts.mod.entities.dto;
 
 import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.entities.enums.FormatOption;

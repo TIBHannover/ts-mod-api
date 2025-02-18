@@ -4,7 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.tib.ts.mod.common.ServiceHandler;
-import com.tib.ts.mod.entities.RequestDTO;
+import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.dto.ResponseDTO;
 
 /**
  *@author Deepan Anbalagan
@@ -22,13 +23,13 @@ class GetArtefactHandler implements ServiceHandler {
 	}
 
 	@Override
-	public JsonElement execute(RequestDTO request) {
+	public String execute(RequestDTO request) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String postHandler(JsonElement response) {
+	public ResponseDTO postHandler(String response) {
 		// TODO Auto-generated method stub
 		return null;
 	}

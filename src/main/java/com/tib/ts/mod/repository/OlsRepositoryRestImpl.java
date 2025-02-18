@@ -27,7 +27,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	RestClient restClient;
 	
 	@Override
-	public JsonElement getOntologies() {
+	public String getOntologies() {
 		String url = OlsRestUrl.GET_ALL_ONTOLOGIES;
 		
 		logger.info("calling external service: {}", url);
@@ -35,10 +35,10 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return invokeRest(url);
 	}
 	
-	private JsonElement invokeRest(String url) {
+	private String invokeRest(String url) {
 		try {
 			String response = restClient.get().uri(url).retrieve().body(String.class);
-			return JsonParser.parseString(response);
+			return response;
 		}catch (HttpClientErrorException e) {
 			logger.error("HTTP error while calling {}: {}, {}", url, e.getStatusCode(), e.getMessage());
 			throw new RuntimeException("Failed to fetch artefacts: "+ e.getStatusCode());

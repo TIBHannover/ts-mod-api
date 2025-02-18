@@ -1,7 +1,5 @@
 package com.tib.ts.mod.repository;
 
-import com.google.gson.JsonElement;
-
 /**
  *@author Deepan Anbalagan
  *@email deepan.anbalagan@tib.eu
@@ -10,6 +8,6 @@ import com.google.gson.JsonElement;
 
 public interface OlsRepository {
 	
-	public JsonElement getOntologies();
+	public String getOntologies();
 
 }

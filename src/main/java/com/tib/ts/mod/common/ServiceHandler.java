@@ -1,7 +1,8 @@
 package com.tib.ts.mod.common;
 
 import com.google.gson.JsonElement;
-import com.tib.ts.mod.entities.RequestDTO;
+import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.dto.ResponseDTO;
 
 /**
  *@author Deepan Anbalagan
@@ -13,8 +14,8 @@ public interface ServiceHandler {
 	
 	public String preHandler(RequestDTO request);
 	
-	public JsonElement execute(RequestDTO request);
+	public String execute(RequestDTO request);
 	
-	public String postHandler(JsonElement response);
+	public ResponseDTO postHandler(String response);
 
 }

@@ -1,15 +1,17 @@
 package com.tib.ts.mod.artefact;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.tib.ts.mod.common.ConfigLoader;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.ErrorMessage;
@@ -18,7 +20,6 @@ import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
-import com.tib.ts.mod.entities.enums.AttributeType;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -28,11 +29,14 @@ import com.tib.ts.mod.repository.OlsRepository;
 */
 
 @Service
-class GetAllArtefactHandler implements ServiceHandler{
-	
+class GetAllArtefactHandler implements ServiceHandler {
+
 	@Autowired
 	OlsRepository terminologyService;
-	
+
+	@Autowired
+	MetadataMapper mapper;
+
 	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactHandler.class);
 
 	@Override
@@ -63,36 +67,47 @@ class GetAllArtefactHandler implements ServiceHandler{
 			case ONTOLOGIES -> terminologyService.getOntologies();
 			default -> throw new IllegalArgumentException();
 		};
-		
+
 		return result;
 	}
 
 	@Override
-	public ResponseDTO postHandler(String response) {
-		Map<String, Object> config = new HashMap<String, Object>();
+	public List<SemanticArtefact> postHandler(String response) {
+
+		List<SemanticArtefact> results = new LinkedList<SemanticArtefact>();
 		try {
-			config = ConfigLoader.loadConfig("ontology-config.yaml");
+			var responseObject = JsonParser.parseString(response).getAsJsonObject();
+
+			if (!responseObject.has("_embedded") || responseObject.get("_embedded").isJsonNull()) {
+				logger.warn("Response does not contain any ontologies");
+				return results;
+			}
+
+			var embedded = responseObject.get("_embedded").getAsJsonObject();
+
+			if (!embedded.has("ontologies") || embedded.get("ontologies").isJsonNull()) {
+				logger.warn("Response does not contain any ontologies");
+				return results;
+			}
+
+			var ontologies = embedded.getAsJsonArray("ontologies");
+
+			for (JsonElement ontology : ontologies) {
+				if (ontology == null || ontology.isJsonNull()) {
+					logger.debug("Skipping null ontology");
+					continue;
+				}
+				SemanticArtefact result = mapper.mapJsonToDto(ontology.toString(), SemanticArtefact.class);
+				logger.debug("Mapped SemanticArtefact: {}", result);
+				result.setContext(Context.getContext());
+				results.add(result);
+			}
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error processing response in postHandler", e);
 		}
-		//SemanticArtefact result = MetadataMapper.mapJsonToDto(response, config, SemanticArtefact.class);
-		
-		
-		
-		ResponseDTO res = new ResponseDTO();
-		String at = "ACCESS_URL";
-		String ct = "CONFORMS_TO";
-		res.setAccessUrl(Map.ofEntries(
-								Map.entry("@id", "http://localhost:8080"),
-								Map.entry("@type", AttributeType.valueOf(at).getType())));
-		res.setConformsTo(Map.ofEntries(
-				Map.entry("@id", "Deepan"),
-				Map.entry("@type", AttributeType.valueOf(ct).getType())));
-		
-		res.setId("something");
-		res.setContext(Context.getContext());
-		return res;
+
+		return results;
 	}
 
 }

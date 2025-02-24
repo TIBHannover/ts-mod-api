@@ -10,24 +10,19 @@ import lombok.Setter;
 
 /**
  *@author Deepan Anbalagan
+ * @param <T>
+ * @param <T>
  *@email deepan.anbalagan@tib.eu
  *TIB-Leibniz Information Center for Science and Technology
 */
 
 @Getter
 @Setter
-public class ResponseDTO {
+public class ResponseDTO<T> {
 	
 	@JsonProperty("@context")
 	private Map<String, String> context;
-	
-	@JsonProperty("@id")
-	private String id;
-	
-	@JsonProperty("dcterms:accessURL")
-	private Map<String, String> accessUrl;
-	
-	@JsonProperty("dcterms:conformsTo")
-	private Map<String, String> conformsTo;
+
+	private T result;
 
 }

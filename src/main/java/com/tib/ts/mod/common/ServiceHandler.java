@@ -16,6 +16,6 @@ public interface ServiceHandler {
 	
 	public String execute(RequestDTO request);
 	
-	public ResponseDTO postHandler(String response);
+	public <T> T postHandler(String response);
 
 }

@@ -1,13 +1,15 @@
 package com.tib.ts.mod.artefact;
 
+import java.util.List;
+
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonElement;
 import com.tib.ts.mod.common.constants.ErrorMessage;
+import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 
@@ -29,7 +31,7 @@ class ArtefactServiceImpl implements ArtefactService {
 	GetArtefactHandler getArtefactHandler;
 	
 	@Override
-	public ResponseDTO getAllArtefact(RequestDTO request) throws BadRequestException {
+	public List<SemanticArtefact> getAllArtefact(RequestDTO request) throws BadRequestException {
 		logger.info("Received request to get all artefacts");
 
 		// invoke preHandler for validating the request
@@ -47,7 +49,7 @@ class ArtefactServiceImpl implements ArtefactService {
 		}
 		
 		//invoke postHandler to process the response
-		ResponseDTO modResponse = getAllArtefactHandler.postHandler(olsResponse);
+		List<SemanticArtefact> modResponse = getAllArtefactHandler.postHandler(olsResponse);
 
 		return modResponse;
 	}

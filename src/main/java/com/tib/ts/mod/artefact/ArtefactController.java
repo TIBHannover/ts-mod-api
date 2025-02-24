@@ -1,6 +1,8 @@
 package com.tib.ts.mod.artefact;
 
 
+import java.util.List;
+
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
@@ -40,7 +41,7 @@ public class ArtefactController {
 	
 	@GetMapping(produces = "application/ld+json")
 	@Operation(summary = "Get information about all ontology", description = "Retrieves a collection of all ontology")
-	private ResponseEntity<ResponseDTO> getAllArtefacts(
+	private ResponseEntity<List<SemanticArtefact>> getAllArtefacts(
 			@RequestParam(defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -50,12 +51,12 @@ public class ArtefactController {
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES).setFormat(format).setPage(page).setPageSize(pagesize).setDisplay(display).build();
 		
 		//invoke service impl
-		ResponseDTO response = service.getAllArtefact(request);
+		List<SemanticArtefact> response = service.getAllArtefact(request);
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf("application/ld+json"));
         		
-		return new ResponseEntity<ResponseDTO>(response, headers, HttpStatus.OK);
+		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{artefactID}")

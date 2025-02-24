@@ -10,6 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,16 +20,15 @@ import lombok.Setter;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "mappings")
-public class MappingRule {
+@Component
+//@ConfigurationProperties(prefix = "mappings")
+public abstract class MappingRule {
 
 	private Map<String, List<MappingDetail>> modAttributes;
 
-	@Getter
-	@Setter
+	@Data
 	public static class MappingDetail {
 		private String jsonPath;
 

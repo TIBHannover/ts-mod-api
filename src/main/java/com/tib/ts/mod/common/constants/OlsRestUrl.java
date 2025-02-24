@@ -10,5 +10,6 @@ public class OlsRestUrl {
 	
 	private static final String TS = "https://api.terminology.tib.eu/api";
 	public static final String GET_ALL_ONTOLOGIES = TS + "/ontologies";
+	public static final String GET_ONTOLOGY_BY_ONTOLOGY_ID = TS + "/ontologies/{0}";
 
 }

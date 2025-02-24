@@ -59,12 +59,23 @@ public class ArtefactController {
 		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
 	
-	@GetMapping("/{artefactID}")
+	@GetMapping(path = "/{artefactID}", produces = "application/ld+json")
 	@Operation(summary = "Get information about a ontology", description = "Retrieves information about a ontology")
-	public String getArtefactByArtefactId(
+	public ResponseEntity<SemanticArtefact> getArtefactByArtefactId(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
-			@RequestParam(defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format) {
-		return null;
+			@RequestParam(defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format) throws BadRequestException {
+		
+		
+		//Create a request DTO
+		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGYBYONTOLOGYID).setArtefactId(artefactId).setFormat(format).setDisplay(display).build();
+		
+		//invoke service impl
+		SemanticArtefact response = service.getArtefactByArtefactId(request);
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf("application/ld+json"));
+        
+		return new ResponseEntity<>(response, headers, HttpStatus.OK);
 	}
 }

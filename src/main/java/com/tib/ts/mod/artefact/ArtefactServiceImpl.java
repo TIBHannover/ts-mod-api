@@ -55,12 +55,26 @@ class ArtefactServiceImpl implements ArtefactService {
 	}
 
 	@Override
-	public String getArtefactByArtefactId(RequestDTO request) throws BadRequestException{
+	public SemanticArtefact getArtefactByArtefactId(RequestDTO request) throws BadRequestException{
+		logger.info("Received request to get all artefacts");
+
+		// invoke preHandler for validating the request
+		String validationMessage = getArtefactHandler.preHandler(request);
 		
-		getArtefactHandler.preHandler(request);
+		if (!validationMessage.isBlank()) {
+			logger.info(ErrorMessage.VALIDATION_EXCEPTION_MSG, validationMessage);
+			throw new BadRequestException(validationMessage);
+		}
+		
+		// invoke execute to retrieve the data
 		String olsResponse = getArtefactHandler.execute(request);
-		getArtefactHandler.postHandler(olsResponse);
-		return null;
+		
+		if (olsResponse == null) {
+			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+		}
+		
+		SemanticArtefact modResponse = getArtefactHandler.postHandler(olsResponse);
+		return modResponse;
 	}
 
 }

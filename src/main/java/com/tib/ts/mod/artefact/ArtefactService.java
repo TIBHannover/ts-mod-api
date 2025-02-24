@@ -18,6 +18,6 @@ interface ArtefactService {
 	
 	public List<SemanticArtefact> getAllArtefact(RequestDTO request) throws BadRequestException;
 	
-	public String getArtefactByArtefactId(RequestDTO request) throws BadRequestException;
+	public SemanticArtefact getArtefactByArtefactId(RequestDTO request) throws BadRequestException;
 
 }

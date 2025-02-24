@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
@@ -19,7 +17,6 @@ import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
-import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -30,14 +27,14 @@ import com.tib.ts.mod.repository.OlsRepository;
 
 @Service
 class GetAllArtefactHandler implements ServiceHandler {
+	
+	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactHandler.class);
 
 	@Autowired
 	OlsRepository terminologyService;
 
 	@Autowired
 	MetadataMapper mapper;
-
-	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactHandler.class);
 
 	@Override
 	public String preHandler(RequestDTO request) {
@@ -63,11 +60,8 @@ class GetAllArtefactHandler implements ServiceHandler {
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 
-		String result = switch (request.getOperationType()) {
-			case ONTOLOGIES -> terminologyService.getOntologies();
-			default -> throw new IllegalArgumentException();
-		};
-
+		String result = terminologyService.call(request);
+		
 		return result;
 	}
 

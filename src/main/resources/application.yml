@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ts-mod-api
+
+  # Swagger UI configuration via springdoc
+  doc:
+    swagger-ui:
+      path: /swagger-ui.html
+
+server:
+  port: 8181
+
+logging:
+  level:
+    org:
+      springframework:
+        core:
+          env: DEBUG

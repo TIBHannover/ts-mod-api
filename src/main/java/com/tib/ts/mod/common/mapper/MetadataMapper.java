@@ -28,7 +28,7 @@ public class MetadataMapper {
 	private static final Logger logger = LoggerFactory.getLogger(MetadataMapper.class);
 
 	@Autowired
-	private MappingRule config;
+	private ArtefactAttribute config;
 
 	public <T> T mapJsonToDto(String apiResponse, Class<T> dtoClass) throws Exception {
 
@@ -46,12 +46,9 @@ public class MetadataMapper {
 		for (Field field : fields) {
 			field.setAccessible(true);
 			String attributeName = field.getName();
+			
 			logger.debug("Processing Attribute: {}", attributeName);
 			
-			if(attributeName.equalsIgnoreCase("semanticArtefactId")) {
-				logger.info("expected attribute");
-			}
-
 			List<MappingDetail> details = config.getModAttributes().get(attributeName);
 			if (details == null)
 				continue;
@@ -61,22 +58,11 @@ public class MetadataMapper {
 				try {
 					value = JsonPath.read(apiResponse, detail.getJsonPath());
 				}catch (Exception e) {
-					logger.info("Path not available in response: {}", detail.getJsonPath());
+					logger.debug("Path not available in response: {}", detail.getJsonPath());
 				}
 				if (value == null)
 					continue;
-				/*if (isList(field)) {
-					handleListField(dtoInstance, field, detail, value);
-				} else if (isMap(field)) {
-					handleMapField(dtoInstance, field, detail, value);
-				} else if (isDTO(field)) {
-					Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper);
-					field.set(dtoInstance, nestedDto);
-				} else {
-					if(attributeName.equalsIgnoreCase("type"))
-						field.set(dtoInstance, value);
-					field.set(dtoInstance, value);
-				}*/
+				
 				if(value instanceof List) {
 					handleList(dtoInstance, field, detail, (List)value);
 				}else if (isMap(field)) {
@@ -145,32 +131,8 @@ public class MetadataMapper {
 		return false;
 	}
 
-	private <T> void handleListField(T dtoInstance, Field field, MappingDetail detail, Object value)
-			throws IllegalArgumentException, IllegalAccessException {
-		List<Map<String, String>> listMapField = (List<Map<String, String>>) field.get(dtoInstance);
-		Map<String, String> mapField = new HashMap<String, String>();
-		if (listMapField == null) {
-			listMapField = new ArrayList<Map<String, String>>();
-		}
-		List<String> keys = detail.getKeys();
-		for (String key : keys) {
-			mapField = new HashMap<String, String>();
-			if (key.equalsIgnoreCase("@id")) {
-				mapField.put(key, value.toString());
-			} else if (key.equalsIgnoreCase("@type")) {
-				mapField.put(key, detail.getType());
-			}
-			listMapField.add(mapField);
-		}
-		field.set(dtoInstance, listMapField);
-	}
-
 	private boolean isDTO(Field field) {
 		return !field.getType().isPrimitive() && field.getType().getTypeName() != "java.lang.Object";
-	}
-
-	private boolean isList(Field field) {
-		return List.class.isAssignableFrom(field.getType());
 	}
 
 	private boolean isMap(Field field) {

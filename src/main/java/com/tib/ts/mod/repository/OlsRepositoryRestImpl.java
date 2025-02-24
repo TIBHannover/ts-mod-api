@@ -1,5 +1,7 @@
 package com.tib.ts.mod.repository;
 
+import java.text.MessageFormat;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +10,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.tib.ts.mod.common.constants.OlsRestUrl;
+import com.tib.ts.mod.entities.dto.RequestDTO;
 
 /**
  *@author Deepan Anbalagan
@@ -22,12 +23,33 @@ import com.tib.ts.mod.common.constants.OlsRestUrl;
 public class OlsRepositoryRestImpl implements OlsRepository{
 	
 	private static final Logger logger = LoggerFactory.getLogger(OlsRepository.class);
+
 	
 	@Autowired
 	RestClient restClient;
 	
 	@Override
-	public String getOntologies() {
+	public String call(RequestDTO request) {
+		String result = switch (request.getOperationType()) {
+			case ONTOLOGIES -> getOntologies();
+			case ONTOLOGYBYONTOLOGYID -> getOntologiesByOntologyId(request.getArtefactId());
+			default -> throw new IllegalArgumentException();
+		};
+
+		return result;
+	}
+	
+	private String getOntologiesByOntologyId(String artefactId) {
+		String url = OlsRestUrl.GET_ONTOLOGY_BY_ONTOLOGY_ID;
+		
+		String parameterizedUrl = MessageFormat.format(url, artefactId);
+		
+		logger.info("calling external service: {}", parameterizedUrl);
+		
+		return invokeRest(parameterizedUrl);
+	}
+
+	private String getOntologies() {
 		String url = OlsRestUrl.GET_ALL_ONTOLOGIES;
 		
 		logger.info("calling external service: {}", url);

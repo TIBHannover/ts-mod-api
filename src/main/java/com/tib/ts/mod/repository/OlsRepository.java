@@ -1,5 +1,7 @@
 package com.tib.ts.mod.repository;
 
+import com.tib.ts.mod.entities.dto.RequestDTO;
+
 /**
  *@author Deepan Anbalagan
  *@email deepan.anbalagan@tib.eu
@@ -8,6 +10,6 @@ package com.tib.ts.mod.repository;
 
 public interface OlsRepository {
 	
-	public String getOntologies();
+	public String call(RequestDTO request);
 
 }

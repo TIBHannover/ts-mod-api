@@ -8,7 +8,7 @@ package com.tib.ts.mod.entities.enums;
 
 public enum FormatOption {
 	html,
-	json,
+	jsonld,
 	ttl,
-	xml
+	rdfxml
 }

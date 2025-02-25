@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.tib.ts.mod.common.constants.ErrorMessage;
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
-import com.tib.ts.mod.entities.dto.ResponseDTO;
 
 /**
  *@author Deepan Anbalagan
@@ -31,7 +30,7 @@ class ArtefactServiceImpl implements ArtefactService {
 	GetArtefactHandler getArtefactHandler;
 	
 	@Override
-	public List<SemanticArtefact> getAllArtefact(RequestDTO request) throws BadRequestException {
+	public String getAllArtefact(RequestDTO request) throws BadRequestException {
 		logger.info("Received request to get all artefacts");
 
 		// invoke preHandler for validating the request
@@ -49,13 +48,13 @@ class ArtefactServiceImpl implements ArtefactService {
 		}
 		
 		//invoke postHandler to process the response
-		List<SemanticArtefact> modResponse = getAllArtefactHandler.postHandler(olsResponse);
+		String modResponse = getAllArtefactHandler.postHandler(request, olsResponse);
 
 		return modResponse;
 	}
 
 	@Override
-	public SemanticArtefact getArtefactByArtefactId(RequestDTO request) throws BadRequestException{
+	public String getArtefactByArtefactId(RequestDTO request) throws BadRequestException{
 		logger.info("Received request to get all artefacts");
 
 		// invoke preHandler for validating the request
@@ -73,7 +72,8 @@ class ArtefactServiceImpl implements ArtefactService {
 			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
 		}
 		
-		SemanticArtefact modResponse = getArtefactHandler.postHandler(olsResponse);
+		String modResponse = getArtefactHandler.postHandler(request, olsResponse);
+		
 		return modResponse;
 	}
 

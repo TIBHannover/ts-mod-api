@@ -1,16 +1,24 @@
 package com.tib.ts.mod.repository;
 
 import java.text.MessageFormat;
+import java.util.concurrent.TimeoutException;
 
+import org.apache.coyote.BadRequestException;
+import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 
+import com.tib.ts.mod.common.constants.ErrorMessage;
 import com.tib.ts.mod.common.constants.OlsRestUrl;
+import com.tib.ts.mod.entities.dto.OlsErrorResponse;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 
 /**
@@ -29,7 +37,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	RestClient restClient;
 	
 	@Override
-	public String call(RequestDTO request) {
+	public String call(RequestDTO request) throws BadRequestException {
 		String result = switch (request.getOperationType()) {
 			case ONTOLOGIES -> getOntologies();
 			case ONTOLOGYBYONTOLOGYID -> getOntologiesByOntologyId(request.getArtefactId());
@@ -39,7 +47,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return result;
 	}
 	
-	private String getOntologiesByOntologyId(String artefactId) {
+	private String getOntologiesByOntologyId(String artefactId) throws BadRequestException {
 		String url = OlsRestUrl.GET_ONTOLOGY_BY_ONTOLOGY_ID;
 		
 		String parameterizedUrl = MessageFormat.format(url, artefactId);
@@ -49,7 +57,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return invokeRest(parameterizedUrl);
 	}
 
-	private String getOntologies() {
+	private String getOntologies() throws BadRequestException {
 		String url = OlsRestUrl.GET_ALL_ONTOLOGIES;
 		
 		logger.info("calling external service: {}", url);
@@ -57,16 +65,24 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return invokeRest(url);
 	}
 	
-	private String invokeRest(String url) {
+	private String invokeRest(String url) throws BadRequestException {
 		try {
 			String response = restClient.get().uri(url).retrieve().body(String.class);
 			return response;
 		}catch (HttpClientErrorException e) {
 			logger.error("HTTP error while calling {}: {}, {}", url, e.getStatusCode(), e.getMessage());
 			throw new RuntimeException("Failed to fetch artefacts: "+ e.getStatusCode());
-		}catch(RestClientException e) {
+		}catch(RestClientResponseException e) {
+			OlsErrorResponse errorResponse = e.getResponseBodyAs(OlsErrorResponse.class);
+			if (errorResponse != null && errorResponse.getMessage().equalsIgnoreCase(ErrorMessage.OLS_EXCEPTION_MSG)) {
+				logger.error("No record found while calling {}: {}", url, e.getMessage());
+				throw new NotFoundException(ErrorMessage.INVALID_PARAMETERS);
+			}
 			logger.error("Network error while calling {}: {}", url, e.getMessage());
 			throw new RuntimeException("Failed to fetch artefacts due to network issue.");
+		}catch(ResourceAccessException e) {
+			logger.error("Timeout error while calling {}: {}", url, e.getMessage());
+			throw new RuntimeException("Failed to fetch artefacts dut to timeout");
 		}catch(Exception e) {
 			logger.error("Unexpected error while calling {}: {}", url, e.getMessage());
 			throw new RuntimeException("An Unexpected error occurred while fetching artefacts");

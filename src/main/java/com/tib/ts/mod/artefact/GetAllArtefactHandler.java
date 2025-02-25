@@ -1,22 +1,35 @@
 package com.tib.ts.mod.artefact;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.coyote.BadRequestException;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.ErrorMessage;
+import com.tib.ts.mod.common.converter.ResponseConverter;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -29,6 +42,8 @@ import com.tib.ts.mod.repository.OlsRepository;
 class GetAllArtefactHandler implements ServiceHandler {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactHandler.class);
+	
+	private static final String EMPTY_STRING = "";
 
 	@Autowired
 	OlsRepository terminologyService;
@@ -52,11 +67,11 @@ class GetAllArtefactHandler implements ServiceHandler {
 		if (!isDisplayValid)
 			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
 
-		return (isPaginationValid && isDisplayValid) ? "" : ErrorMessage.INVALID_PARAMETERS;
+		return (isPaginationValid && isDisplayValid) ? EMPTY_STRING : ErrorMessage.INVALID_PARAMETERS;
 	}
 
 	@Override
-	public String execute(RequestDTO request) {
+	public String execute(RequestDTO request) throws BadRequestException {
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 
@@ -66,22 +81,23 @@ class GetAllArtefactHandler implements ServiceHandler {
 	}
 
 	@Override
-	public List<SemanticArtefact> postHandler(String response) {
+	public String postHandler(RequestDTO request, String response) {
 
-		List<SemanticArtefact> results = new LinkedList<SemanticArtefact>();
+		List<SemanticArtefact> semanticArtefacts = new LinkedList<SemanticArtefact>();
+		String results = EMPTY_STRING;
 		try {
 			var responseObject = JsonParser.parseString(response).getAsJsonObject();
 
 			if (!responseObject.has("_embedded") || responseObject.get("_embedded").isJsonNull()) {
 				logger.warn("Response does not contain any ontologies");
-				return results;
+				return EMPTY_STRING;
 			}
 
 			var embedded = responseObject.get("_embedded").getAsJsonObject();
 
 			if (!embedded.has("ontologies") || embedded.get("ontologies").isJsonNull()) {
 				logger.warn("Response does not contain any ontologies");
-				return results;
+				return EMPTY_STRING;
 			}
 
 			var ontologies = embedded.getAsJsonArray("ontologies");
@@ -91,10 +107,18 @@ class GetAllArtefactHandler implements ServiceHandler {
 					logger.debug("Skipping null ontology");
 					continue;
 				}
-				SemanticArtefact result = mapper.mapJsonToDto(ontology.toString(), SemanticArtefact.class);
-				logger.debug("Mapped SemanticArtefact: {}", result);
-				result.setContext(Context.getContext());
-				results.add(result);
+				SemanticArtefact semanticArtefact = mapper.mapJsonToDto(ontology.toString(), SemanticArtefact.class);
+				
+				logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
+				
+				if (semanticArtefact != null) {
+					semanticArtefact.setContext(Context.getContext());
+					semanticArtefacts.add(semanticArtefact);
+				}
+			}
+			
+			if(!semanticArtefacts.isEmpty()) {
+				results = ResponseConverter.convert(semanticArtefacts, request.getFormat());
 			}
 
 		} catch (Exception e) {

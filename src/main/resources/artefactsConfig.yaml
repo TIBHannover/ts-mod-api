@@ -1,25 +1,25 @@
 mappings:
   modAttributes:
     semanticArtefactId:
-      - jsonPath: "$.ontologyId"
+      - jsonPath: "$.config.versionIri"
         priority: 1
     contactPoint:
       - jsonPath: "$.config.mailingList"
-        keys: ["@id", "@type", "vcard:fn", "vcard:nickname"]
-        type: 'vcard:Kind'
+       # keys: ["@id", "@type", "vcard:fn", "vcard:nickname"]
+        type: 'vcard:kind'
         priority: 1
     creator:
       - jsonPath: "$.config.subject"
         type: 'foaf:agent'
-        keys: ["@id", "@type"]
+       # keys: ["@id", "@type"]
         priority: 1
     description:
       - jsonPath: "$.config.description"
-        keys: ["@id", "@type"]
+       # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
     isReferencedBy:
       - jsonPath: "$.config['Is Referenced By']"
-        keys: ["@id", "@type"]
+       # keys: ["@id", "@type"]
         type: 'dcterms:isReferencedBy'
         priority: 1

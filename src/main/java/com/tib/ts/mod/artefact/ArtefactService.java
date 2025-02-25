@@ -16,8 +16,8 @@ import com.tib.ts.mod.entities.dto.ResponseDTO;
 
 interface ArtefactService {
 	
-	public List<SemanticArtefact> getAllArtefact(RequestDTO request) throws BadRequestException;
+	public String getAllArtefact(RequestDTO request) throws BadRequestException;
 	
-	public SemanticArtefact getArtefactByArtefactId(RequestDTO request) throws BadRequestException;
+	public String getArtefactByArtefactId(RequestDTO request) throws BadRequestException;
 
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,256 +31,256 @@ public class SemanticArtefact extends Resource {
 	private Object semanticArtefactType;
 	
 	@JsonProperty("cc:useGuidelines")
-	private Map<String, Object> useGuidelines;
+	private List<Map<String, String>> useGuidelines;
 
 	@JsonProperty("cc:morePermissions")
-	private Map<String, Object> morePermissions;
+	private List<Map<String, String>> morePermissions;
 
 	@JsonProperty("dcat:downloadURL")
-	private Map<String, Object> downloadURL;
+	private List<Map<String, String>> downloadURL;
 
 	@JsonProperty("foaf:primaryTopic")
-	private Map<String, Object> primaryTopic;
+	private List<Map<String, String>> primaryTopic;
 
 	@JsonProperty("dcterms:abstract")
-	private Map<String, Object> abstracts;
+	private List<Map<String, String>> abstracts;
 
 	@JsonProperty("dcterms:accrualMethod")
-	private Map<String, Object> accrualMethod;
+	private List<Map<String, String>> accrualMethod;
 
 	@JsonProperty("dcterms:accrualPeriodicity")
-	private Map<String, Object> accrualPeriodicity;
+	private List<Map<String, String>> accrualPeriodicity;
 
 	@JsonProperty("dcterms:accrualPolicy")
-	private Map<String, Object> accrualPolicy;
+	private List<Map<String, String>> accrualPolicy;
 
 	@JsonProperty("dcterms:alternative")
-	private Map<String, Object> alternative;
+	private List<Map<String, String>> alternative;
 
 	@JsonProperty("dcterms:audience")
-	private Map<String, Object> audience;
+	private List<Map<String, String>> audience;
 
 	@JsonProperty("dcterms:bibliographicCitation")
-	private Map<String, Object> bibliographicCitation;
+	private List<Map<String, String>> bibliographicCitation;
 
 	@JsonProperty("dcterms:contributor")
-	private List<Map<String, Object>> contributor;
+	private List<List<Map<String, String>>> contributor;
 
 	@JsonProperty("dcterms:coverage")
-	private Map<String, Object> coverage;
+	private List<Map<String, String>> coverage;
 
 	@JsonProperty("dcterms:hasFormat")
-	private Map<String, Object> hasFormat;
+	private List<Map<String, String>> hasFormat;
 
 	@JsonProperty("dcterms:hasPart")
-	private Map<String, Object> hasPart;
+	private List<Map<String, String>> hasPart;
 
 	@JsonProperty("dct:hasVersion")
-	private Map<String, Object> hasVersion;
+	private List<Map<String, String>> hasVersion;
 
 	@JsonProperty("dcterms:isFormatOf")
-	private Map<String, Object> isFormatOf;
+	private List<Map<String, String>> isFormatOf;
 
 	@JsonProperty("dct:isPartOf")
-	private Map<String, Object> isPartOf;
+	private List<Map<String, String>> isPartOf;
 
 	@JsonProperty("dcterms:rightsHolder")
-	private Map<String, Object> rightsHolder;
+	private List<Map<String, String>> rightsHolder;
 
 	@JsonProperty("dcterms:source")
-	private Map<String, Object> source;
+	private List<Map<String, String>> source;
 
 	@JsonProperty("doap:bug-database")
-	private Map<String, Object> bugDatabase;
+	private List<Map<String, String>> bugDatabase;
 
 	@JsonProperty("doap:mailing-list")
-	private Map<String, Object> mailingList;
+	private List<Map<String, String>> mailingList;
 
 	@JsonProperty("doap:repository")
-	private Map<String, Object> repository;
+	private List<Map<String, String>> repository;
 
 	@JsonProperty("foaf:depiction")
-	private Map<String, Object> depiction;
+	private List<Map<String, String>> depiction;
 
 	@JsonProperty("foaf:fundedBy")
-	private Map<String, Object> fundedBy;
+	private List<Map<String, String>> fundedBy;
 
 	@JsonProperty("foaf:homepage")
-	private Map<String, Object> homepage;
+	private List<Map<String, String>> homepage;
 
 	@JsonProperty("foaf:logo")
-	private Map<String, Object> logo;
+	private List<Map<String, String>> logo;
 
 	@JsonProperty("mod:acronym")
-	private Map<String, Object> acronym;
+	private List<Map<String, String>> acronym;
 
 	@JsonProperty("mod:analytics")
-	private Map<String, Object> analytics;
+	private List<Map<String, String>> analytics;
 
 	@JsonProperty("mod:comesFromTheSameDomain")
-	private Map<String, Object> comesFromTheSameDomain;
+	private List<Map<String, String>> comesFromTheSameDomain;
 
 	@JsonProperty("mod:competencyQuestion")
-	private Map<String, Object> competencyQuestion;
+	private List<Map<String, String>> competencyQuestion;
 
 	@JsonProperty("mod:curatedBy")
-	private Map<String, Object> curatedBy;
+	private List<Map<String, String>> curatedBy;
 
 	@JsonProperty("mod:createdWith")
-	private Map<String, Object> createdWith;
+	private List<Map<String, String>> createdWith;
 
 	@JsonProperty("mod:designedForTask")
 	private SemanticArtefactService designedForTask;
 
 	@JsonProperty("mod:endorsedBy")
-	private Map<String, Object> endorsedBy;
+	private List<Map<String, String>> endorsedBy;
 
 	@JsonProperty("mod:generalizes")
-	private Map<String, Object> generalizes;
+	private List<Map<String, String>> generalizes;
 
 	@JsonProperty("mod:group")
-	private Map<String, Object> group;
+	private List<Map<String, String>> group;
 
 	@JsonProperty("mod:hasDisjunctionsWith")
-	private Map<String, Object> hasDisjunctionsWith;
+	private List<Map<String, String>> hasDisjunctionsWith;
 
 	@JsonProperty("mod:hasDisparateModelling")
-	private Map<String, Object> hasDisparateModelling;
+	private List<Map<String, String>> hasDisparateModelling;
 
 	@JsonProperty("mod:hasEquivalencesWith")
-	private Map<String, Object> hasEquivalencesWith;
+	private List<Map<String, String>> hasEquivalencesWith;
 
 	@JsonProperty("mod:hasEvaluation")
-	private Map<String, Object> hasEvaluation;
+	private List<Map<String, String>> hasEvaluation;
 
 	@JsonProperty("mod:hasFormalityLevel")
-	private Map<String, Object> hasFormalityLevel;
+	private List<Map<String, String>> hasFormalityLevel;
 
 	@JsonProperty("mod:knownUsage")
-	private Map<String, Object> knownUsage;
+	private List<Map<String, String>> knownUsage;
 
 	@JsonProperty("mod:metrics")
-	private Map<String, Object> metrics;
+	private List<Map<String, String>> metrics;
 
 	@JsonProperty("mod:numberOfAgents")
-	private Map<String, Object> numberOfAgents;
+	private List<Map<String, String>> numberOfAgents;
 
 	@JsonProperty("mod:numberOfEnsorments")
-	private Map<String, Object> numberOfEnsorments;
+	private List<Map<String, String>> numberOfEnsorments;
 
 	@JsonProperty("mod:numberOfEvaluations")
-	private Map<String, Object> numberOfEvaluations;
+	private List<Map<String, String>> numberOfEvaluations;
 
 	@JsonProperty("mod:numberOfNotes")
-	private Map<String, Object> numberOfNotes;
+	private List<Map<String, String>> numberOfNotes;
 
 	@JsonProperty("mod:numberOfUsers")
-	private Map<String, Object> numberOfUsers;
+	private List<Map<String, String>> numberOfUsers;
 
 	@JsonProperty("mod:numberOfUsingProjects")
-	private Map<String, Object> numberOfUsingProjects;
+	private List<Map<String, String>> numberOfUsingProjects;
 
 	@JsonProperty("mod:reliesOn")
-	private Map<String, Object> reliesOn;
+	private List<Map<String, String>> reliesOn;
 
 	@JsonProperty("mod:semanticArtefactRelation")
-	private Map<String, Object> semanticArtefactRelation;
+	private List<Map<String, String>> semanticArtefactRelation;
 
 	@JsonProperty("mod:similar")
-	private Map<String, Object> similar;
+	private List<Map<String, String>> similar;
 
 	@JsonProperty("mod:specializes")
-	private Map<String, Object> specializes;
+	private List<Map<String, String>> specializes;
 
 	@JsonProperty("mod:status")
-	private Map<String, Object> status;
+	private List<Map<String, String>> status;
 
 	@JsonProperty("mod:toDoList")
-	private Map<String, Object> toDoList;
+	private List<Map<String, String>> toDoList;
 
 	@JsonProperty("mod:URI")
-	private Map<String, Object> URI;
+	private List<Map<String, String>> URI;
 
 	@JsonProperty("mod:usedBy")
-	private Map<String, Object> usedBy;
+	private List<Map<String, String>> usedBy;
 
 	@JsonProperty("mod:usedInProject")
-	private Map<String, Object> usedInProject;
+	private List<Map<String, String>> usedInProject;
 
 	@JsonProperty("owl:deprecated")
-	private Map<String, Object> deprecated;
+	private List<Map<String, String>> deprecated;
 
 	@JsonProperty("owl:priorVersion")
-	private Map<String, Object> priorVersion;
+	private List<Map<String, String>> priorVersion;
 
 	@JsonProperty("owl:versionInfo")
-	private Map<String, Object> versionInfo;
+	private List<Map<String, String>> versionInfo;
 
 	@JsonProperty("owl:versionIRI")
-	private Map<String, Object> versionIRI;
+	private List<Map<String, String>> versionIRI;
 
 	@JsonProperty("prov:wasGeneratedBy")
-	private Map<String, Object> wasGeneratedBy;
+	private List<Map<String, String>> wasGeneratedBy;
 
 	@JsonProperty("prov:wasInvalidatedBy")
-	private Map<String, Object> wasInvalidatedBy;
+	private List<Map<String, String>> wasInvalidatedBy;
 
 	@JsonProperty("rdfs:comment")
-	private Map<String, Object> comment;
+	private List<Map<String, String>> comment;
 
 	@JsonProperty("schema:associatedMedia")
-	private Map<String, Object> associatedMedia;
+	private List<Map<String, String>> associatedMedia;
 
 	@JsonProperty("schema:award")
-	private Map<String, Object> award;
+	private List<Map<String, String>> award;
 
 	@JsonProperty("schema:comment")
-	private Map<String, Object> schemaComment;
+	private List<Map<String, String>> schemaComment;
 
 	@JsonProperty("schema:funding")
-	private Map<String, Object> funding;
+	private List<Map<String, String>> funding;
 
 	@JsonProperty("schema:includedInDataCatalog")
-	private Map<String, Object> includedInDataCatalog;
+	private List<Map<String, String>> includedInDataCatalog;
 
 	@JsonProperty("schema:translator")
-	private Map<String, Object> translator;
+	private List<Map<String, String>> translator;
 
 	@JsonProperty("skos:hiddenLabel")
-	private Map<String, Object> hiddenLabel;
+	private List<Map<String, String>> hiddenLabel;
 
 	@JsonProperty("vann:changes")
-	private Map<String, Object> changes;
+	private List<Map<String, String>> changes;
 
 	@JsonProperty("vann:example")
-	private Map<String, Object> example;
+	private List<Map<String, String>> example;
 
 	@JsonProperty("vann:preferredNamespacePrefix")
-	private Map<String, Object> preferredNamespacePrefix;
+	private List<Map<String, String>> preferredNamespacePrefix;
 
 	@JsonProperty("vann:preferredNamespaceUri")
-	private Map<String, Object> preferredNamespaceUri;
+	private List<Map<String, String>> preferredNamespaceUri;
 
 	@JsonProperty("void:openSearchDescription")
-	private Map<String, Object> openSearchDescription;
+	private List<Map<String, String>> openSearchDescription;
 
 	@JsonProperty("void:classPartition")
-	private Map<String, Object> classPartition;
+	private List<Map<String, String>> classPartition;
 
 	@JsonProperty("void:exampleResource")
-	private Map<String, Object> exampleResource;
+	private List<Map<String, String>> exampleResource;
 
 	@JsonProperty("void:rootResource")
-	private Map<String, Object> rootResource;
+	private List<Map<String, String>> rootResource;
 
 	@JsonProperty("void:propertyPartition")
-	private Map<String, Object> propertyPartition;
+	private List<Map<String, String>> propertyPartition;
 
 	@JsonProperty("void:uriLookupEndpoint")
-	private Map<String, Object> uriLookupEndpoint;
+	private List<Map<String, String>> uriLookupEndpoint;
 
 	@JsonProperty("void:uriRegexPattern")
-	private Map<String, Object> uriRegexPattern;
+	private List<Map<String, String>> uriRegexPattern;
 
 	@JsonGetter("@id")
     public String getIdAsString() {

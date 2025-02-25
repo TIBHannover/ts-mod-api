@@ -1,23 +1,19 @@
 package com.tib.ts.mod.artefact;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.ErrorMessage;
+import com.tib.ts.mod.common.converter.ResponseConverter;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
-import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -53,7 +49,7 @@ class GetArtefactHandler implements ServiceHandler {
 	}
 
 	@Override
-	public String execute(RequestDTO request) {
+	public String execute(RequestDTO request) throws BadRequestException {
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 
@@ -63,13 +59,19 @@ class GetArtefactHandler implements ServiceHandler {
 	}
 
 	@Override
-	public SemanticArtefact postHandler(String response) {
+	public String postHandler(RequestDTO request, String response) {
 		
-		SemanticArtefact result = new SemanticArtefact();
+		SemanticArtefact semanticArtefact = null;
+		String result = "";
 		try {
-			result = mapper.mapJsonToDto(response, SemanticArtefact.class);
-			logger.debug("Mapped SemanticArtefact: {}", result);
-			result.setContext(Context.getContext());
+			semanticArtefact = mapper.mapJsonToDto(response, SemanticArtefact.class);
+			
+			logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
+			
+			if (semanticArtefact != null) {
+				semanticArtefact.setContext(Context.getContext());
+				result = ResponseConverter.convert(semanticArtefact, request.getFormat());
+			}
 
 		} catch (Exception e) {
 			logger.error("Error processing response in postHandler", e);

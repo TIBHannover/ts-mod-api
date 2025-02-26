@@ -42,6 +42,8 @@ public class ArtefactController {
 	
 	private static final String RDF_XML = "application/rdf+xml";
 	
+	private static final String TTL = "text/turtle";
+	
 	@Autowired
 	private ArtefactService service;
 	
@@ -67,6 +69,8 @@ public class ArtefactController {
 		//return new ResponseEntity<>(response, headers, HttpStatus.OK);
 		if (format.equals(FormatOption.rdfxml))
 			return ResponseEntity.ok().contentType(MediaType.valueOf(RDF_XML)).body(response);
+		else if (format.equals(FormatOption.ttl))
+			return ResponseEntity.ok().contentType(MediaType.valueOf(TTL)).body(response);
 		
 		return ResponseEntity.ok().contentType(MediaType.valueOf(JSON_LD)).body(response);
 	}
@@ -90,6 +94,8 @@ public class ArtefactController {
 		
 		if (format.equals(FormatOption.rdfxml))
 			return ResponseEntity.ok().contentType(MediaType.valueOf(RDF_XML)).body(response);
+		else if (format.equals(FormatOption.ttl))
+			return ResponseEntity.ok().contentType(MediaType.valueOf(TTL)).body(response);
 		
 		return ResponseEntity.ok().contentType(MediaType.valueOf(JSON_LD)).body(response);
 	}

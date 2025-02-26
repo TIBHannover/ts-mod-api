@@ -115,6 +115,8 @@ class GetAllArtefactHandler implements ServiceHandler {
 					semanticArtefact.setContext(Context.getContext());
 					semanticArtefacts.add(semanticArtefact);
 				}
+				//need to remove - only for testing
+				break;
 			}
 			
 			if(!semanticArtefacts.isEmpty()) {

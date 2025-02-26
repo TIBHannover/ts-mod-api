@@ -1,25 +1,49 @@
 mappings:
   modAttributes:
     semanticArtefactId:
-      - jsonPath: "$.config.versionIri"
+      - jsonPath: "$.iri"
+        priority: 1
+    conformsTo:
+      - jsonPath: "$.http://purl.org/dc/terms/conformsTo"
+        type: 'foaf:agent'
+       # keys: ["@id", "@type"]
         priority: 1
     contactPoint:
-      - jsonPath: "$.config.mailingList"
-       # keys: ["@id", "@type", "vcard:fn", "vcard:nickname"]
+      - jsonPath: "$.mailing_list"
         type: 'vcard:kind'
         priority: 1
+      - jsonPath: "$.tracker"
+        type: 'vcard:kind'
+        priority: 2 
     creator:
-      - jsonPath: "$.config.subject"
+      - jsonPath: "$.creator"
         type: 'foaf:agent'
        # keys: ["@id", "@type"]
         priority: 1
     description:
-      - jsonPath: "$.config.description"
+      - jsonPath: "$.description"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:identifier'
+        priority: 1
+    identifier:
+      - jsonPath: "$.http://purl.org/dc/terms/identifier"
        # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
     isReferencedBy:
-      - jsonPath: "$.config['Is Referenced By']"
+      - jsonPath: "$.http://purl.org/dc/terms/isReferencedBy"
        # keys: ["@id", "@type"]
         type: 'dcterms:isReferencedBy'
         priority: 1
+    issued:
+      - jsonPath: "$.http://purl.org/dc/terms/issued"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:identifier'
+        priority: 1
+        
+        
+        
+        
+        
+        
+        

@@ -8,7 +8,7 @@ package com.tib.ts.mod.common.constants;
 
 public class OlsRestUrl {
 	
-	private static final String TS = "https://api.terminology.tib.eu/api";
+	private static final String TS = "https://api.terminology.tib.eu/api/v2";
 	public static final String GET_ALL_ONTOLOGIES = TS + "/ontologies";
 	public static final String GET_ONTOLOGY_BY_ONTOLOGY_ID = TS + "/ontologies/{0}";
 

@@ -1,7 +1,9 @@
 package com.tib.ts.mod.common.converter;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.io.StringWriter;
 
 import org.apache.jena.rdf.model.Model;
@@ -9,6 +11,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.jena.riot.RDFParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -29,45 +32,58 @@ public class ResponseConverter {
 
 	private static final Logger logger = LoggerFactory.getLogger(ResponseConverter.class);
 
+	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+			.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
 	public static <T> String convert(T response, FormatOption format) {
 		String results = "";
 
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
 		try {
-			results = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
+			results = OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(response);
+
+			return results = switch (format) {
+				case rdfxml -> convertToRDF(results);
+				case ttl -> convertToTTL(results);
+				default -> results;
+			};
 		} catch (JsonProcessingException e) {
 			logger.error("Error in converting response to JSON-LD");
+			return "";
 		}
-		
-		results = switch (format) {
-			case rdfxml -> convertToRDF(results);
-			default -> results;
-		};
-
-		return results;
-
 	}
 
 	private static String convertToRDF(String inputToConvert) {
-		String results = "";
 
 		Model model = ModelFactory.createDefaultModel();
 		try (InputStream jsonLdStream = new ByteArrayInputStream(inputToConvert.getBytes())) {
-			// Read JSON-LD into an RDF model
 			RDFDataMgr.read(model, jsonLdStream, null, Lang.JSONLD);
 		} catch (Exception e) {
 			logger.error("Error in converting JSON-LD to RDF/xml");
+			return "";
 		}
+		return writeModel(model, RDFFormat.RDFXML_PRETTY);
+	}
 
-		// Convert RDF model to RDF/XML format
-		StringWriter writer = new StringWriter();
-		RDFDataMgr.write(writer, model, RDFFormat.RDFXML_PRETTY);
-		results = writer.toString();
+	private static String convertToTTL(String inputToConvert) {
 
-		return results;
+		Model model = ModelFactory.createDefaultModel();
+		try {
+			RDFParser.create().source(new StringReader(inputToConvert)).lang(Lang.JSONLD).parse(model);
+		} catch (Exception e) {
+			logger.error("Error converting JSON-LD to Turtle", e);
+		}
+		return writeModel(model, RDFFormat.TURTLE);
+	}
+
+	private static String writeModel(Model model, RDFFormat format) {
+
+		try (StringWriter writer = new StringWriter()) {
+			RDFDataMgr.write(writer, model, format);
+			return writer.toString();
+		} catch (IOException e) {
+			logger.error("Error writing format:{}", format, e);
+			return "";
+		}
 	}
 
 }

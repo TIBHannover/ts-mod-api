@@ -57,7 +57,9 @@ public class MetadataMapper {
 				List<MappingDetail> details = config.getModAttributes().get(attributeName);
 				if (details == null)
 					continue;
+				
 				details.sort(Comparator.comparingInt(MappingDetail::getPriority));
+				
 				for (MappingDetail detail : details) {
 					Object value = null;
 					try {
@@ -79,7 +81,8 @@ public class MetadataMapper {
 					} catch (IllegalAccessException e) {
 						logger.error(ErrorMessage.MAPPER_FIELD_EXCEPTION_MSG, field.getName(), e);
 					}
-
+					// break the loop when the first priority assignment has value
+					break;
 				}
 
 			}
@@ -89,20 +92,6 @@ public class MetadataMapper {
 			return null;
 		}
 	}
-
-	/*
-	 * private <T> void handleList(T dtoInstance, Field field, MappingDetail detail,
-	 * List<String> value) { try { Map<String, Object> mapField = new HashMap<>();
-	 * List<String> mapFieldValue = new ArrayList<String>(); List<String> keys =
-	 * detail.getKeys(); for (String key : keys) { if (key.equalsIgnoreCase("@id"))
-	 * { if (isNullorEmpty(value)) { mapField = null; break; } for (String s :
-	 * value) { mapFieldValue.add(s); } mapField.put(key, mapFieldValue); } else if
-	 * (key.equalsIgnoreCase("@type")) { mapField.put(key, detail.getType()); } }
-	 * field.set(dtoInstance, mapField); } catch (IllegalArgumentException |
-	 * IllegalAccessException e) {
-	 * logger.error(ErrorMessage.MAPPER_HANDLE_LIST_EXCEPTION_MSG, field.getName(),
-	 * e); } }
-	 */
 	
 	private <T> void handleListField(T dtoInstance, Field field, MappingDetail detail, Object value) {
 		try {
@@ -112,49 +101,28 @@ public class MetadataMapper {
 				listMapField = new ArrayList<>();
 			}
 
-			List<String> keys = detail.getKeys();
-			List<String> valueList = (value instanceof List) ? (List<String>) value : List.of(value.toString());
-
-			for (String str : valueList) {
-				var mapField = new HashMap<String, String>();
-				if (check_URL(str)) {
-					mapField.put("@id", str);
-				} else if (detail.getType().equalsIgnoreCase("rdfs:Literal")) {
-					mapField.put("@value", str);
-				} else {
-					mapField.put("rdfs:label", str);
+			List<String> valueList = ((value instanceof List)) ? (List<String>) value : List.of(value.toString());
+			if (!valueList.isEmpty()) {
+				for (String str : valueList) {
+					var mapField = new HashMap<String, String>();
+					if (check_URL(str)) {
+						mapField.put("@id", str);
+					} else if (detail.getType().equalsIgnoreCase("rdfs:Literal")) {
+						mapField.put("@value", str);
+					} else {
+						mapField.put("rdfs:label", str);
+					}
+					if (!detail.getType().equalsIgnoreCase("rdfs:resource")) {
+						mapField.put("@type", detail.getType());
+					}
+					listMapField.add(mapField);
 				}
-				if(!detail.getType().equalsIgnoreCase("rdfs:resource")) {
-					mapField.put("@type", detail.getType());
-				}
-				listMapField.add(mapField);
+				field.set(dtoInstance, listMapField);
 			}
-			field.set(dtoInstance, listMapField);
 		} catch (IllegalAccessException e) {
 			logger.error(ErrorMessage.MAPPER_HANDLE_LIST_EXCEPTION_MSG, field.getName(), e);
 		}
 	}
-
-	/*
-	 * private <T> void handleMapField(T dtoInstance, Field field, MappingDetail
-	 * detail, Object value) { try { Map<String, String> mapField = (Map<String,
-	 * String>) field.get(dtoInstance); if (mapField == null) { mapField = new
-	 * HashMap<String, String>(); } List<String> keys = detail.getKeys(); for
-	 * (String key : keys) { if (key.equalsIgnoreCase("@id")) { if
-	 * (isNullorEmpty(value)) { mapField = null; break; } mapField.put(key,
-	 * value.toString()); } else if (key.equalsIgnoreCase("@type")) {
-	 * mapField.put(key, detail.getType()); } }
-	 * 
-	 * field.set(dtoInstance, mapField); } catch (IllegalArgumentException |
-	 * IllegalAccessException e) {
-	 * logger.error(ErrorMessage.MAPPER_HANDLE_MAP_EXCEPTION_MSG, field.getName(),
-	 * e); } }
-	 */
-
-	/*
-	 * private boolean isNullorEmpty(Object value) { return value instanceof List &&
-	 * ((List<?>) value).isEmpty(); }
-	 */
 
 	private boolean isList(Field field) {
 		return List.class.isAssignableFrom(field.getType());
@@ -163,11 +131,6 @@ public class MetadataMapper {
 	private boolean isDTO(Field field) {
 		return !field.getType().isPrimitive() && !field.getType().getTypeName().equals("java.lang.Object");
 	}
-
-	/*
-	 * private boolean isMap(Field field) { return
-	 * Map.class.isAssignableFrom(field.getType()); }
-	 */
 
 	private List<Field> getAllFields(List<Field> fields, Class<?> classType) {
 		if (classType.getSuperclass() != null) {

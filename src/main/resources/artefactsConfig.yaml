@@ -4,7 +4,7 @@ mappings:
       - jsonPath: "$.iri"
         priority: 1
     conformsTo:
-      - jsonPath: "$.http://purl.org/dc/terms/conformsTo"
+      - jsonPath: "$[']http://purl.org/dc/terms/conformsTo']"
         type: 'foaf:agent'
        # keys: ["@id", "@type"]
         priority: 1
@@ -26,20 +26,80 @@ mappings:
         type: 'dcterms:identifier'
         priority: 1
     identifier:
-      - jsonPath: "$.http://purl.org/dc/terms/identifier"
+      - jsonPath: "$['http://purl.org/dc/terms/identifier']"
        # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
     isReferencedBy:
-      - jsonPath: "$.http://purl.org/dc/terms/isReferencedBy"
+      - jsonPath: "$['http://purl.org/dc/terms/isReferencedBy']"
        # keys: ["@id", "@type"]
         type: 'dcterms:isReferencedBy'
         priority: 1
     issued:
-      - jsonPath: "$.http://purl.org/dc/terms/issued"
+      - jsonPath: "$['http://purl.org/dc/terms/issued']"
        # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
+    language:
+      - jsonPath: "$.language"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:LinguisticSystem'
+        priority: 1
+      - jsonPath: "$.defaultLanguage"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:LinguisticSystem'
+        priority: 2
+    license:
+      - jsonPath: "$['http://purl.org/dc/terms/license']"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:LicenseDocument'
+        priority: 1
+      - jsonPath: "$.license.url"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:LicenseDocument'
+        priority: 2
+    modified:
+      - jsonPath: "$['http://purl.org/dc/terms/modified']"
+       # keys: ["@id", "@type"]
+        type: 'rdfs:Literal'
+        priority: 1
+    publisher:
+      - jsonPath: "$['http://purl.org/dc/terms/publisher']"
+       # keys: ["@id", "@type"]
+        type: 'foaf:Agent'
+        priority: 1
+    rights:
+      - jsonPath: "$['http://purl.org/dc/terms/rights']"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:RightsStatement'
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/elements/1.1/rights']"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:RightsStatement'
+        priority: 2
+    subject:
+      - jsonPath: "$.classifications[*].subject[*]"
+       # keys: ["@id", "@type"]
+        type: 'skos:Concept'
+        priority: 1
+    title:
+      - jsonPath: "$.title"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:identifier'
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/terms/title']"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:identifier'
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/elements/1.1/title']"
+       # keys: ["@id", "@type"]
+        type: 'dcterms:identifier'
+        priority: 2
+    type:
+      - jsonPath: "$.type"
+       # keys: ["@id", "@type"]
+        type: 'dt:type'
+        priority: 1  
         
         
         

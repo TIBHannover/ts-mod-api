@@ -88,19 +88,12 @@ class GetAllArtefactHandler implements ServiceHandler {
 		try {
 			var responseObject = JsonParser.parseString(response).getAsJsonObject();
 
-			if (!responseObject.has("_embedded") || responseObject.get("_embedded").isJsonNull()) {
+			if (!responseObject.has("elements") || responseObject.get("elements").isJsonNull()) {
 				logger.warn("Response does not contain any ontologies");
 				return EMPTY_STRING;
 			}
 
-			var embedded = responseObject.get("_embedded").getAsJsonObject();
-
-			if (!embedded.has("ontologies") || embedded.get("ontologies").isJsonNull()) {
-				logger.warn("Response does not contain any ontologies");
-				return EMPTY_STRING;
-			}
-
-			var ontologies = embedded.getAsJsonArray("ontologies");
+			var ontologies = responseObject.get("elements").getAsJsonArray();
 
 			for (JsonElement ontology : ontologies) {
 				if (ontology == null || ontology.isJsonNull()) {
@@ -115,8 +108,6 @@ class GetAllArtefactHandler implements ServiceHandler {
 					semanticArtefact.setContext(Context.getContext());
 					semanticArtefacts.add(semanticArtefact);
 				}
-				//need to remove - only for testing
-				break;
 			}
 			
 			if(!semanticArtefacts.isEmpty()) {

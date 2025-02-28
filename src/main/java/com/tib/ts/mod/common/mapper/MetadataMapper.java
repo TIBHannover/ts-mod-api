@@ -105,16 +105,17 @@ public class MetadataMapper {
 			if (!valueList.isEmpty()) {
 				for (String str : valueList) {
 					var mapField = new HashMap<String, String>();
-					if (check_URL(str)) {
-						mapField.put("@id", str);
-					} else if (detail.getType().equalsIgnoreCase("rdfs:Literal")) {
-						mapField.put("@value", str);
-					} else {
-						mapField.put("rdfs:label", str);
+					
+					switch (detail.getType().toLowerCase()) {
+						case "rdfs:literal" -> mapField.put("@value", str);
+						case "skos:preflabel" -> mapField.put("skos:prefLabel", str);
+						default -> mapField.put(check_URL(str) ? "@id" : "rdfs:label", str);
 					}
+					
 					if (!detail.getType().equalsIgnoreCase("rdfs:resource")) {
 						mapField.put("@type", detail.getType());
 					}
+					
 					listMapField.add(mapField);
 				}
 				field.set(dtoInstance, listMapField);

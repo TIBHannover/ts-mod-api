@@ -64,7 +64,7 @@ public class SemanticArtefact extends Resource {
 	private List<Map<String, String>> bibliographicCitation;
 
 	@JsonProperty("dcterms:contributor")
-	private List<List<Map<String, String>>> contributor;
+	private List<Map<String, String>> contributor;
 
 	@JsonProperty("dcterms:coverage")
 	private List<Map<String, String>> coverage;

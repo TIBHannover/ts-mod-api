@@ -38,7 +38,7 @@ public class MetadataMapper {
 		try {
 			return constructDTO(apiResponse, dtoClass, objectMapper);
 		}catch(Exception e) {
-			logger.error(ErrorMessage.MAPPER_EXCEPTION_MSG, e.getMessage(), e);
+			logger.debug(ErrorMessage.MAPPER_EXCEPTION_MSG, e.getMessage(), e);
 			return null;
 		}
 	}
@@ -65,7 +65,7 @@ public class MetadataMapper {
 					try {
 						value = JsonPath.read(apiResponse, detail.getJsonPath());
 					} catch (Exception e) {
-						logger.warn("Path not available in response: {}", detail.getJsonPath());
+						logger.debug("Path not available in response: {}", detail.getJsonPath());
 					}
 					if (value == null)
 						continue;
@@ -88,7 +88,7 @@ public class MetadataMapper {
 			}
 			return dtoInstance;
 		} catch (Exception e) {
-			logger.error(ErrorMessage.MAPPER_RESPONSE_CONSTRUCT_EXCEPTION_MSG, dtoClass.getSimpleName(), e);
+			logger.debug(ErrorMessage.MAPPER_RESPONSE_CONSTRUCT_EXCEPTION_MSG, dtoClass.getSimpleName(), e);
 			return null;
 		}
 	}
@@ -121,7 +121,7 @@ public class MetadataMapper {
 				field.set(dtoInstance, listMapField);
 			}
 		} catch (IllegalAccessException e) {
-			logger.error(ErrorMessage.MAPPER_HANDLE_LIST_EXCEPTION_MSG, field.getName(), e);
+			logger.debug(ErrorMessage.MAPPER_HANDLE_LIST_EXCEPTION_MSG, field.getName(), e);
 		}
 	}
 

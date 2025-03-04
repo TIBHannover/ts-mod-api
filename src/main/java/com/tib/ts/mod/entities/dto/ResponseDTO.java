@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tib.ts.mod.entities.Context;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -18,11 +19,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ResponseDTO<T> {
 	
 	@JsonProperty("@context")
 	private Map<String, String> context;
 
+	@JsonProperty("@graph")
 	private T result;
 
 }

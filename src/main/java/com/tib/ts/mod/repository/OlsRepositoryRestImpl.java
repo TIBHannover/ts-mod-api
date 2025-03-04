@@ -15,6 +15,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.tib.ts.mod.common.constants.ErrorMessage;
 import com.tib.ts.mod.common.constants.OlsRestUrl;
@@ -39,7 +40,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	@Override
 	public String call(RequestDTO request) throws BadRequestException {
 		String result = switch (request.getOperationType()) {
-			case ONTOLOGIES -> getOntologies();
+			case ONTOLOGIES -> getOntologies(request.getPage(), request.getPageSize());
 			case ONTOLOGYBYONTOLOGYID -> getOntologiesByOntologyId(request.getArtefactId());
 			default -> throw new IllegalArgumentException();
 		};
@@ -47,18 +48,23 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return result;
 	}
 	
-	private String getOntologiesByOntologyId(String artefactId) throws BadRequestException {
-		String url = OlsRestUrl.GET_ONTOLOGY_BY_ONTOLOGY_ID;
+	private String getOntologiesByOntologyId(final String artefactId) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ONTOLOGY_BY_ONTOLOGY_ID)
+				                         .path(artefactId)
+				                         .toUriString();
+				
+		logger.info("calling external service: {}", url);
 		
-		String parameterizedUrl = MessageFormat.format(url, artefactId);
-		
-		logger.info("calling external service: {}", parameterizedUrl);
-		
-		return invokeRest(parameterizedUrl);
+		return invokeRest(url);
 	}
 
-	private String getOntologies() throws BadRequestException {
-		String url = OlsRestUrl.GET_ALL_ONTOLOGIES;
+	private String getOntologies(final Integer page, final Integer size) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ONTOLOGIES)
+										 .queryParam("page", page)
+										 .queryParam("size", size)
+										 .toUriString();
+		
+		url = MessageFormat.format(url, page, size);
 		
 		logger.info("calling external service: {}", url);
 		

@@ -1,105 +1,164 @@
 mappings:
   modAttributes:
-    semanticArtefactId:
-      - jsonPath: "$.iri"
-        priority: 1
+  # DCATResourceAttributes
+    
     conformsTo:
-      - jsonPath: "$[']http://purl.org/dc/terms/conformsTo']"
+      - jsonPath: "$['http://purl.org/dc/terms/conformsTo']"
         type: 'foaf:agent'
-       # keys: ["@id", "@type"]
         priority: 1
     contactPoint:
       - jsonPath: "$.mailing_list"
         type: 'vcard:kind'
         priority: 1
-      - jsonPath: "$.tracker"
-        type: 'vcard:kind'
-        priority: 2 
     creator:
       - jsonPath: "$.creator"
         type: 'foaf:agent'
-       # keys: ["@id", "@type"]
         priority: 1
     description:
       - jsonPath: "$.description"
-       # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
     identifier:
       - jsonPath: "$['http://purl.org/dc/terms/identifier']"
-       # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
     isReferencedBy:
       - jsonPath: "$['http://purl.org/dc/terms/isReferencedBy']"
-       # keys: ["@id", "@type"]
         type: 'dcterms:isReferencedBy'
         priority: 1
     issued:
       - jsonPath: "$['http://purl.org/dc/terms/issued']"
-       # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
     language:
       - jsonPath: "$.language"
-       # keys: ["@id", "@type"]
         type: 'dcterms:LinguisticSystem'
         priority: 1
       - jsonPath: "$.defaultLanguage"
-       # keys: ["@id", "@type"]
         type: 'dcterms:LinguisticSystem'
         priority: 2
     license:
       - jsonPath: "$['http://purl.org/dc/terms/license']"
-       # keys: ["@id", "@type"]
         type: 'dcterms:LicenseDocument'
         priority: 1
       - jsonPath: "$.license.url"
-       # keys: ["@id", "@type"]
         type: 'dcterms:LicenseDocument'
         priority: 2
     modified:
       - jsonPath: "$['http://purl.org/dc/terms/modified']"
-       # keys: ["@id", "@type"]
         type: 'rdfs:Literal'
         priority: 1
     publisher:
       - jsonPath: "$['http://purl.org/dc/terms/publisher']"
-       # keys: ["@id", "@type"]
         type: 'foaf:Agent'
         priority: 1
     rights:
       - jsonPath: "$['http://purl.org/dc/terms/rights']"
-       # keys: ["@id", "@type"]
         type: 'dcterms:RightsStatement'
         priority: 1
       - jsonPath: "$['http://purl.org/dc/elements/1.1/rights']"
-       # keys: ["@id", "@type"]
         type: 'dcterms:RightsStatement'
         priority: 2
     subject:
       - jsonPath: "$.classifications[*].subject[*]"
-       # keys: ["@id", "@type"]
         type: 'skos:Concept'
         priority: 1
     title:
       - jsonPath: "$.title"
-       # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
       - jsonPath: "$['http://purl.org/dc/terms/title']"
-       # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 1
       - jsonPath: "$['http://purl.org/dc/elements/1.1/title']"
-       # keys: ["@id", "@type"]
         type: 'dcterms:identifier'
         priority: 2
     type:
       - jsonPath: "$.type"
-       # keys: ["@id", "@type"]
-        type: 'dt:type'
+        type: 'dcterms:type'
         priority: 1  
+# SemanticArtefact Attributes
+    semanticArtefactId:
+      - jsonPath: "$.iri"
+        priority: 1
+    abstracts:
+      - jsonPath: "$.['http://purl.org/dc/terms/abstract']"
+        type: 'dcterms:abstract'
+        priority: 1
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/abstract']"
+        type: 'dcterms:abstract'
+        priority: 2
+    alternative:
+      - jsonPath: "$.['http://purl.org/dc/terms/alternative']"
+        type: 'rdfs:Literal'
+        priority: 1
+    audience:
+      - jsonPath: "$.['http://purl.org/dc/terms/audience']"
+        type: 'dcterms:audience'
+        priority: 1
+      - jsonPath: "$.['https://schema.org/audience']"
+        type: 'dcterms:audience'
+        priority: 2
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#audience']"
+        type: 'dcterms:audience'
+        priority: 3
+    bibliographicCitation:
+      - jsonPath: "$.['http://purl.org/dc/terms/bibliographicCitation']"
+        type: 'rdfs:Literal'
+        priority: 1
+    contributor:
+      - jsonPath: "$.['http://purl.org/dc/terms/contributor']"
+        type: 'dcterms:contributor'
+        priority: 1
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/contributor']"
+        type: 'dcterms:contributor'
+        priority: 2
+    coverage:
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/coverage']"
+        type: 'dcterms:coverage'
+        priority: 1
+    rightsHolder:
+      - jsonPath: "$.['http://purl.org/dc/terms/rightsHolder']"
+        type: 'dcterms:RightsHolder'
+        priority: 1
+    source:
+      - jsonPath: "$.['http://purl.org/dc/terms/source']"
+        type: 'dcterms:source'
+        priority: 1
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/source']"
+        type: 'dcterms:source'
+        priority: 2
+    bugDatabase:
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#bug-database']"
+        type: 'doap:bug-database'
+        priority: 1
+      - jsonPath: "$.tracker"
+        type: 'doap:bug-database'
+        priority: 2
+    mailingList:
+      - jsonPath: "$.mailing_list"
+        type: 'doap:mailing-list'
+        priority: 1
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#mailing-list']"
+        type: 'doap:mailing-list'
+        priority: 2
+    repository:
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#repository']"
+        type: 'doap:repository'
+        priority: 1
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#GitRepository']"
+        type: 'doap:repository'
+        priority: 2
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#SVNRepository']"
+        type: 'doap:repository'
+        priority: 3
+      - jsonPath: "$.['http://edamontology.org/repository']"
+        type: 'doap:repository'
+        priority: 4
+    fundedBy:
+      - jsonPath: "$.['http://xmlns.com/foaf/0.1/fundedBy']"
+        type: 'owl:Thing'
+        priority: 1
         
         
         

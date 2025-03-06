@@ -5,12 +5,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,14 +30,21 @@ public class MetadataMapper {
 
 	private static final Logger logger = LoggerFactory.getLogger(MetadataMapper.class);
 
-	@Autowired
-	private ArtefactAttribute config;
+	private MappingRule config;
+	
+	private Set<String> processedClasses;
+	
+	public <T> T mapJsonToDto(String apiResponse, Class<T> dtoClass, MappingRule mergedConfigs) {
 
-	public <T> T mapJsonToDto(String apiResponse, Class<T> dtoClass) {
-
+		this.config = mergedConfigs;
+		
+		this.processedClasses = new HashSet<String>();
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			return constructDTO(apiResponse, dtoClass, objectMapper);
+			T semanticArtefact = constructDTO(apiResponse, dtoClass, objectMapper);
+			//((SemanticArtefact) semanticArtefact).setContext(context);
+			return semanticArtefact;
 		}catch(Exception e) {
 			logger.debug(ErrorMessage.MAPPER_EXCEPTION_MSG, e.getMessage(), e);
 			return null;
@@ -53,6 +61,17 @@ public class MetadataMapper {
 				String attributeName = field.getName();
 
 				logger.debug("Processing Attribute: {}", attributeName);
+				
+				if(attributeName.equalsIgnoreCase("designedForTask")) {
+					System.out.println("Found!!");
+				}
+				
+				if (isDTO(field)) {
+					if(processedClasses.add(dtoClass.getName())) {
+						Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper);
+						field.set(dtoInstance, nestedDto);
+					}
+				}
 
 				List<MappingDetail> details = config.getModAttributes().get(attributeName);
 				if (details == null)
@@ -65,16 +84,13 @@ public class MetadataMapper {
 					try {
 						value = JsonPath.read(apiResponse, detail.getJsonPath());
 					} catch (Exception e) {
-						logger.debug("Path not available in response: {}", detail.getJsonPath());
+						logger.warn("Path not available in response: {}", detail.getJsonPath());
 					}
 					if (value == null)
 						continue;
 					try {
 						if (isList(field)) {
 							handleListField(dtoInstance, field, detail, value);
-						}  else if (isDTO(field)) {
-							Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper);
-							field.set(dtoInstance, nestedDto);
 						} else {
 							field.set(dtoInstance, value);
 						}
@@ -107,12 +123,14 @@ public class MetadataMapper {
 					var mapField = new HashMap<String, String>();
 					
 					switch (detail.getType().toLowerCase()) {
-						case "rdfs:literal" -> mapField.put("@value", str);
-						case "skos:preflabel" -> mapField.put("skos:prefLabel", str);
-						default -> mapField.put(check_URL(str) ? "@id" : "rdfs:label", str);
+						case "rdfs:Literal" -> mapField.put("@value", str);
+						case "skos:Concept" -> mapField.put("skos:prefLabel", str);
+						default -> mapField.put(check_URL(str) ? "@id" : "@value", str);
 					}
 					
-					if (!detail.getType().equalsIgnoreCase("rdfs:resource")) {
+					if (!detail.getType().equalsIgnoreCase("rdfs:resource") ||
+						!detail.getType().equalsIgnoreCase("rdfs:Literal")) {
+						//context.put(field.getName(), detail.getType());
 						mapField.put("@type", detail.getType());
 					}
 					
@@ -130,7 +148,7 @@ public class MetadataMapper {
 	}
 	
 	private boolean isDTO(Field field) {
-		return !field.getType().isPrimitive() && !field.getType().getTypeName().equals("java.lang.Object");
+		return !field.getType().isPrimitive() && !field.getType().getName().startsWith("java.");
 	}
 
 	private List<Field> getAllFields(List<Field> fields, Class<?> classType) {

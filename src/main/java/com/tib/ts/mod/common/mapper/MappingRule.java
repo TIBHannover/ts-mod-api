@@ -1,7 +1,11 @@
 package com.tib.ts.mod.common.mapper;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Component;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -22,9 +27,10 @@ import lombok.Setter;
 
 @Data
 @AllArgsConstructor
-@Component
-//@ConfigurationProperties(prefix = "mappings")
-public abstract class MappingRule {
+@NoArgsConstructor
+//@Component
+@ConfigurationProperties(prefix = "mappings")
+public class MappingRule {
 
 	private Map<String, List<MappingDetail>> modAttributes;
 
@@ -36,7 +42,40 @@ public abstract class MappingRule {
 
 		private String type;
 
-		private List<String> keys;
+		private List<String> fair;
+	}
+	
+	public void merge(MappingRule rule, String display) {
+		if (rule != null && rule.getModAttributes() != null) {
+			if(this.modAttributes == null) {
+				this.modAttributes = new HashMap<String, List<MappingDetail>>();
+			}
+			rule.getModAttributes().forEach((key, value) -> {
+				
+				List<MappingDetail> filteredMappingRule = value;
+				
+				if(!display.toLowerCase().equalsIgnoreCase("all")) {
+					if (display.toLowerCase().equalsIgnoreCase("default")) {
+						filteredMappingRule = value.stream().filter(detail -> detail.getFair() != null && detail.getFair().contains(display)).collect(Collectors.toList());
+					}else {
+						List<String> filterByAttributes = Arrays.stream(display.toLowerCase().split(","))
+																.map(String::trim)
+																.collect(Collectors.toList());
+						if (!filterByAttributes.contains(key.toLowerCase())) {
+							filteredMappingRule = new ArrayList<MappingDetail>();
+						}
+					}
+				}
+				
+				if (!filteredMappingRule.isEmpty()) {
+					this.modAttributes.merge(key, filteredMappingRule, (existing, newVal) -> {
+						existing.addAll(newVal);
+						return existing;
+					});
+				}
+			});
+				
+		}
 	}
 
 }

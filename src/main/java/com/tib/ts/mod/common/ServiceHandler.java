@@ -14,7 +14,7 @@ import com.tib.ts.mod.entities.dto.ResponseDTO;
 
 public interface ServiceHandler {
 	
-	public String preHandler(RequestDTO request);
+	public String preHandler(RequestDTO request) throws BadRequestException;
 	
 	public String execute(RequestDTO request) throws BadRequestException;
 	

@@ -16,7 +16,7 @@ public class Validation {
 	}
 	
 	public static boolean ValidateDisplay(String display) {		
-		return display != null && display.equalsIgnoreCase("all");
+		return true; //display != null && (display.equalsIgnoreCase("all") || display.equalsIgnoreCase("default"));
 	}
 
 }

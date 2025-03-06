@@ -49,6 +49,10 @@ class ArtefactServiceImpl implements ArtefactService {
 		
 		//invoke postHandler to process the response
 		String modResponse = getAllArtefactHandler.postHandler(request, olsResponse);
+		
+		if (modResponse == null) {
+			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+		}
 
 		return modResponse;
 	}
@@ -73,6 +77,10 @@ class ArtefactServiceImpl implements ArtefactService {
 		}
 		
 		String modResponse = getArtefactHandler.postHandler(request, olsResponse);
+		
+		if (modResponse == null) {
+			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+		}
 		
 		return modResponse;
 	}

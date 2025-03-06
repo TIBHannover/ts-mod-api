@@ -26,4 +26,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<?> handleException(NotFoundException ex){
 		return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<?> handleException(RuntimeException ex){
+		return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }

@@ -1,5 +1,6 @@
 package com.tib.ts.mod.entities;
 
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,19 +19,19 @@ import lombok.Setter;
 public class CatalogRecord {
 	
 	@JsonProperty("dct:conformsTo")
-	private Map<String, String> conformsTo;
+	private List<Map<String, String>> conformsTo;
 
 	@JsonProperty("dct:description")
-	private Map<String, String> description;
+	private List<Map<String, String>> description;
 
 	@JsonProperty("dct:issued")
-	private Map<String, String> issued;
+	private List<Map<String, String>> issued;
 
 	@JsonProperty("dct:modified")
-	private Map<String, String> modified;
+	private List<Map<String, String>> modified;
 
 	@JsonProperty("dct:title")
-	private Map<String, String> title;
+	private List<Map<String, String>> title;
 
 	@JsonProperty("foaf:primaryTopic")
 	private Resource primaryTopic;

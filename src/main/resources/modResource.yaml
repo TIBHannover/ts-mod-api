@@ -1,0 +1,94 @@
+modAttributes:
+  # DCATResourceAttributes
+    conformsTo:
+      - jsonPath: "$['http://purl.org/dc/terms/conformsTo']"
+        type: 'foaf:agent'
+        fair: ['default']
+        priority: 1
+    contactPoint:
+      - jsonPath: "$.mailing_list"
+        type: 'vcard:kind'
+        fair: ['default']
+        priority: 1
+    creator:
+      - jsonPath: "$.creator"
+        type: 'foaf:agent'
+        fair: ['default']
+        priority: 1
+    description:
+      - jsonPath: "$.description"
+        type: 'dcterms:identifier'
+        fair: ['default']
+        priority: 1
+    identifier:
+      - jsonPath: "$['http://purl.org/dc/terms/identifier']"
+        type: 'dcterms:identifier'
+        priority: 1
+    isReferencedBy:
+      - jsonPath: "$['http://purl.org/dc/terms/isReferencedBy']"
+        type: 'dcterms:isReferencedBy'
+        priority: 1
+    issued:
+      - jsonPath: "$['http://purl.org/dc/terms/issued']"
+        type: 'dcterms:identifier'
+        priority: 1
+    language:
+      - jsonPath: "$.language"
+        type: 'dcterms:LinguisticSystem'
+        fair: ['default']
+        priority: 1
+      - jsonPath: "$.defaultLanguage"
+        type: 'dcterms:LinguisticSystem'
+        fair: ['default']
+        priority: 2
+    license:
+      - jsonPath: "$['http://purl.org/dc/terms/license']"
+        type: 'dcterms:LicenseDocument'
+        fair: ['default']
+        priority: 1
+      - jsonPath: "$.license.url"
+        type: 'dcterms:LicenseDocument'
+        fair: ['default']
+        priority: 2
+    modified:
+      - jsonPath: "$['http://purl.org/dc/terms/modified']"
+        type: 'rdfs:Literal'
+        priority: 1
+    publisher:
+      - jsonPath: "$['http://purl.org/dc/terms/publisher']"
+        type: 'foaf:Agent'
+        priority: 1
+    rights:
+      - jsonPath: "$['http://purl.org/dc/terms/rights']"
+        type: 'dcterms:RightsStatement'
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/elements/1.1/rights']"
+        type: 'dcterms:RightsStatement'
+        priority: 2
+    subject:
+      - jsonPath: "$.classifications[*].subject[*]"
+        type: 'skos:Concept'
+        priority: 1
+    title:
+      - jsonPath: "$.title"
+        type: 'dcterms:identifier'
+        fair: ['default']
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/terms/title']"
+        type: 'dcterms:identifier'
+        fair: ['default']
+        priority: 2
+      - jsonPath: "$['http://purl.org/dc/elements/1.1/title']"
+        type: 'dcterms:identifier'
+        fair: ['default']
+        priority: 3
+    type:
+      - jsonPath: "$.type"
+        type: 'dcterms:type'
+        fair: ['default']
+        priority: 1     
+        
+        
+        
+        
+        

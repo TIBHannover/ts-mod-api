@@ -1,5 +1,6 @@
 package com.tib.ts.mod.entities;
 
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,7 +25,7 @@ public class Catalog {
 	private Resource hasPart;
 
 	@JsonProperty("foaf:homepage")
-	private Map<String, String> homepage;
+	private List<Map<String, String>> homepage;
 
 	@JsonProperty("dcat:record")
 	private CatalogRecord record;
@@ -36,7 +37,7 @@ public class Catalog {
 	private DataService service;
 
 	@JsonProperty("dcat:themeTaxonomy")
-	private Map<String, String> themeTaxonomy;
+	private List<Map<String, String>> themeTaxonomy;
 
 
 }

@@ -1,5 +1,6 @@
 package com.tib.ts.mod.entities;
 
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,24 +19,24 @@ import lombok.Setter;
 public class DataSet extends Resource {
 	
 	@JsonProperty("dcterms:accrualPeriodicity")
-	private Map<String, String> accrualPeriodicity;
+	private List<Map<String, String>> accrualPeriodicity;
 
 	@JsonProperty("dcat:distribution")
 	private Distribution distribution;
 
 	@JsonProperty("dcterms:spatial")
-	private Map<String, String> spatial;
+	private List<Map<String, String>> spatial;
 
 	@JsonProperty("dcat:spatialResolutionInMeters")
-	private Map<String, String> spatialResolutionInMeters;
+	private List<Map<String, String>> spatialResolutionInMeters;
 
 	@JsonProperty("dcterms:temporal")
-	private Map<String, String> temporal;
+	private List<Map<String, String>> temporal;
 
 	@JsonProperty("dcat:temporalResolution")
-	private Map<String, String> temporalResolution;
+	private List<Map<String, String>> temporalResolution;
 
 	@JsonProperty("prov:wasGeneratedBy")
-	private Map<String, String> wasGeneratedBy;
+	private List<Map<String, String>> wasGeneratedBy;
 
 }

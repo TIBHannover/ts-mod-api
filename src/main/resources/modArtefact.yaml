@@ -1,85 +1,8 @@
-mappings:
-  modAttributes:
-  # DCATResourceAttributes
-    
-    conformsTo:
-      - jsonPath: "$['http://purl.org/dc/terms/conformsTo']"
-        type: 'foaf:agent'
-        priority: 1
-    contactPoint:
-      - jsonPath: "$.mailing_list"
-        type: 'vcard:kind'
-        priority: 1
-    creator:
-      - jsonPath: "$.creator"
-        type: 'foaf:agent'
-        priority: 1
-    description:
-      - jsonPath: "$.description"
-        type: 'dcterms:identifier'
-        priority: 1
-    identifier:
-      - jsonPath: "$['http://purl.org/dc/terms/identifier']"
-        type: 'dcterms:identifier'
-        priority: 1
-    isReferencedBy:
-      - jsonPath: "$['http://purl.org/dc/terms/isReferencedBy']"
-        type: 'dcterms:isReferencedBy'
-        priority: 1
-    issued:
-      - jsonPath: "$['http://purl.org/dc/terms/issued']"
-        type: 'dcterms:identifier'
-        priority: 1
-    language:
-      - jsonPath: "$.language"
-        type: 'dcterms:LinguisticSystem'
-        priority: 1
-      - jsonPath: "$.defaultLanguage"
-        type: 'dcterms:LinguisticSystem'
-        priority: 2
-    license:
-      - jsonPath: "$['http://purl.org/dc/terms/license']"
-        type: 'dcterms:LicenseDocument'
-        priority: 1
-      - jsonPath: "$.license.url"
-        type: 'dcterms:LicenseDocument'
-        priority: 2
-    modified:
-      - jsonPath: "$['http://purl.org/dc/terms/modified']"
-        type: 'rdfs:Literal'
-        priority: 1
-    publisher:
-      - jsonPath: "$['http://purl.org/dc/terms/publisher']"
-        type: 'foaf:Agent'
-        priority: 1
-    rights:
-      - jsonPath: "$['http://purl.org/dc/terms/rights']"
-        type: 'dcterms:RightsStatement'
-        priority: 1
-      - jsonPath: "$['http://purl.org/dc/elements/1.1/rights']"
-        type: 'dcterms:RightsStatement'
-        priority: 2
-    subject:
-      - jsonPath: "$.classifications[*].subject[*]"
-        type: 'skos:Concept'
-        priority: 1
-    title:
-      - jsonPath: "$.title"
-        type: 'dcterms:identifier'
-        priority: 1
-      - jsonPath: "$['http://purl.org/dc/terms/title']"
-        type: 'dcterms:identifier'
-        priority: 1
-      - jsonPath: "$['http://purl.org/dc/elements/1.1/title']"
-        type: 'dcterms:identifier'
-        priority: 2
-    type:
-      - jsonPath: "$.type"
-        type: 'dcterms:type'
-        priority: 1  
+modAttributes:
 # SemanticArtefact Attributes
     semanticArtefactId:
       - jsonPath: "$.iri"
+        fair: ['default']
         priority: 1
     abstracts:
       - jsonPath: "$.['http://purl.org/dc/terms/abstract']"
@@ -159,6 +82,58 @@ mappings:
       - jsonPath: "$.['http://xmlns.com/foaf/0.1/fundedBy']"
         type: 'owl:Thing'
         priority: 1
+    homepage:
+      - jsonPath: "$.homepage"
+        type: 'foaf:Document'
+        priority: 1
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#homepage']"
+        type: 'foaf:Document'
+        priority: 2
+      - jsonPath: "$.['http://xmlns.com/foaf/0.1/homepage']"
+        type: 'foaf:Document'
+        priority: 3
+    logo:
+      - jsonPath: "$.['http://xmlns.com/foaf/0.1/logo']"
+        type: 'owl:Thing'
+        priority: 1
+      - jsonPath: "$.['https://schema.org/logo']"
+        type: 'foaf:Document'
+        priority: 2
+      - jsonPath: "$.['http://www.wurvoc.org/vocabularies/WV/logo']"
+        type: 'foaf:Document'
+        priority: 3
+    acronym:
+      - jsonPath: "$.['https://w3id.org/mod#acronym']"
+        type: 'xsd:string'
+        priority: 1
+      - jsonPath: "$.['https://www.omg.org/spec/Commons/AnnotationVocabulary/acronym']"
+        type: 'xsd:string'
+        priority: 2
+      - jsonPath: "$.['http://omv.ontoware.org/2005/05/ontologyacronym']"
+        type: 'xsd:string'
+        priority: 3
+    competencyQuestion:
+      - jsonPath: "$.['https://www.tno.nl/agrifood/ontology/common-greenhouse-ontology#competencyQuestion']"
+        type: 'xsd:string'
+        priority: 1
+    hasEquivalencesWith:
+      - jsonPath: "$.voaf:hasEquivalencesWith"
+        type: 'mod:hasEquivalencesWith'
+        priority: 1
+    knownUsage:
+      - jsonPath: "$.['http://omv.ontoware.org/2005/05/ontologyknownUsage']"
+        type: 'xsd:string'
+        priority: 1
+    reliesOn:
+      - jsonPath: "$.['http://purl.org/vocommons/voaf#reliesOn']"
+        type: 'mod:reliesOn'
+        priority: 1
+    status:
+      - jsonPath: "$.['http://purl.org/ontology/bibo/status']"
+        type: 'xsd:string'
+        priority: 1
+        
+        
         
         
         

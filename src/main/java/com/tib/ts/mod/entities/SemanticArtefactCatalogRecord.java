@@ -1,5 +1,6 @@
 package com.tib.ts.mod.entities;
 
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,18 +19,18 @@ import lombok.Setter;
 public class SemanticArtefactCatalogRecord extends CatalogRecord {
 
 	@JsonProperty("dcterms:dateSubmitted")
-	private Map<String, String> dateSubmitted;
+	private List<Map<String, String>> dateSubmitted;
 
 	@JsonProperty("foaf:homepage")
-	private Map<String, String> homepage;
+	private List<Map<String, String>> homepage;
 
 	@JsonProperty("dcterms:created")
-	private Map<String, String> created;
+	private List<Map<String, String>> created;
 
 	@JsonProperty("mod:curatedBy")
-	private Map<String, String> curatedBy;
+	private List<Map<String, String>> curatedBy;
 
 	@JsonProperty("mod:curatedOn")
-	private Map<String, String> curatedOn;
+	private List<Map<String, String>> curatedOn;
 
 }

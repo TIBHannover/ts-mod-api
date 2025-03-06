@@ -39,4 +39,10 @@ public class Context {
 	public static Map<String, String> getContext(){
 		return context;
 	}
+
+	public static void setContext(Map<String, String> context) {
+		Context.context = context;
+	}
+	
+	
 }

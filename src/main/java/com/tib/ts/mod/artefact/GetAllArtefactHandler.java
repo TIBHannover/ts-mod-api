@@ -13,8 +13,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
+import com.tib.ts.mod.common.constants.AttributeFile;
 import com.tib.ts.mod.common.constants.ErrorMessage;
 import com.tib.ts.mod.common.converter.ResponseConverter;
+import com.tib.ts.mod.common.mapper.DynamicConfigLoader;
+import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
@@ -40,9 +43,12 @@ class GetAllArtefactHandler implements ServiceHandler {
 
 	@Autowired
 	MetadataMapper mapper;
+	
+	@Autowired
+	DynamicConfigLoader configLoader;
 
 	@Override
-	public String preHandler(RequestDTO request) {
+	public String preHandler(RequestDTO request) throws BadRequestException {
 		if (request == null) {
 			logger.info(ErrorMessage.NULL_REQUEST_MSG);
 			return ErrorMessage.INVALID_PARAMETERS;
@@ -50,12 +56,21 @@ class GetAllArtefactHandler implements ServiceHandler {
 
 		boolean isPaginationValid = Validation.ValidatePage(request.getPage(), request.getPageSize());
 		boolean isDisplayValid = Validation.ValidateDisplay(request.getDisplay());
+		
+		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(), 
+															AttributeFile.MOD_ARTEFACT, 
+															AttributeFile.MOD_RESOURCE,
+															AttributeFile.DATA_SERVICE);
 
-		if (!isPaginationValid)
+		request.setMappingRule(rules);
+		
+		if (!isPaginationValid) {
 			logger.info(ErrorMessage.INVALID_PAGE_MSG, request.getPage(), request.getPageSize());
+		}
 
-		if (!isDisplayValid)
+		if (!isDisplayValid) {
 			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
+		}
 
 		return (isPaginationValid && isDisplayValid) ? EMPTY_STRING : ErrorMessage.INVALID_PARAMETERS;
 	}
@@ -90,27 +105,24 @@ class GetAllArtefactHandler implements ServiceHandler {
 					logger.debug("Skipping null ontology");
 					continue;
 				}
-				SemanticArtefact semanticArtefact = mapper.mapJsonToDto(ontology.toString(), SemanticArtefact.class);
+				
+				SemanticArtefact semanticArtefact = mapper.mapJsonToDto(ontology.toString(), SemanticArtefact.class, request.getMappingRule());
 				
 				logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
 				
 				if (semanticArtefact != null) {
-					semanticArtefact.setContext(Context.getContext());
+					//semanticArtefact.setContext(Context.getContext());
 					semanticArtefacts.add(semanticArtefact);
 				}
 			}
 			
-			/*
-			 * ResponseDTO<List<SemanticArtefact>> responseDto = new
-			 * ResponseDTO<List<SemanticArtefact>>();
-			 * responseDto.setContext(Context.getContext());
-			 * if(!semanticArtefacts.isEmpty()) { responseDto.setResult(semanticArtefacts);
-			 * results = ResponseConverter.convert(responseDto, request.getFormat()); }
-			 */
+			ResponseDTO<List<SemanticArtefact>> responseDto = new ResponseDTO<List<SemanticArtefact>>();
+			responseDto.setContext(Context.getContext());
 			
-			if(!semanticArtefacts.isEmpty()) {
-				results = ResponseConverter.convert(semanticArtefacts, request.getFormat());
-			}
+			if (!semanticArtefacts.isEmpty()) {
+				responseDto.setResult(semanticArtefacts);
+				results = ResponseConverter.convert(responseDto, request.getFormat());
+			} 
 		} catch (Exception e) {
 			logger.error("Error processing response in postHandler", e);
 		}

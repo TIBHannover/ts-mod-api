@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
+import com.tib.ts.mod.common.constants.AttributeFile;
 import com.tib.ts.mod.common.constants.ErrorMessage;
 import com.tib.ts.mod.common.converter.ResponseConverter;
+import com.tib.ts.mod.common.mapper.DynamicConfigLoader;
+import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
@@ -32,15 +35,25 @@ class GetArtefactHandler implements ServiceHandler {
 	
 	@Autowired
 	MetadataMapper mapper;
+	
+	@Autowired
+	DynamicConfigLoader configLoader;
 
 	@Override
-	public String preHandler(RequestDTO request) {
+	public String preHandler(RequestDTO request) throws BadRequestException {
 		if (request == null) {
 			logger.info(ErrorMessage.NULL_REQUEST_MSG);
 			return ErrorMessage.INVALID_PARAMETERS;
 		}
 
 		boolean isDisplayValid = Validation.ValidateDisplay(request.getDisplay());
+		
+		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(), 
+															AttributeFile.MOD_ARTEFACT, 
+															AttributeFile.MOD_RESOURCE,
+															AttributeFile.DATA_SERVICE);
+
+		request.setMappingRule(rules);
 
 		if (!isDisplayValid)
 			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
@@ -64,11 +77,13 @@ class GetArtefactHandler implements ServiceHandler {
 		SemanticArtefact semanticArtefact = null;
 		String result = "";
 		try {
-			semanticArtefact = mapper.mapJsonToDto(response, SemanticArtefact.class);
+			semanticArtefact = mapper.mapJsonToDto(response, SemanticArtefact.class, request.getMappingRule());
 			
 			logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
 			
 			if (semanticArtefact != null) {
+				//Context.setContext();
+				//Context.getContext().putAll(semanticArtefact.getContext());
 				semanticArtefact.setContext(Context.getContext());
 				result = ResponseConverter.convert(semanticArtefact, request.getFormat());
 			}

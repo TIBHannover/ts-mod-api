@@ -20,6 +20,7 @@ import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.entities.enums.FormatOption;
+import com.tib.ts.mod.entities.enums.ResponseType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -37,13 +38,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/artefacts")
 @Tag(name = "Artefacts", description = "Get information about ontologies")
 public class ArtefactController {
-	
-	private static final String JSON_LD = "application/ld+json";
-	
-	private static final String RDF_XML = "application/rdf+xml";
-	
-	private static final String TTL = "text/turtle";
-	
+		
 	@Autowired
 	private ArtefactService service;
 	
@@ -68,11 +63,11 @@ public class ArtefactController {
         		
 		//return new ResponseEntity<>(response, headers, HttpStatus.OK);
 		if (format.equals(FormatOption.rdfxml))
-			return ResponseEntity.ok().contentType(MediaType.valueOf(RDF_XML)).body(response);
+			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.RDF_XML.getType())).body(response);
 		else if (format.equals(FormatOption.ttl))
-			return ResponseEntity.ok().contentType(MediaType.valueOf(TTL)).body(response);
+			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.TTL.getType())).body(response);
 		
-		return ResponseEntity.ok().contentType(MediaType.valueOf(JSON_LD)).body(response);
+		return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.JSON_LD.getType())).body(response);
 	}
 	
 	@GetMapping(path = "/{artefactID}", produces = "application/ld+json")
@@ -93,10 +88,10 @@ public class ArtefactController {
 		String response = service.getArtefactByArtefactId(request);
 		
 		if (format.equals(FormatOption.rdfxml))
-			return ResponseEntity.ok().contentType(MediaType.valueOf(RDF_XML)).body(response);
+			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.RDF_XML.getType())).body(response);
 		else if (format.equals(FormatOption.ttl))
-			return ResponseEntity.ok().contentType(MediaType.valueOf(TTL)).body(response);
+			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.TTL.getType())).body(response);
 		
-		return ResponseEntity.ok().contentType(MediaType.valueOf(JSON_LD)).body(response);
+		return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.JSON_LD.getType())).body(response);
 	}
 }

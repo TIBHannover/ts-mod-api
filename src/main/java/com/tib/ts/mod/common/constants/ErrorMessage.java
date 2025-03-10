@@ -8,6 +8,7 @@ package com.tib.ts.mod.common.constants;
 
 public class ErrorMessage {
 	
+	public static final String NO_ERROR = "";
 	public static final String INVALID_PARAMETERS = "The provided parameters are incorrect.";
 	public static final String NULL_REQUEST_MSG = "Request is null";
 	public static final String INVALID_PAGE_MSG = "Invalid Page parameters: page={}, pageSize={}";

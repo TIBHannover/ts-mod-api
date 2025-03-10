@@ -42,9 +42,7 @@ public class MetadataMapper {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			T semanticArtefact = constructDTO(apiResponse, dtoClass, objectMapper);
-			//((SemanticArtefact) semanticArtefact).setContext(context);
-			return semanticArtefact;
+			return constructDTO(apiResponse, dtoClass, objectMapper);
 		}catch(Exception e) {
 			logger.debug(ErrorMessage.MAPPER_EXCEPTION_MSG, e.getMessage(), e);
 			return null;
@@ -66,12 +64,14 @@ public class MetadataMapper {
 					System.out.println("Found!!");
 				}
 				
+				
 				if (isDTO(field)) {
-					if(processedClasses.add(dtoClass.getName())) {
+					if (processedClasses.add(dtoClass.getName())) {
 						Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper);
 						field.set(dtoInstance, nestedDto);
 					}
 				}
+				 
 
 				List<MappingDetail> details = config.getModAttributes().get(attributeName);
 				if (details == null)

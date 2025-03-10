@@ -36,8 +36,6 @@ class GetAllArtefactHandler implements ServiceHandler {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactHandler.class);
 	
-	private static final String EMPTY_STRING = "";
-
 	@Autowired
 	OlsRepository terminologyService;
 
@@ -72,7 +70,7 @@ class GetAllArtefactHandler implements ServiceHandler {
 			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
 		}
 
-		return (isPaginationValid && isDisplayValid) ? EMPTY_STRING : ErrorMessage.INVALID_PARAMETERS;
+		return (isPaginationValid && isDisplayValid) ? ErrorMessage.NO_ERROR : ErrorMessage.INVALID_PARAMETERS;
 	}
 
 	@Override
@@ -89,13 +87,13 @@ class GetAllArtefactHandler implements ServiceHandler {
 	public String postHandler(RequestDTO request, String response) {
 
 		List<SemanticArtefact> semanticArtefacts = new LinkedList<SemanticArtefact>();
-		String results = EMPTY_STRING;
+		String results = "";
 		try {
 			var responseObject = JsonParser.parseString(response).getAsJsonObject();
 
 			if (!responseObject.has("elements") || responseObject.get("elements").isJsonNull()) {
 				logger.warn("Response does not contain any ontologies");
-				return EMPTY_STRING;
+				return "";
 			}
 
 			var ontologies = responseObject.get("elements").getAsJsonArray();

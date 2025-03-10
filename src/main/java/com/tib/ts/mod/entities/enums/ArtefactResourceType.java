@@ -6,8 +6,14 @@ package com.tib.ts.mod.entities.enums;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
-public enum ActionType {
-	ONTOLOGIES,
-	ONTOLOGYBYONTOLOGYID,
-	ENTITIESBYONTOLOGYID
+public enum ArtefactResourceType {
+	
+	ENTITIES,
+	CLASS,
+	PROPERTY,
+	INDIVIDUAL,
+	SCHEME,
+	COLLECTION,
+	CONCEPT
+
 }

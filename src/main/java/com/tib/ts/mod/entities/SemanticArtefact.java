@@ -199,7 +199,7 @@ public class SemanticArtefact extends Resource {
 	private List<Map<String, String>> toDoList;
 
 	@JsonProperty("mod:URI")
-	private List<Map<String, String>> URI;
+	private List<Map<String, String>> uri;
 
 	@JsonProperty("mod:usedBy")
 	private List<Map<String, String>> usedBy;

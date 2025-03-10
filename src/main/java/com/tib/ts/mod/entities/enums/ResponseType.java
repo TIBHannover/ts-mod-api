@@ -6,13 +6,14 @@ package com.tib.ts.mod.entities.enums;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
-public enum AttributeType {
-	ACCESS_URL("dcterms:RightStatement"),
-	CONFORMS_TO("dcterms:Standard");
+public enum ResponseType {
+	JSON_LD("application/ld+json"),
+	RDF_XML("application/rdf+xml"),
+	TTL("text/turtle");
 	
 	private String type;
 	
-	AttributeType(String type) {
+	ResponseType(String type) {
 		this.type = type;
 	}
 	

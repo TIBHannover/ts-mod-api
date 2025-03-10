@@ -1,8 +1,5 @@
 package com.tib.ts.mod.repository;
 
-import java.text.MessageFormat;
-import java.util.concurrent.TimeoutException;
-
 import org.apache.coyote.BadRequestException;
 import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
@@ -10,10 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -42,12 +37,25 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		String result = switch (request.getOperationType()) {
 			case ONTOLOGIES -> getOntologies(request.getPage(), request.getPageSize());
 			case ONTOLOGYBYONTOLOGYID -> getOntologiesByOntologyId(request.getArtefactId());
+			case ENTITIESBYONTOLOGYID -> getEntitiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
 			default -> throw new IllegalArgumentException();
 		};
 
 		return result;
 	}
 	
+	private String getEntitiesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ENTITIES_BY_ONTOLOGY_ID)
+										 .queryParam("page", page)
+										 .queryParam("size", pageSize)
+										 .buildAndExpand(artefactId)
+										 .toUriString();
+		
+		logger.info("calling external service: {}", url);
+		
+		return invokeRest(url);
+	}
+
 	private String getOntologiesByOntologyId(final String artefactId) throws BadRequestException {
 		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ONTOLOGY_BY_ONTOLOGY_ID)
 				                         .path(artefactId)
@@ -63,8 +71,6 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 										 .queryParam("page", page)
 										 .queryParam("size", size)
 										 .toUriString();
-		
-		url = MessageFormat.format(url, page, size);
 		
 		logger.info("calling external service: {}", url);
 		

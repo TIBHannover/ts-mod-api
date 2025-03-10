@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class Validation {
 	
 	public static boolean ValidatePage(Integer page, Integer pageSize) {
-		return page != null && pageSize != null && page >= 1 && pageSize >=1;
+		return page != null && pageSize != null && page >= 0 && pageSize >=1;
 	}
 	
 	public static boolean ValidateDisplay(String display) {		

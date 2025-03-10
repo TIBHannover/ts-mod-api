@@ -2,6 +2,7 @@ package com.tib.ts.mod.entities.dto;
 
 import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.entities.enums.ActionType;
+import com.tib.ts.mod.entities.enums.ArtefactResourceType;
 import com.tib.ts.mod.entities.enums.FormatOption;
 
 /**
@@ -22,6 +23,7 @@ public class RequestDTO {
 	private String display;
 	private ActionType operationType;
 	private MappingRule mappingRule;
+	private ArtefactResourceType resourceType;
 
 	private RequestDTO(Builder request) {
 		this.artefactId = request.artefactId;
@@ -34,6 +36,7 @@ public class RequestDTO {
 		this.display = request.display;
 		this.operationType = request.operationType;
 		this.mappingRule = request.mappingRule;
+		this.resourceType = request.resourceType;
 	}
 
 	public String getArtefactId() {
@@ -81,6 +84,11 @@ public class RequestDTO {
 	}
 
 
+	public ArtefactResourceType getResourceType() {
+		return resourceType;
+	}
+
+
 
 
 	public static class Builder {
@@ -94,6 +102,7 @@ public class RequestDTO {
 		private String display;
 		private ActionType operationType;
 		private MappingRule mappingRule;
+		private ArtefactResourceType resourceType;
 
 		public Builder(ActionType ontologies) {
 			this.operationType = ontologies;
@@ -141,6 +150,11 @@ public class RequestDTO {
 		
 		public Builder setMappingRule(MappingRule mappingRule) {
 			this.mappingRule = mappingRule;
+			return this;
+		}
+		
+		public Builder setResourceType(ArtefactResourceType resourceType) {
+			this.resourceType = resourceType;
 			return this;
 		}
 

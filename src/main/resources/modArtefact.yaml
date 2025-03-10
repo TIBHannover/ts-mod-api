@@ -132,12 +132,61 @@ modAttributes:
       - jsonPath: "$.['http://purl.org/ontology/bibo/status']"
         type: 'xsd:string'
         priority: 1
-        
-        
-        
-        
-        
-        
-        
-        
+    uri:
+      - jsonPath: "$.ontology_purl"
+        type: 'xsd:anyURI'
+        priority: 1
+    priorVersion:
+      - jsonPath: "$.['http://www.w3.org/2002/07/owl#priorVersion']"
+        type: 'owl:Ontology'
+        priority: 1
+      - jsonPath: "$.[' http://purl.org/dc/terms/replaces/']"
+        type: 'owl:Ontology'
+        priority: 2
+    versionInfo:
+      - jsonPath: "$.['http://www.w3.org/2002/07/owl#versionInfo']"
+        type: 'rdfs:Resource'
+        priority: 1
+    versionIRI:
+      - jsonPath: "$.['http://www.w3.org/2002/07/owl#versionIRI']"
+        type: 'owl:Ontology'
+        priority: 1
+    comment:
+      - jsonPath: "$.['http://www.w3.org/2000/01/rdf-schema#comment']"
+        type: 'rdfs:Literal'
+        priority: 1
+    schemaComment:
+      - jsonPath: "$.['http://schema.org/comment']"
+        type: 'schema:comment'
+        priority: 1
+    funding:
+      - jsonPath: "$.['https://schema.org/funding']"
+        type: 'schema:funding'
+        priority: 1
+    includedInDataCatalog:
+      - jsonPath: "$.['http://schema.org/includedInDataCatalog']"
+        type: 'schema:funding'
+        priority: 1
+    example:
+      - jsonPath: "$.['http://purl.org/vocab/vann/example']"
+        type: 'vann:example'
+        priority: 1
+      - jsonPath: "$.['http://purl.obolibrary.org/obo/IAO_0000112']"
+        type: 'vann:example'
+        priority: 2
+    preferredNamespacePrefix:
+      - jsonPath: "$.['http://purl.org/vocab/vann/preferredNamespacePrefix']"
+        type: 'vann:preferredNamespacePrefix'
+        priority: 1
+    preferredNamespaceUri:
+      - jsonPath: "$.['http://purl.org/vocab/vann/preferredNamespaceUri']"
+        type: 'vann:preferredNamespaceUri'
+        priority: 1
+    rootResource:
+      - jsonPath: "$.preferredRoot"
+        type: 'rdfs:Resource'
+        priority: 1
+      - jsonPath: "$.['http://purl.obolibrary.org/obo/IAO_0000700']"
+        type: 'rdfs:Resource'
+        priority: 2
         

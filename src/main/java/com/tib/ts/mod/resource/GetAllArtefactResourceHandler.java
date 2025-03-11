@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.coyote.BadRequestException;
+import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import com.tib.ts.mod.common.converter.ResponseConverter;
 import com.tib.ts.mod.common.mapper.ArtefactResourceMapper;
 import com.tib.ts.mod.entities.ArtefactResource;
 import com.tib.ts.mod.entities.Context;
-import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.repository.OlsRepository;
@@ -30,7 +30,7 @@ import com.tib.ts.mod.repository.OlsRepository;
 */
 
 @Service
-public class GetAllArtefactResourceHandler implements ServiceHandler{
+class GetAllArtefactResourceHandler implements ServiceHandler{
 	
 	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactResourceHandler.class);
 	
@@ -77,10 +77,15 @@ public class GetAllArtefactResourceHandler implements ServiceHandler{
 		
 		if (!responseObject.has("elements") || responseObject.get("elements").isJsonNull()) {
 			logger.warn("Response does not contain any resources");
-			return "";
+			throw new NotFoundException(ErrorMessage.RESOURCE_NOT_FOUND);
 		}
 		
 		var resources = responseObject.get("elements").getAsJsonArray();
+		
+		if (resources.isEmpty()) {
+			logger.warn("Response does not contain any resources");
+			throw new NotFoundException(ErrorMessage.RESOURCE_NOT_FOUND);
+		}
 
 		for (JsonElement resource : resources) {
 			if (resource == null || resource.isJsonNull()) {

@@ -12,5 +12,8 @@ public class OlsRestUrl {
 	public static final String GET_ALL_ONTOLOGIES = TS + "/ontologies";
 	public static final String GET_ONTOLOGY_BY_ONTOLOGY_ID = TS + "/ontologies/";
 	public static final String GET_ALL_ENTITIES_BY_ONTOLOGY_ID = TS + "/ontologies/{0}/entities";
+	public static final String GET_ALL_CLASSES_BY_ONTOLOGY_ID = TS + "/ontologies/{0}/classes";
+	public static final String GET_ALL_INDIVIDUALS_BY_ONTOLOGY_ID = TS + "/ontologies/{0}/individuals";
+	public static final String GET_ALL_PROPERTIES_BY_ONTOLOGY_ID = TS + "/ontologies/{0}/properties";
 	
 }

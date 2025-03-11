@@ -20,4 +20,5 @@ public class ErrorMessage {
 	public static final String MAPPER_HANDLE_LIST_EXCEPTION_MSG = "Error handling list field: {}";
 	public static final String MAPPER_HANDLE_MAP_EXCEPTION_MSG = "Error handling map field: {}";
 	public static final String OLS_EXCEPTION_MSG = "Expected at least 1 result for solr getFirst";
+	public static final String RESOURCE_NOT_FOUND = "No resource found for the given parameters";
 }

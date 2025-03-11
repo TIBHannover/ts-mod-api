@@ -15,8 +15,9 @@ import com.tib.ts.mod.entities.dto.RequestDTO;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
+
 @Service
-public class ArtefactResourceServiceImpl implements ArtefactResourceService {
+class ArtefactResourceServiceImpl implements ArtefactResourceService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ArtefactResourceServiceImpl.class);
 	
@@ -27,6 +28,64 @@ public class ArtefactResourceServiceImpl implements ArtefactResourceService {
 	public String getAllArtefactResource(RequestDTO request) throws BadRequestException {
 		logger.info("Received request to get all artefact resource ");
 
+		return processArtefactResource(request);
+	}
+
+	@Override
+	public String getArtefactResourceByArtefactIdAndResourceId(RequestDTO request) throws BadRequestException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getArtefactResourceClassesByArtefactId(RequestDTO request) throws BadRequestException {
+		logger.info("Received request to get artefact resource classes by artefact Id");
+
+		return processArtefactResource(request);
+	}
+
+	@Override
+	public String getArtefactResourceConceptByArtefactId(RequestDTO request) throws BadRequestException {
+		logger.info("Received request to get artefact resource concepts by artefact Id");
+
+		return processArtefactResource(request);
+	}
+
+	@Override
+	public String getArtefactResourcePropertiesByArtefactId(RequestDTO request) throws BadRequestException {
+		logger.info("Received request to get artefact resource properties by artefact Id");
+
+		return processArtefactResource(request);
+	}
+
+	@Override
+	public String getArtefactResourceIndividualsByArtefactId(RequestDTO request) throws BadRequestException {
+		logger.info("Received request to get artefact resource individuals by artefact Id");
+
+		return processArtefactResource(request);
+	}
+
+	@Override
+	public String getArtefactResourceSchemesByArtefactId(RequestDTO request) throws BadRequestException {
+		logger.info("Received request to get artefact resource conceptScheme by artefact Id");
+
+		return processArtefactResource(request);
+	}
+
+	@Override
+	public String getArtefactResourceCollectionByArtefactId(RequestDTO request) throws BadRequestException {
+		logger.info("Received request to get artefact resource collection by artefact Id");
+
+		return processArtefactResource(request);
+	}
+	
+	/**
+	 * @param request
+	 * @return
+	 * @throws BadRequestException
+	 */
+	private String processArtefactResource(RequestDTO request) throws BadRequestException {
+		
 		// invoke preHandler for validating the request
 		String validationMessage = getAllArtefactResourceHandler.preHandler(request);
 
@@ -49,48 +108,6 @@ public class ArtefactResourceServiceImpl implements ArtefactResourceService {
 		}
 
 		return modResponse;
-	}
-
-	@Override
-	public String getArtefactResourceByArtefactIdAndResourceId(RequestDTO request) throws BadRequestException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getArtefactResourceClassesByArtefactId(RequestDTO request) throws BadRequestException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getArtefactResourceConceptByArtefactId(RequestDTO request) throws BadRequestException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getArtefactResourcePropertiesByArtefactId(RequestDTO request) throws BadRequestException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getArtefactResourceIndividualsByArtefactId(RequestDTO request) throws BadRequestException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getArtefactResourceSchemesByArtefactId(RequestDTO request) throws BadRequestException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getArtefactResourceCollectionByArtefactId(RequestDTO request) throws BadRequestException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

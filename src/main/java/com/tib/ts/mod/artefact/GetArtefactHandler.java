@@ -25,6 +25,10 @@ import com.tib.ts.mod.repository.OlsRepository;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
+/**
+ * Implementation of the {@link ServiceHandler} interface that provides
+ * logic to get artefact.
+ */
 @Service
 class GetArtefactHandler implements ServiceHandler {
 	
@@ -39,6 +43,14 @@ class GetArtefactHandler implements ServiceHandler {
 	@Autowired
 	DynamicConfigLoader configLoader;
 
+	/**
+     * {@inheritDoc}
+     * <p>
+     * This method performs request validation before execution.
+     * </p>
+     *
+     * @throws BadRequestException if the request data is null or invalid
+     */
 	@Override
 	public String preHandler(RequestDTO request) throws BadRequestException {
 		if (request == null) {
@@ -48,19 +60,20 @@ class GetArtefactHandler implements ServiceHandler {
 
 		boolean isDisplayValid = Validation.ValidateDisplay(request.getDisplay());
 		
-		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(), 
-															AttributeFile.MOD_ARTEFACT, 
-															AttributeFile.MOD_RESOURCE,
-															AttributeFile.DATA_SERVICE);
-
-		request.setMappingRule(rules);
-
 		if (!isDisplayValid)
 			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
 
 		return (isDisplayValid) ? "" : ErrorMessage.INVALID_PARAMETERS;
 	}
 
+	/**
+     * {@inheritDoc}
+     * <p>
+     * Executes the ols api call and load configuration for attribute mapping.
+     * </p>
+     *
+     * @throws BadRequestException if the request data does not meet business rules
+     */
 	@Override
 	public String execute(RequestDTO request) throws BadRequestException {
 		if (request == null || request.getOperationType() == null)
@@ -68,9 +81,23 @@ class GetArtefactHandler implements ServiceHandler {
 
 		String result = terminologyService.call(request);
 		
+		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(), 
+															AttributeFile.SEMANTIC_ARTEFACT, 
+															AttributeFile.DCAT_RESOURCE,
+															AttributeFile.DCAT_DATA_SERVICE);
+
+		request.setMappingRule(rules);
+		
 		return result;
 	}
 
+	/**
+     * {@inheritDoc}
+     * <p>
+     * This method process the ols response data to extract metadata.
+     * </p>
+     *
+     */
 	@Override
 	public String postHandler(RequestDTO request, String response) {
 		
@@ -82,8 +109,6 @@ class GetArtefactHandler implements ServiceHandler {
 			logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
 			
 			if (semanticArtefact != null) {
-				//Context.setContext();
-				//Context.getContext().putAll(semanticArtefact.getContext());
 				semanticArtefact.setContext(Context.getContext());
 				result = ResponseConverter.convert(semanticArtefact, request.getFormat());
 			}

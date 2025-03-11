@@ -1,4 +1,4 @@
-package com.tib.ts.mod.artefact;
+package com.tib.ts.mod.record;
 
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
@@ -16,37 +16,37 @@ import com.tib.ts.mod.entities.dto.RequestDTO;
 */
 
 /**
- * Implementation of the {@link ArtefactService} interface that handles 
- * artefact retrieval operations.
+ * Implementation of the {@link RecordService} interface that handles 
+ * artefactRecord retrieval operations.
  * <p>
- * This class handles artefact data retrieval
+ * This class handles artefactRecord data retrieval
  * </p>
  */
 @Service
-class ArtefactServiceImpl implements ArtefactService {
+class RecordServiceImpl implements RecordService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ArtefactService.class);
-	
-	@Autowired
-	GetAllArtefactHandler getAllArtefactHandler;
+	private static final Logger logger = LoggerFactory.getLogger(RecordService.class);
 	
 	@Autowired
-	GetArtefactHandler getArtefactHandler;
+	GetAllArtefactRecordHandler getAllArtefactRecordHandler;
+	
+	@Autowired
+	GetArtefactRecordHandler getArtefactRecordHandler;
 	
 	/**
      * {@inheritDoc}
      * <p>
-     * This method retrieves all available artefacts.
+     * This method retrieves all available artefactsRecord.
      * </p>
      *
      * @throws BadRequestException if the request is null or invalid
      */
 	@Override
-	public String getAllArtefact(RequestDTO request) throws BadRequestException {
-		logger.info("Received request to get all artefacts");
+	public String getAllArtefactRecord(RequestDTO request) throws BadRequestException {
+		logger.info("Received request to get all artefacts Record");
 
 		// invoke preHandler for validating the request
-		String validationMessage = getAllArtefactHandler.preHandler(request);
+		String validationMessage = getAllArtefactRecordHandler.preHandler(request);
 		
 		if (!validationMessage.isBlank()) {
 			logger.info(ErrorMessage.VALIDATION_EXCEPTION_MSG, validationMessage);
@@ -54,13 +54,13 @@ class ArtefactServiceImpl implements ArtefactService {
 		}
 		
 		// invoke execute to retrieve the data
-		String olsResponse = getAllArtefactHandler.execute(request);
+		String olsResponse = getAllArtefactRecordHandler.execute(request);
 		if (olsResponse == null) {
 			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
 		}
 		
 		//invoke postHandler to process the response
-		String modResponse = getAllArtefactHandler.postHandler(request, olsResponse);
+		String modResponse = getAllArtefactRecordHandler.postHandler(request, olsResponse);
 		
 		if (modResponse == null) {
 			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
@@ -78,11 +78,11 @@ class ArtefactServiceImpl implements ArtefactService {
      * @throws BadRequestException if the artefact ID is missing or invalid
      */
 	@Override
-	public String getArtefactByArtefactId(RequestDTO request) throws BadRequestException{
+	public String getArtefactRecordByArtefactId(RequestDTO request) throws BadRequestException{
 		logger.info("Received request to get all artefacts");
 
 		// invoke preHandler for validating the request
-		String validationMessage = getArtefactHandler.preHandler(request);
+		String validationMessage = getArtefactRecordHandler.preHandler(request);
 		
 		if (!validationMessage.isBlank()) {
 			logger.info(ErrorMessage.VALIDATION_EXCEPTION_MSG, validationMessage);
@@ -90,13 +90,13 @@ class ArtefactServiceImpl implements ArtefactService {
 		}
 		
 		// invoke execute to retrieve the data
-		String olsResponse = getArtefactHandler.execute(request);
+		String olsResponse = getArtefactRecordHandler.execute(request);
 		
 		if (olsResponse == null) {
 			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
 		}
 		
-		String modResponse = getArtefactHandler.postHandler(request, olsResponse);
+		String modResponse = getArtefactRecordHandler.postHandler(request, olsResponse);
 		
 		if (modResponse == null) {
 			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);

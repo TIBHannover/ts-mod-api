@@ -1,4 +1,4 @@
-package com.tib.ts.mod.artefact;
+package com.tib.ts.mod.record;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +21,7 @@ import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
+import com.tib.ts.mod.entities.SemanticArtefactCatalogRecord;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.repository.OlsRepository;
@@ -33,12 +34,12 @@ import com.tib.ts.mod.repository.OlsRepository;
 
 /**
  * Implementation of the {@link ServiceHandler} interface that provides
- * logic to get all artefacts.
+ * logic to get all artefactsRecord.
  */
 @Service
-class GetAllArtefactHandler implements ServiceHandler {
+class GetAllArtefactRecordHandler implements ServiceHandler {
 	
-	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactRecordHandler.class);
 	
 	@Autowired
 	OlsRepository terminologyService;
@@ -94,9 +95,9 @@ class GetAllArtefactHandler implements ServiceHandler {
 		String result = terminologyService.call(request);
 
 		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(),
-															AttributeFile.SEMANTIC_ARTEFACT,
 															AttributeFile.DCAT_RESOURCE,
-															AttributeFile.DCAT_DATA_SERVICE);
+															AttributeFile.DCAT_CATALOG_RECORD,
+															AttributeFile.SEMANTIC_ARTEFACT_CATALOG_RECORD);
 
 		request.setMappingRule(rules);
 
@@ -113,7 +114,7 @@ class GetAllArtefactHandler implements ServiceHandler {
 	@Override
 	public String postHandler(RequestDTO request, String response) {
 
-		List<SemanticArtefact> semanticArtefacts = new LinkedList<SemanticArtefact>();
+		List<SemanticArtefactCatalogRecord> semanticArtefactCatalogRecords = new LinkedList<SemanticArtefactCatalogRecord>();
 		String results = "";
 		try {
 			var responseObject = JsonParser.parseString(response).getAsJsonObject();
@@ -131,20 +132,20 @@ class GetAllArtefactHandler implements ServiceHandler {
 					continue;
 				}
 				
-				SemanticArtefact semanticArtefact = mapper.mapJsonToDto(ontology.toString(), SemanticArtefact.class, request.getMappingRule());
+				SemanticArtefactCatalogRecord semanticArtefactCatalogRecord = mapper.mapJsonToDto(ontology.toString(), SemanticArtefactCatalogRecord.class, request.getMappingRule());
 				
-				logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
+				logger.debug("Mapped SemanticArtefactCatalogRecord: {}", semanticArtefactCatalogRecord);
 				
-				if (semanticArtefact != null) {
-					semanticArtefacts.add(semanticArtefact);
+				if (semanticArtefactCatalogRecord != null) {
+					semanticArtefactCatalogRecords.add(semanticArtefactCatalogRecord);
 				}
 			}
 			
-			ResponseDTO<List<SemanticArtefact>> responseDto = new ResponseDTO<List<SemanticArtefact>>();
+			ResponseDTO<List<SemanticArtefactCatalogRecord>> responseDto = new ResponseDTO<List<SemanticArtefactCatalogRecord>>();
 			responseDto.setContext(Context.getContext());
 			
-			if (!semanticArtefacts.isEmpty()) {
-				responseDto.setResult(semanticArtefacts);
+			if (!semanticArtefactCatalogRecords.isEmpty()) {
+				responseDto.setResult(semanticArtefactCatalogRecords);
 				results = ResponseConverter.convert(responseDto, request.getFormat());
 			} 
 		} catch (Exception e) {

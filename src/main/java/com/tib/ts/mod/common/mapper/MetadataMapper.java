@@ -130,7 +130,6 @@ public class MetadataMapper {
 					
 					if (!detail.getType().equalsIgnoreCase("rdfs:resource") ||
 						!detail.getType().equalsIgnoreCase("rdfs:Literal")) {
-						//context.put(field.getName(), detail.getType());
 						mapField.put("@type", detail.getType());
 					}
 					

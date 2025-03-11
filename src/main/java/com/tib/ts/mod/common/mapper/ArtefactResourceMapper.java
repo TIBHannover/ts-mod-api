@@ -27,27 +27,33 @@ public class ArtefactResourceMapper {
 		
 		ArtefactResource artefactResource = new ArtefactResource();
 		
-		String value = JsonPath.read(apiResponse, "$.iri");
+		String iri = readFromJsonPath(apiResponse, "$.iri");
 		
-		var entityType = JsonPath.read(apiResponse, "$.type");
+		var prefLabel = readFromJsonPath(apiResponse, "$.['http://www.w3.org/2004/02/skos/core#prefLabel']");
 		
-		var skosType = JsonPath.read(apiResponse, "$.['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']");
+		if (prefLabel == null) {
+			prefLabel = readFromJsonPath(apiResponse, "$.label");
+		}
+		
+		var entityType = readFromJsonPath(apiResponse, "$.type");
+		
+		var skosType = readFromJsonPath(apiResponse, "$.['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']");
 		
 		if (entityType == null)
 			return artefactResource;
 		
 		List<String> entityTypeList = ((entityType instanceof List)) ? (List<String>) entityType : List.of(entityType.toString());
 		List<String> skosTypeList = ((skosType instanceof List)) ? (List<String>) skosType : List.of(skosType.toString());
-		
+		List<String> prefLabelList = ((prefLabel instanceof List)) ? (List<String>) prefLabel : List.of(prefLabel.toString());
 		
 		artefactResource = switch (request.getResourceType()) {
-			case CLASS -> buildArtefactResource(artefactResource, "owl:Class", value, null);
-			case PROPERTY -> buildArtefactResource(artefactResource, "rdfs:Property", value, null);
-			case INDIVIDUAL -> buildArtefactResource(artefactResource, "owl:NamedIndividual", value, null);
-			case COLLECTION -> buildArtefactResource(artefactResource, "skos:Collection", null, value);
-			case CONCEPT -> buildArtefactResource(artefactResource, "skos:Concept", null, value);
-			case SCHEME -> buildArtefactResource(artefactResource, "skos:ConceptScheme", null, value);
-			default -> determineType(artefactResource, skosTypeList, entityTypeList, value);
+			case CLASS -> buildArtefactResource(artefactResource, "owl:Class", iri, null);
+			case PROPERTY -> buildArtefactResource(artefactResource, "rdfs:Property", iri, null);
+			case INDIVIDUAL -> buildArtefactResource(artefactResource, "owl:NamedIndividual", iri, null);
+			case COLLECTION -> buildArtefactResource(artefactResource, "skos:Collection", null, prefLabelList.get(0));
+			case CONCEPT -> buildArtefactResource(artefactResource, "skos:Concept", null, prefLabelList.get(0));
+			case SCHEME -> buildArtefactResource(artefactResource, "skos:ConceptScheme", null, prefLabelList.get(0));
+			default -> determineType(artefactResource, skosTypeList, entityTypeList, iri);
 		};
 		
 		return artefactResource;
@@ -83,5 +89,14 @@ public class ArtefactResourceMapper {
 			artefactResource.setPrefLabel(prefLabel);
 		
 		return artefactResource;
+	}
+	
+	private <T> T readFromJsonPath(String json, String jsonPath) {
+		try {
+			return JsonPath.read(json, jsonPath);
+		}catch(Exception e) {
+			logger.debug("Failed to read json path '{}'}", jsonPath);
+			return null;
+		}
 	}
 }

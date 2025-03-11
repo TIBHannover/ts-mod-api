@@ -1,0 +1,17 @@
+modAttributes:
+  # DCATCatalogRecordAttributes
+    catalogRecordDescription:
+      - jsonPath: "$.description"
+        type: 'rdfs:Literal'
+        fair: ['default']
+        priority: 1
+    catalogRecordIssued:
+      - jsonPath: "$.loaded"
+        type: 'rdfs:Literal'
+        fair: ['default']
+        priority: 1
+    catalogRecordTitle:
+      - jsonPath: "$.title"
+        type: 'dcterms:identifier'
+        fair: ['default']
+        priority: 1

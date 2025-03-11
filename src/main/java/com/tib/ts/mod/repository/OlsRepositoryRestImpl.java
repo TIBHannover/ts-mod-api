@@ -38,12 +38,51 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 			case ONTOLOGIES -> getOntologies(request.getPage(), request.getPageSize());
 			case ONTOLOGYBYONTOLOGYID -> getOntologiesByOntologyId(request.getArtefactId());
 			case ENTITIESBYONTOLOGYID -> getEntitiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case CLASSESBYONTOLOGYID -> getClassesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case INDIVIDUALSBYONTOLOGYID -> getIndividualsByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case PROPERTIESBYONTOLOGYID -> getPropertiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
 			default -> throw new IllegalArgumentException();
 		};
 
 		return result;
 	}
 	
+	private String getPropertiesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_PROPERTIES_BY_ONTOLOGY_ID)
+										 .queryParam("page", page)
+										 .queryParam("size", pageSize)
+										 .buildAndExpand(artefactId)
+										 .toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+	
+	private String getIndividualsByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_INDIVIDUALS_BY_ONTOLOGY_ID)
+										 .queryParam("page", page)
+										 .queryParam("size", pageSize)
+										 .buildAndExpand(artefactId)
+										 .toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+	
+	private String getClassesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_CLASSES_BY_ONTOLOGY_ID)
+										 .queryParam("page", page)
+										 .queryParam("size", pageSize)
+										 .buildAndExpand(artefactId)
+										 .toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+
 	private String getEntitiesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
 		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ENTITIES_BY_ONTOLOGY_ID)
 										 .queryParam("page", page)

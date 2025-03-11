@@ -18,22 +18,22 @@ import lombok.Setter;
 @Setter
 public class CatalogRecord {
 	
-	@JsonProperty("dct:conformsTo")
-	private List<Map<String, String>> conformsTo;
+	@JsonProperty("dcterms:conformsTo")
+	private List<Map<String, String>> catalogRecordConformsTo;
 
-	@JsonProperty("dct:description")
-	private List<Map<String, String>> description;
+	@JsonProperty("dcterms:description")
+	private List<Map<String, String>> catalogRecordDescription;
 
-	@JsonProperty("dct:issued")
-	private List<Map<String, String>> issued;
+	@JsonProperty("dcterms:issued")
+	private List<Map<String, String>> catalogRecordIssued;
 
-	@JsonProperty("dct:modified")
-	private List<Map<String, String>> modified;
+	@JsonProperty("dcterms:modified")
+	private List<Map<String, String>> catalogRecordModified;
 
-	@JsonProperty("dct:title")
-	private List<Map<String, String>> title;
+	@JsonProperty("dcterms:title")
+	private List<Map<String, String>> catalogRecordTitle;
 
 	@JsonProperty("foaf:primaryTopic")
-	private Resource primaryTopic;
+	private Resource catalogRecordPrimaryTopic;
 
 }

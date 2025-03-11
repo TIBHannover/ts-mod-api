@@ -10,7 +10,7 @@ import com.tib.ts.mod.entities.dto.RequestDTO;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
-public interface ArtefactResourceService {
+interface ArtefactResourceService {
 
 	public String getAllArtefactResource(RequestDTO request) throws BadRequestException;
 

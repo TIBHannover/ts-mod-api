@@ -25,7 +25,7 @@ public class SearchController {
 	@GetMapping
 	@Operation(summary = "Search all of the metadata and content in a catlogue", description = "The returned data should include a decription of the type of data that is being returned.")
 	public String SearchMetadataAndContent(
-			@RequestParam(defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) {
 		return null;
@@ -34,7 +34,7 @@ public class SearchController {
 	@GetMapping("/content")
 	@Operation(summary = "Search all of the content in a catlogue", description = "The returned data should include a decription of the type of data that is being returned. For example the resturned content could be SKOS Concepts or OWL Classes.")
 	public String SearchContent(
-			@RequestParam(defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q) {
 		return null;
 	}
@@ -42,7 +42,7 @@ public class SearchController {
 	@GetMapping("/metadata")
 	@Operation(summary = "Search all of the metadata in a catlogue", description = "The returned data should include a decription of the type of data that is being returned.")
 	public String SearchMetadata(
-			@RequestParam(defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) {
 		return null;

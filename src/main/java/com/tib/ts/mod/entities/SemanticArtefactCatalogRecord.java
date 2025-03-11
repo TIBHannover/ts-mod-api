@@ -17,6 +17,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SemanticArtefactCatalogRecord extends CatalogRecord {
+	
+	@JsonProperty("@context")
+	private Map<String, String> context;
+	
+	@JsonProperty("@id")
+	private Object semanticArtefactCatalogRecordId;
+	
+	@JsonProperty("@type")
+	private Object semanticAArtefactCatalogRecordType;
 
 	@JsonProperty("dcterms:dateSubmitted")
 	private List<Map<String, String>> dateSubmitted;

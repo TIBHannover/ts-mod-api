@@ -58,12 +58,7 @@ public class MetadataMapper {
 				field.setAccessible(true);
 				String attributeName = field.getName();
 
-				logger.debug("Processing Attribute: {}", attributeName);
-				
-				if(attributeName.equalsIgnoreCase("designedForTask")) {
-					System.out.println("Found!!");
-				}
-				
+				logger.debug("Processing Attribute: {}", attributeName);				
 				
 				if (isDTO(field)) {
 					if (processedClasses.add(dtoClass.getName())) {
@@ -71,7 +66,6 @@ public class MetadataMapper {
 						field.set(dtoInstance, nestedDto);
 					}
 				}
-				 
 
 				List<MappingDetail> details = config.getModAttributes().get(attributeName);
 				if (details == null)

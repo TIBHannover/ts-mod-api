@@ -1,5 +1,7 @@
 package com.tib.ts.mod.entities.dto;
 
+import java.util.Set;
+
 import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.entities.enums.ArtefactResourceType;
@@ -24,6 +26,8 @@ public class RequestDTO {
 	private ActionType operationType;
 	private MappingRule mappingRule;
 	private ArtefactResourceType resourceType;
+	private Set<String> filterByOntology;
+	private Set<String> filterByType;
 
 	private RequestDTO(Builder request) {
 		this.artefactId = request.artefactId;
@@ -37,6 +41,7 @@ public class RequestDTO {
 		this.operationType = request.operationType;
 		this.mappingRule = request.mappingRule;
 		this.resourceType = request.resourceType;
+		this.filterByType = request.filterByType;
 	}
 
 	public String getArtefactId() {
@@ -88,6 +93,22 @@ public class RequestDTO {
 		return resourceType;
 	}
 
+	public void setFilterByOntology(Set<String> filterByOntology) {
+		this.filterByOntology = filterByOntology;
+	}
+	
+	public Set<String> getFilterByOntology() {
+		return filterByOntology;
+	}
+
+	public void setOperationType(ActionType operationType) {
+		this.operationType = operationType;
+	}
+
+	public Set<String> getFilterByType() {
+		return filterByType;
+	}
+
 
 
 
@@ -103,6 +124,7 @@ public class RequestDTO {
 		private ActionType operationType;
 		private MappingRule mappingRule;
 		private ArtefactResourceType resourceType;
+		private Set<String> filterByType;
 
 		public Builder(ActionType ontologies) {
 			this.operationType = ontologies;
@@ -155,6 +177,11 @@ public class RequestDTO {
 		
 		public Builder setResourceType(ArtefactResourceType resourceType) {
 			this.resourceType = resourceType;
+			return this;
+		}
+		
+		public Builder setFilterByType(Set<String> type) {
+			this.filterByType = type;
 			return this;
 		}
 

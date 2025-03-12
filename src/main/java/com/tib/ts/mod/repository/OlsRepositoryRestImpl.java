@@ -1,5 +1,8 @@
 package com.tib.ts.mod.repository;
 
+import java.util.Optional;
+import java.util.Set;
+
 import org.apache.coyote.BadRequestException;
 import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
@@ -35,18 +38,35 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	@Override
 	public String call(RequestDTO request) throws BadRequestException {
 		String result = switch (request.getOperationType()) {
-			case ONTOLOGIES -> getOntologies(request.getPage(), request.getPageSize());
+			case ONTOLOGIES -> getOntologies(request.getPage(), request.getPageSize(), request.getFilterByOntology());
 			case ONTOLOGYBYONTOLOGYID -> getOntologiesByOntologyId(request.getArtefactId());
 			case ENTITIESBYONTOLOGYID -> getEntitiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
 			case CLASSESBYONTOLOGYID -> getClassesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
 			case INDIVIDUALSBYONTOLOGYID -> getIndividualsByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
 			case PROPERTIESBYONTOLOGYID -> getPropertiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case V1Search -> searchMetadataAndContent(request.getQuery(), request.getPage(), request.getPageSize(), request.getFilterByType());
 			default -> throw new IllegalArgumentException();
 		};
 
 		return result;
 	}
 	
+	private String searchMetadataAndContent(String query, Integer page, Integer pageSize, Set<String> filterByType) {
+		
+		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.SEARCH)
+										  .queryParam("q", query)
+										  .queryParam("start", page)
+										  .queryParam("rows", pageSize);
+		
+		Optional.ofNullable(filterByType).ifPresent(type -> builder.queryParam("type", type));
+		
+		String url = builder.toUriString();
+		
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+
 	private String getPropertiesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
 		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_PROPERTIES_BY_ONTOLOGY_ID)
 										 .queryParam("page", page)
@@ -105,18 +125,22 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return invokeRest(url);
 	}
 
-	private String getOntologies(final Integer page, final Integer size) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ONTOLOGIES)
-										 .queryParam("page", page)
-										 .queryParam("size", size)
-										 .toUriString();
+	private String getOntologies(final Integer page, final Integer size, Set<String> filterByOntology) throws BadRequestException {
+				
+		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ONTOLOGIES)
+				 						  .queryParam("page", page)
+				 						  .queryParam("size", size);
+		
+		Optional.ofNullable(filterByOntology).ifPresent(ontology -> builder.queryParam("ontology", ontology));
+		
+		String url = builder.toUriString();
 		
 		logger.info("calling external service: {}", url);
 		
 		return invokeRest(url);
 	}
 	
-	private String invokeRest(String url) throws BadRequestException {
+	private String invokeRest(String url) {
 		try {
 			String response = restClient.get().uri(url).retrieve().body(String.class);
 			return response;

@@ -43,7 +43,7 @@ public class ResourceController {
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
 		
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIESBYONTOLOGYID)
+		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.ENTITIES)
 										   .setArtefactId(artefactId)
 										   .setFormat(format)
@@ -95,7 +95,7 @@ public class ResourceController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.CLASSESBYONTOLOGYID)
+		RequestDTO request = new RequestDTO.Builder(ActionType.CLASSES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.CLASS)
 										   .setArtefactId(artefactId)
 										   .setFormat(format)
@@ -123,7 +123,7 @@ public class ResourceController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIESBYONTOLOGYID)
+		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 				   						   .setResourceType(ArtefactResourceType.CONCEPT)
 				   						   .setArtefactId(artefactId)
 				   						   .setFormat(format)
@@ -151,7 +151,7 @@ public class ResourceController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.PROPERTIESBYONTOLOGYID)
+		RequestDTO request = new RequestDTO.Builder(ActionType.PROPERTIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.PROPERTY)
 										   .setArtefactId(artefactId)
 										   .setFormat(format)
@@ -179,7 +179,7 @@ public class ResourceController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.INDIVIDUALSBYONTOLOGYID)
+		RequestDTO request = new RequestDTO.Builder(ActionType.INDIVIDUALS_BY_ONTOLOGY_ID)
 				   					       .setResourceType(ArtefactResourceType.INDIVIDUAL)
 				   					       .setArtefactId(artefactId)
 				   					       .setFormat(format)
@@ -207,7 +207,7 @@ public class ResourceController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIESBYONTOLOGYID)
+		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.SCHEME)
 										   .setArtefactId(artefactId)
 										   .setFormat(format)
@@ -235,7 +235,7 @@ public class ResourceController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIESBYONTOLOGYID)
+		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.COLLECTION)
 										   .setArtefactId(artefactId)
 										   .setFormat(format)

@@ -69,7 +69,7 @@ public class RecordController {
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) throws BadRequestException {
 		
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGYBYONTOLOGYID)
+		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID)
 										   .setArtefactId(artefactId)
 										   .setFormat(format)
 										   .setDisplay(display).build();

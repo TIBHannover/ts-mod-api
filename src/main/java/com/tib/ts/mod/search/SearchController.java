@@ -71,7 +71,7 @@ public class SearchController {
 										   .setFormat(format)
 										   .build();
 		// invoke service impl
-		String response = searchService.searchMetadataAndContent(request);
+		String response = searchService.searchContent(request);
 
 		if (format.equals(FormatOption.rdfxml))
 			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.RDF_XML.getType())).body(response);

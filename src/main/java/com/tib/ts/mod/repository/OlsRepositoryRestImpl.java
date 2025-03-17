@@ -30,7 +30,6 @@ import com.tib.ts.mod.entities.dto.RequestDTO;
 public class OlsRepositoryRestImpl implements OlsRepository{
 	
 	private static final Logger logger = LoggerFactory.getLogger(OlsRepository.class);
-
 	
 	@Autowired
 	RestClient restClient;
@@ -39,11 +38,14 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	public String call(RequestDTO request) throws BadRequestException {
 		String result = switch (request.getOperationType()) {
 			case ONTOLOGIES -> getOntologies(request.getPage(), request.getPageSize(), request.getFilterByOntology());
-			case ONTOLOGYBYONTOLOGYID -> getOntologiesByOntologyId(request.getArtefactId());
-			case ENTITIESBYONTOLOGYID -> getEntitiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
-			case CLASSESBYONTOLOGYID -> getClassesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
-			case INDIVIDUALSBYONTOLOGYID -> getIndividualsByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
-			case PROPERTIESBYONTOLOGYID -> getPropertiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case ONTOLOGY_BY_ONTOLOGY_ID -> getOntologiesByOntologyId(request.getArtefactId());
+			case ENTITIES_BY_ONTOLOGY_ID -> getEntitiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case CLASSES_BY_ONTOLOGY_ID -> getClassesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case CLASSES_BY_ONTOLOGY_ID_AND_IRI -> getClassesByOntologyIdAndIri(request.getArtefactId(), request.getResourceId());
+			case INDIVIDUALS_BY_ONTOLOGY_ID -> getIndividualsByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case INDIVIDUALS_BY_ONTOLOGY_ID_AND_IRI -> getIndividualsByOntologyIdAndIri(request.getArtefactId(), request.getResourceId());
+			case PROPERTIES_BY_ONTOLOGY_ID -> getPropertiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
+			case PROPERTIES_BY_ONTOLOGY_ID_AND_IRI -> getPropertiesByOntologyIdAndIri(request.getArtefactId(), request.getResourceId());
 			case V1Search -> searchMetadataAndContent(request.getQuery(), request.getPage(), request.getPageSize(), request.getFilterByType());
 			default -> throw new IllegalArgumentException();
 		};
@@ -79,6 +81,16 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return invokeRest(url);
 	}
 	
+	private String getPropertiesByOntologyIdAndIri(String artefactId, String iri) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_PROPERTIES_BY_ONTOLOGY_ID_AND_IRI)
+										 .buildAndExpand(artefactId, iri)
+										 .toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+	
 	private String getIndividualsByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
 		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_INDIVIDUALS_BY_ONTOLOGY_ID)
 										 .queryParam("page", page)
@@ -91,11 +103,31 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return invokeRest(url);
 	}
 	
+	private String getIndividualsByOntologyIdAndIri(String artefactId, String iri) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_INDIVIDUALS_BY_ONTOLOGY_ID_AND_IRI)
+										 .buildAndExpand(artefactId, iri)
+										 .toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+	
 	private String getClassesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
 		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_CLASSES_BY_ONTOLOGY_ID)
 										 .queryParam("page", page)
 										 .queryParam("size", pageSize)
 										 .buildAndExpand(artefactId)
+										 .toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+	
+	private String getClassesByOntologyIdAndIri(String artefactId, String iri) throws BadRequestException {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_CLASSES_BY_ONTOLOGY_ID_AND_IRI)
+										 .buildAndExpand(artefactId, iri)
 										 .toUriString();
 
 		logger.info("calling external service: {}", url);

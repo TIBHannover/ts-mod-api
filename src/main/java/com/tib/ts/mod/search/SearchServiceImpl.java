@@ -22,6 +22,9 @@ class SearchServiceImpl implements SearchService{
 	
 	@Autowired
 	SearchMetadataAndContentHandler searchMetadataAndContentHandler;
+	
+	@Autowired
+	SearchContentHandler searchContentHandler;
 
 	@Override
 	public String searchMetadataAndContent(RequestDTO request) throws BadRequestException {
@@ -39,9 +42,28 @@ class SearchServiceImpl implements SearchService{
 
 	@Override
 	public String searchContent(RequestDTO request) throws BadRequestException {
-		logger.info("Received request to search content");
+		// invoke preHandler for validating the request
+		String validationMessage = searchContentHandler.preHandler(request);
 
-		return processSearch(request);
+		if (!validationMessage.isBlank()) {
+			logger.info(ErrorMessage.VALIDATION_EXCEPTION_MSG, validationMessage);
+			throw new BadRequestException(validationMessage);
+		}
+
+		// invoke execute to retrieve the data
+		String olsResponse = searchContentHandler.execute(request);
+		if (olsResponse == null) {
+			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+		}
+
+		// invoke postHandler to process the response
+		String modResponse = searchContentHandler.postHandler(request, olsResponse);
+
+		if (modResponse == null) {
+			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+		}
+
+		return modResponse;
 	}
 	
 	/**

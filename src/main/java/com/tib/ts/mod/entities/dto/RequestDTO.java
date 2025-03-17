@@ -109,6 +109,10 @@ public class RequestDTO {
 		return filterByType;
 	}
 
+	public void setResourceType(ArtefactResourceType resourceType) {
+		this.resourceType = resourceType;
+	}
+
 
 
 

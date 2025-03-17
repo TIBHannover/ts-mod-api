@@ -82,7 +82,7 @@ public class ArtefactController {
 		
 		
 		//Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGYBYONTOLOGYID).setArtefactId(artefactId).setFormat(format).setDisplay(display).build();
+		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID).setArtefactId(artefactId).setFormat(format).setDisplay(display).build();
 		
 		//invoke service impl
 		String response = service.getArtefactByArtefactId(request);

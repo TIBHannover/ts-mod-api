@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,8 +40,9 @@ public class ResourceController {
 	public ResponseEntity<String> getAllResourceByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
 		
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
@@ -49,6 +51,7 @@ public class ResourceController {
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
+										   .setBaseUrl(baseUrl)
 										   .build();
 
 		// invoke service impl
@@ -68,12 +71,9 @@ public class ResourceController {
 	public ResponseEntity<String> getResourceByResourceId(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@PathVariable(value = "resourceID") @Parameter(description = "The ID of the resource") String resourceId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES).setFormat(format).setPage(page)
-				.setPageSize(pageSize).build();
+		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES).setFormat(format).build();
 
 		// invoke service impl
 		String response = service.getArtefactResourceByArtefactIdAndResourceId(request);
@@ -92,8 +92,9 @@ public class ResourceController {
 	public ResponseEntity<String> getAllClassByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.CLASSES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.CLASS)
@@ -101,6 +102,7 @@ public class ResourceController {
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
+										   .setBaseUrl(baseUrl)
 										   .build();
 
 		// invoke service impl
@@ -120,8 +122,9 @@ public class ResourceController {
 	public ResponseEntity<String> getAllConceptByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "format", defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 				   						   .setResourceType(ArtefactResourceType.CONCEPT)
@@ -129,6 +132,7 @@ public class ResourceController {
 				   						   .setFormat(format)
 				   						   .setPage(page)
 				   						   .setPageSize(pageSize)
+				   						   .setBaseUrl(baseUrl)
 				   						   .build();
 
 		// invoke service impl
@@ -148,8 +152,9 @@ public class ResourceController {
 	public ResponseEntity<String> getAllPropertiesByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.PROPERTIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.PROPERTY)
@@ -157,6 +162,7 @@ public class ResourceController {
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
+										   .setBaseUrl(baseUrl)
 										   .build();
 
 		// invoke service impl
@@ -176,8 +182,9 @@ public class ResourceController {
 	public ResponseEntity<String> getAllIndividualsByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.INDIVIDUALS_BY_ONTOLOGY_ID)
 				   					       .setResourceType(ArtefactResourceType.INDIVIDUAL)
@@ -185,6 +192,7 @@ public class ResourceController {
 				   					       .setFormat(format)
 				   					       .setPage(page)
 				   					       .setPageSize(pageSize)
+				   					       .setBaseUrl(baseUrl)
 				   					       .build();
 
 		// invoke service impl
@@ -204,8 +212,9 @@ public class ResourceController {
 	public ResponseEntity<String> getAllSchemeByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.SCHEME)
@@ -213,6 +222,7 @@ public class ResourceController {
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
+										   .setBaseUrl(baseUrl)
 										   .build();
 
 		// invoke service impl
@@ -232,8 +242,9 @@ public class ResourceController {
 	public ResponseEntity<String> getAllCollectionByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) throws BadRequestException {
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.COLLECTION)
@@ -241,6 +252,7 @@ public class ResourceController {
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
+										   .setBaseUrl(baseUrl)
 										   .build();
 
 		// invoke service impl
@@ -260,7 +272,7 @@ public class ResourceController {
 	public String getAllLabelByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) {
 		return null;
 	}

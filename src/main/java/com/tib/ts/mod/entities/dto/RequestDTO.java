@@ -28,6 +28,7 @@ public class RequestDTO {
 	private ArtefactResourceType resourceType;
 	private Set<String> filterByOntology;
 	private Set<String> filterByType;
+	private String baseUrl;
 
 	private RequestDTO(Builder request) {
 		this.artefactId = request.artefactId;
@@ -42,6 +43,7 @@ public class RequestDTO {
 		this.mappingRule = request.mappingRule;
 		this.resourceType = request.resourceType;
 		this.filterByType = request.filterByType;
+		this.baseUrl = request.baseUrl;
 	}
 
 	public String getArtefactId() {
@@ -113,6 +115,10 @@ public class RequestDTO {
 		this.resourceType = resourceType;
 	}
 
+	public String getBaseUrl() {
+		return baseUrl;
+	}
+
 
 
 
@@ -129,6 +135,7 @@ public class RequestDTO {
 		private MappingRule mappingRule;
 		private ArtefactResourceType resourceType;
 		private Set<String> filterByType;
+		private String baseUrl;
 
 		public Builder(ActionType ontologies) {
 			this.operationType = ontologies;
@@ -189,6 +196,11 @@ public class RequestDTO {
 			return this;
 		}
 
+		public Builder setBaseUrl(String baseUrl) {
+			this.baseUrl = baseUrl;
+			return this;
+		}
+		
 		public RequestDTO build() {
 			return new RequestDTO(this);
 		}

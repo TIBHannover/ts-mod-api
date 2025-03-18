@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.tib.ts.mod.common.Helper;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.AttributeFile;
@@ -23,6 +24,7 @@ import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
+import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -48,6 +50,9 @@ class GetAllArtefactHandler implements ServiceHandler {
 	
 	@Autowired
 	DynamicConfigLoader configLoader;
+	
+	@Autowired
+	Helper helper;
 	
 	/**
      * {@inheritDoc}
@@ -141,10 +146,20 @@ class GetAllArtefactHandler implements ServiceHandler {
 			}
 			
 			ResponseDTO<List<SemanticArtefact>> responseDto = new ResponseDTO<List<SemanticArtefact>>();
-			responseDto.setContext(Context.getContext());
 			
 			if (!semanticArtefacts.isEmpty()) {
 				responseDto.setResult(semanticArtefacts);
+				
+				if(request.getFormat().equals(FormatOption.jsonld)) {
+					Context.addPaginationContext();
+					responseDto.setView(helper.getView(request.getBaseUrl(), responseObject));
+					responseDto.setId(request.getBaseUrl());
+					responseDto.setType("Collection");
+					responseDto.setTotalItems(responseObject.get("totalElements").getAsInt());
+					responseDto.setItemsPerPage(responseObject.get("numElements").getAsInt());
+				}
+				
+				responseDto.setContext(Context.getContext());
 				results = ResponseConverter.convert(responseDto, request.getFormat());
 			} 
 		} catch (Exception e) {
@@ -153,5 +168,7 @@ class GetAllArtefactHandler implements ServiceHandler {
 
 		return results;
 	}
+
+	
 
 }

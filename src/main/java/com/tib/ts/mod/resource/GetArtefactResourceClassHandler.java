@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.coyote.BadRequestException;
-import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.tib.ts.mod.common.Helper;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.ErrorMessage;
@@ -20,9 +18,9 @@ import com.tib.ts.mod.common.converter.ResponseConverter;
 import com.tib.ts.mod.common.mapper.ArtefactResourceMapper;
 import com.tib.ts.mod.entities.ArtefactResource;
 import com.tib.ts.mod.entities.Context;
+import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
-import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -32,18 +30,15 @@ import com.tib.ts.mod.repository.OlsRepository;
 */
 
 @Service
-class GetAllArtefactResourceHandler implements ServiceHandler{
+class GetArtefactResourceClassHandler implements ServiceHandler{
 	
-	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactResourceHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(GetArtefactResourceClassHandler.class);
 	
 	@Autowired
 	OlsRepository terminologyService;
 	
 	@Autowired
 	ArtefactResourceMapper artefactResourceMapper;
-	
-	@Autowired
-	Helper helper;
 
 	@Override
 	public String preHandler(RequestDTO request) throws BadRequestException {
@@ -82,15 +77,10 @@ class GetAllArtefactResourceHandler implements ServiceHandler{
 		
 		if (!responseObject.has("elements") || responseObject.get("elements").isJsonNull()) {
 			logger.warn("Response does not contain any resources");
-			throw new NotFoundException(ErrorMessage.RESOURCE_NOT_FOUND);
+			return "";
 		}
 		
 		var resources = responseObject.get("elements").getAsJsonArray();
-		
-		if (resources.isEmpty()) {
-			logger.warn("Response does not contain any resources");
-			throw new NotFoundException(ErrorMessage.RESOURCE_NOT_FOUND);
-		}
 
 		for (JsonElement resource : resources) {
 			if (resource == null || resource.isJsonNull()) {
@@ -112,19 +102,9 @@ class GetAllArtefactResourceHandler implements ServiceHandler{
 		
 		if (!artefactResources.isEmpty()) {
 			responseDto.setResult(artefactResources);
-			
-			if(request.getFormat().equals(FormatOption.jsonld)) {
-				Context.addPaginationContext();
-				responseDto.setView(helper.getView(request.getBaseUrl(), responseObject));
-				responseDto.setId(request.getBaseUrl());
-				responseDto.setType("Collection");
-				responseDto.setTotalItems(responseObject.get("totalElements").getAsInt());
-				responseDto.setItemsPerPage(responseObject.get("numElements").getAsInt());
-			}
-			
-			responseDto.setContext(Context.getContext());
 			results = ResponseConverter.convert(responseDto, request.getFormat());
 		} 
 		return results;
 	}
+
 }

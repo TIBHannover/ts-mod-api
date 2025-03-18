@@ -1,6 +1,5 @@
 package com.tib.ts.mod.search;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.coyote.BadRequestException;

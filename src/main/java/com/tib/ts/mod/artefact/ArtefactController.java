@@ -10,10 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
@@ -27,6 +29,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  *@author Deepan Anbalagan
@@ -47,21 +50,22 @@ public class ArtefactController {
 	private ResponseEntity<String> getAllArtefacts(
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) throws BadRequestException {
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
+			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
 		
 		//Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES).setFormat(format).setPage(page).setPageSize(pagesize).setDisplay(display).build();
+		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES)
+										   .setFormat(format)
+										   .setPage(page)
+										   .setPageSize(pagesize)
+										   .setDisplay(display)
+										   .setBaseUrl(baseUrl)
+										   .build();
 		
 		//invoke service impl
 		String response = service.getAllArtefact(request);
 		
-		/*
-		 * HttpHeaders headers = new HttpHeaders();
-		 * headers.setContentType(MediaType.valueOf("application/ld+json"));
-		 */
-        		
-		//return new ResponseEntity<>(response, headers, HttpStatus.OK);
 		if (format.equals(FormatOption.rdfxml))
 			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.RDF_XML.getType())).body(response);
 		else if (format.equals(FormatOption.ttl))
@@ -80,7 +84,6 @@ public class ArtefactController {
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format) throws BadRequestException {
 		
-		
 		//Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID).setArtefactId(artefactId).setFormat(format).setDisplay(display).build();
 		
@@ -94,4 +97,5 @@ public class ArtefactController {
 		
 		return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.JSON_LD.getType())).body(response);
 	}
+	
 }

@@ -39,7 +39,7 @@ public class RecordController {
 	public ResponseEntity<String> getAllCatalogRecord(
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES)

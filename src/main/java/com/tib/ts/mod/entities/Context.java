@@ -44,5 +44,17 @@ public class Context {
 		Context.context = context;
 	}
 	
+	public static void addPaginationContext() {
+		Context.context.put("hydra", "http://www.w3.org/ns/hydra/core#");
+		Context.context.put("Collection", "hydra:Collection");
+		Context.context.put("totalItems", "hydra:totalItems");
+		Context.context.put("itemsPerPage", "hydra:itemsPerPage");
+		Context.context.put("view", "hydra:view");
+		Context.context.put("firstPage", "hydra:first");
+		Context.context.put("lastPage", "hydra:last");
+		Context.context.put("previousPage", "hydra:previous");
+		Context.context.put("nextPage", "hydra:next");
+	}
+	
 	
 }

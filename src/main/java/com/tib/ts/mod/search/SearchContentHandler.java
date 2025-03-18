@@ -1,13 +1,10 @@
 package com.tib.ts.mod.search;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.coyote.BadRequestException;
@@ -22,20 +19,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
-import com.tib.ts.mod.common.constants.AttributeFile;
 import com.tib.ts.mod.common.constants.ErrorMessage;
 import com.tib.ts.mod.common.converter.ResponseConverter;
 import com.tib.ts.mod.common.mapper.ArtefactResourceMapper;
-import com.tib.ts.mod.common.mapper.DynamicConfigLoader;
-import com.tib.ts.mod.common.mapper.MappingRule;
-import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.ArtefactResource;
 import com.tib.ts.mod.entities.Context;
-import com.tib.ts.mod.entities.SemanticArtefact;
-import com.tib.ts.mod.entities.SemanticArtefactCatalogRecord;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;

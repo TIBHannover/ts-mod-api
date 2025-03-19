@@ -1,4 +1,4 @@
-package com.tib.ts.mod.search;
+package com.tib.ts.mod.feature.search;
 
 import org.apache.coyote.BadRequestException;
 

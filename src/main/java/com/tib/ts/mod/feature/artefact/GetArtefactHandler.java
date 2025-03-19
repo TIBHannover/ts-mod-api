@@ -1,4 +1,4 @@
-package com.tib.ts.mod.record;
+package com.tib.ts.mod.feature.artefact;
 
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
@@ -16,7 +16,6 @@ import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
-import com.tib.ts.mod.entities.SemanticArtefactCatalogRecord;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.repository.OlsRepository;
 
@@ -28,12 +27,12 @@ import com.tib.ts.mod.repository.OlsRepository;
 
 /**
  * Implementation of the {@link ServiceHandler} interface that provides
- * logic to get artefactRecord.
+ * logic to get artefact.
  */
 @Service
-class GetArtefactRecordHandler implements ServiceHandler {
+class GetArtefactHandler implements ServiceHandler {
 	
-	private static final Logger logger = LoggerFactory.getLogger(GetArtefactRecordHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(GetArtefactHandler.class);
 	
 	@Autowired
 	OlsRepository terminologyService;
@@ -82,10 +81,10 @@ class GetArtefactRecordHandler implements ServiceHandler {
 
 		String result = terminologyService.call(request);
 		
-		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(),
+		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(), 
+															AttributeFile.SEMANTIC_ARTEFACT, 
 															AttributeFile.DCAT_RESOURCE,
-															AttributeFile.DCAT_CATALOG_RECORD,
-															AttributeFile.SEMANTIC_ARTEFACT_CATALOG_RECORD);
+															AttributeFile.DCAT_DATA_SERVICE);
 
 		request.setMappingRule(rules);
 		
@@ -102,16 +101,16 @@ class GetArtefactRecordHandler implements ServiceHandler {
 	@Override
 	public String postHandler(RequestDTO request, String response) {
 		
-		SemanticArtefactCatalogRecord semanticArtefactCatalogRecord = null;
+		SemanticArtefact semanticArtefact = null;
 		String result = "";
 		try {
-			semanticArtefactCatalogRecord = mapper.mapJsonToDto(response, SemanticArtefactCatalogRecord.class, request.getMappingRule());
+			semanticArtefact = mapper.mapJsonToDto(response, SemanticArtefact.class, request.getMappingRule());
 			
-			logger.debug("Mapped SemanticArtefactCatalogRecord: {}", semanticArtefactCatalogRecord);
+			logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
 			
-			if (semanticArtefactCatalogRecord != null) {
-				semanticArtefactCatalogRecord.setContext(Context.getContext());
-				result = ResponseConverter.convert(semanticArtefactCatalogRecord, request.getFormat());
+			if (semanticArtefact != null) {
+				semanticArtefact.setContext(Context.getContext());
+				result = ResponseConverter.convert(semanticArtefact, request.getFormat());
 			}
 
 		} catch (Exception e) {

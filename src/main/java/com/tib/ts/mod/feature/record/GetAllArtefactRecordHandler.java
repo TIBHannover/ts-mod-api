@@ -1,4 +1,7 @@
-package com.tib.ts.mod.artefact;
+package com.tib.ts.mod.feature.record;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
@@ -6,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.AttributeFile;
@@ -16,7 +21,9 @@ import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
+import com.tib.ts.mod.entities.SemanticArtefactCatalogRecord;
 import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -27,22 +34,22 @@ import com.tib.ts.mod.repository.OlsRepository;
 
 /**
  * Implementation of the {@link ServiceHandler} interface that provides
- * logic to get artefact.
+ * logic to get all artefactsRecord.
  */
 @Service
-class GetArtefactHandler implements ServiceHandler {
+class GetAllArtefactRecordHandler implements ServiceHandler {
 	
-	private static final Logger logger = LoggerFactory.getLogger(GetArtefactHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(GetAllArtefactRecordHandler.class);
 	
 	@Autowired
 	OlsRepository terminologyService;
-	
+
 	@Autowired
 	MetadataMapper mapper;
 	
 	@Autowired
 	DynamicConfigLoader configLoader;
-
+	
 	/**
      * {@inheritDoc}
      * <p>
@@ -58,15 +65,21 @@ class GetArtefactHandler implements ServiceHandler {
 			return ErrorMessage.INVALID_PARAMETERS;
 		}
 
+		boolean isPaginationValid = Validation.ValidatePage(request.getPage(), request.getPageSize());
 		boolean isDisplayValid = Validation.ValidateDisplay(request.getDisplay());
 		
-		if (!isDisplayValid)
-			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
+		if (!isPaginationValid) {
+			logger.info(ErrorMessage.INVALID_PAGE_MSG, request.getPage(), request.getPageSize());
+		}
 
-		return (isDisplayValid) ? "" : ErrorMessage.INVALID_PARAMETERS;
+		if (!isDisplayValid) {
+			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
+		}
+
+		return (isPaginationValid && isDisplayValid) ? ErrorMessage.NO_ERROR : ErrorMessage.INVALID_PARAMETERS;
 	}
 
-	/**
+	 /**
      * {@inheritDoc}
      * <p>
      * Executes the ols api call and load configuration for attribute mapping.
@@ -80,14 +93,14 @@ class GetArtefactHandler implements ServiceHandler {
 			throw new IllegalArgumentException();
 
 		String result = terminologyService.call(request);
-		
-		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(), 
-															AttributeFile.SEMANTIC_ARTEFACT, 
+
+		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(),
 															AttributeFile.DCAT_RESOURCE,
-															AttributeFile.DCAT_DATA_SERVICE);
+															AttributeFile.DCAT_CATALOG_RECORD,
+															AttributeFile.SEMANTIC_ARTEFACT_CATALOG_RECORD);
 
 		request.setMappingRule(rules);
-		
+
 		return result;
 	}
 
@@ -100,24 +113,46 @@ class GetArtefactHandler implements ServiceHandler {
      */
 	@Override
 	public String postHandler(RequestDTO request, String response) {
-		
-		SemanticArtefact semanticArtefact = null;
-		String result = "";
+
+		List<SemanticArtefactCatalogRecord> semanticArtefactCatalogRecords = new LinkedList<SemanticArtefactCatalogRecord>();
+		String results = "";
 		try {
-			semanticArtefact = mapper.mapJsonToDto(response, SemanticArtefact.class, request.getMappingRule());
-			
-			logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
-			
-			if (semanticArtefact != null) {
-				semanticArtefact.setContext(Context.getContext());
-				result = ResponseConverter.convert(semanticArtefact, request.getFormat());
+			var responseObject = JsonParser.parseString(response).getAsJsonObject();
+
+			if (!responseObject.has("elements") || responseObject.get("elements").isJsonNull()) {
+				logger.warn("Response does not contain any ontologies");
+				return "";
 			}
 
+			var ontologies = responseObject.get("elements").getAsJsonArray();
+
+			for (JsonElement ontology : ontologies) {
+				if (ontology == null || ontology.isJsonNull()) {
+					logger.debug("Skipping null ontology");
+					continue;
+				}
+				
+				SemanticArtefactCatalogRecord semanticArtefactCatalogRecord = mapper.mapJsonToDto(ontology.toString(), SemanticArtefactCatalogRecord.class, request.getMappingRule());
+				
+				logger.debug("Mapped SemanticArtefactCatalogRecord: {}", semanticArtefactCatalogRecord);
+				
+				if (semanticArtefactCatalogRecord != null) {
+					semanticArtefactCatalogRecords.add(semanticArtefactCatalogRecord);
+				}
+			}
+			
+			ResponseDTO<List<SemanticArtefactCatalogRecord>> responseDto = new ResponseDTO<List<SemanticArtefactCatalogRecord>>();
+			responseDto.setContext(Context.getContext());
+			
+			if (!semanticArtefactCatalogRecords.isEmpty()) {
+				responseDto.setResult(semanticArtefactCatalogRecords);
+				results = ResponseConverter.convert(responseDto, request.getFormat());
+			} 
 		} catch (Exception e) {
 			logger.error("Error processing response in postHandler", e);
 		}
 
-		return result;
+		return results;
 	}
 
 }

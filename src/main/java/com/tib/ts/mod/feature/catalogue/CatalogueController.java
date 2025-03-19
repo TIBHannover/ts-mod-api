@@ -1,4 +1,4 @@
-package com.tib.ts.mod.catalogue;
+package com.tib.ts.mod.feature.catalogue;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

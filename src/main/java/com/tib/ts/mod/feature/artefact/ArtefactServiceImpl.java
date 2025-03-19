@@ -1,4 +1,4 @@
-package com.tib.ts.mod.artefact;
+package com.tib.ts.mod.feature.artefact;
 
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;

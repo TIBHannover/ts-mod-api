@@ -1,10 +1,11 @@
-package com.tib.ts.mod.record;
+package com.tib.ts.mod.feature.record;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,13 +41,15 @@ public class RecordController {
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) throws BadRequestException {
+			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES)
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pagesize)
 										   .setDisplay(display)
+										   .setBaseUrl(baseUrl)
 										   .build();
 
 		// invoke service impl

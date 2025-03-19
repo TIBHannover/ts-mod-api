@@ -1,4 +1,4 @@
-package com.tib.ts.mod.resource;
+package com.tib.ts.mod.feature.resource;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class ResourceController {
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
-			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
@@ -94,7 +94,7 @@ public class ResourceController {
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
-			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.CLASSES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.CLASS)
@@ -124,7 +124,7 @@ public class ResourceController {
 			@RequestParam(value = "format", defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
-			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 				   						   .setResourceType(ArtefactResourceType.CONCEPT)
@@ -154,7 +154,7 @@ public class ResourceController {
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
-			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.PROPERTIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.PROPERTY)
@@ -184,7 +184,7 @@ public class ResourceController {
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
-			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.INDIVIDUALS_BY_ONTOLOGY_ID)
 				   					       .setResourceType(ArtefactResourceType.INDIVIDUAL)
@@ -214,7 +214,7 @@ public class ResourceController {
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
-			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.SCHEME)
@@ -244,7 +244,7 @@ public class ResourceController {
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
-			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.COLLECTION)

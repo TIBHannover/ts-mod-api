@@ -1,4 +1,4 @@
-package com.tib.ts.mod.search;
+package com.tib.ts.mod.feature.search;
 
 import java.util.Set;
 
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,13 +40,19 @@ public class SearchController {
 	public ResponseEntity<String> SearchMetadataAndContent(
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q,
-			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) throws BadRequestException {
+			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.V1Search)
 										   .setQuery(q)
 										   .setFormat(format)
 										   .setDisplay(display)
+										   .setPage(page)
+										   .setPageSize(pageSize)
+										   .setBaseUrl(baseUrl)
 										   .build();
 		// invoke service impl
 		String response = searchService.searchMetadataAndContent(request);
@@ -62,12 +69,18 @@ public class SearchController {
 	@Operation(summary = "Search all of the content in a catalogue", description = "The returned data should include a decription of the type of data that is being returned. For example the resturned content could be SKOS Concepts or OWL Classes.")
 	public ResponseEntity<String> SearchContent(
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
-			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q) throws BadRequestException {
+			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.V1Search)
 										   .setQuery(q)
 										   .setFilterByType(Set.of("class", "property", "individual"))
 										   .setFormat(format)
+										   .setPage(page)
+										   .setPageSize(pageSize)
+										   .setBaseUrl(baseUrl)
 										   .build();
 		// invoke service impl
 		String response = searchService.searchContent(request);
@@ -85,13 +98,19 @@ public class SearchController {
 	public ResponseEntity<String> SearchMetadata(
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q,
-			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) throws BadRequestException {
+			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
+			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.V1Search)
 										   .setQuery(q)
 										   .setFilterByType(Set.of("ontology"))
 										   .setFormat(format)
 										   .setDisplay(display)
+										   .setPage(page)
+										   .setPageSize(pageSize)
+										   .setBaseUrl(baseUrl)
 										   .build();
 		// invoke service impl
 		String response = searchService.searchMetadataAndContent(request);

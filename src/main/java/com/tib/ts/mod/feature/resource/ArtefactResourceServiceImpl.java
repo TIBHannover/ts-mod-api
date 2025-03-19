@@ -1,4 +1,4 @@
-package com.tib.ts.mod.resource;
+package com.tib.ts.mod.feature.resource;
 
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;

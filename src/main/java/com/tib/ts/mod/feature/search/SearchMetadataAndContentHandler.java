@@ -1,4 +1,4 @@
-package com.tib.ts.mod.search;
+package com.tib.ts.mod.feature.search;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -94,30 +94,6 @@ class SearchMetadataAndContentHandler implements ServiceHandler {
 		return result;
 	}
 
-	/**
-	 * @param olsSearchResult
-	 * @throws JsonSyntaxException
-	 */
-	private Set<String> fetchOntologies(String olsSearchResult) throws JsonSyntaxException {
-		
-		var resultObject = JsonParser.parseString(olsSearchResult).getAsJsonObject();
-		
-		if(Optional.ofNullable(resultObject.getAsJsonObject("response"))
-				.map(response -> response.getAsJsonArray("docs"))
-				.filter(docs -> !docs.isEmpty())
-				.isEmpty()) {
-			logger.warn("Response does not contain any search result");
-			return new HashSet<String>();
-		}
-		
-		var solrDocs = resultObject.getAsJsonObject("response").getAsJsonArray("docs");
-		
-		return StreamSupport.stream(solrDocs.spliterator(), false)
-												   .filter(doc -> doc != null && !doc.isJsonNull())
-												   .map(doc -> doc.getAsJsonObject().get("ontology_name").getAsString())
-												   .collect(Collectors.toSet());
-	}
-
 	@Override
 	public String postHandler(RequestDTO request, String response) {
 		
@@ -160,6 +136,30 @@ class SearchMetadataAndContentHandler implements ServiceHandler {
 		}
 
 		return results;
+	}
+	
+	/**
+	 * @param olsSearchResult
+	 * @throws JsonSyntaxException
+	 */
+	private Set<String> fetchOntologies(String olsSearchResult) throws JsonSyntaxException {
+		
+		var resultObject = JsonParser.parseString(olsSearchResult).getAsJsonObject();
+		
+		if(Optional.ofNullable(resultObject.getAsJsonObject("response"))
+				.map(response -> response.getAsJsonArray("docs"))
+				.filter(docs -> !docs.isEmpty())
+				.isEmpty()) {
+			logger.warn("Response does not contain any search result");
+			return new HashSet<String>();
+		}
+		
+		var solrDocs = resultObject.getAsJsonObject("response").getAsJsonArray("docs");
+		
+		return StreamSupport.stream(solrDocs.spliterator(), false)
+												   .filter(doc -> doc != null && !doc.isJsonNull())
+												   .map(doc -> doc.getAsJsonObject().get("ontology_name").getAsString())
+												   .collect(Collectors.toSet());
 	}
 
 }

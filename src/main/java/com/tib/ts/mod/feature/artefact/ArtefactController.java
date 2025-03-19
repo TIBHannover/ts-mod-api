@@ -1,4 +1,4 @@
-package com.tib.ts.mod.artefact;
+package com.tib.ts.mod.feature.artefact;
 
 
 import java.util.List;
@@ -52,8 +52,9 @@ public class ArtefactController {
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
-			@ModelAttribute("baseUrl") String baseUrl) throws BadRequestException {
+			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		
+		long start = System.currentTimeMillis();
 		//Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES)
 										   .setFormat(format)
@@ -65,7 +66,7 @@ public class ArtefactController {
 		
 		//invoke service impl
 		String response = service.getAllArtefact(request);
-		
+		System.out.println("Total time take: "+ (System.currentTimeMillis() - start));
 		if (format.equals(FormatOption.rdfxml))
 			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.RDF_XML.getType())).body(response);
 		else if (format.equals(FormatOption.ttl))

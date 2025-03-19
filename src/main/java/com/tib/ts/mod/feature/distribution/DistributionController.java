@@ -1,4 +1,4 @@
-package com.tib.ts.mod.distribution;
+package com.tib.ts.mod.feature.distribution;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

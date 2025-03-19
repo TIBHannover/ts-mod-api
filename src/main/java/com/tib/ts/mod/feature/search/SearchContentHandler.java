@@ -1,4 +1,4 @@
-package com.tib.ts.mod.search;
+package com.tib.ts.mod.feature.search;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

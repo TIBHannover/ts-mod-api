@@ -42,7 +42,10 @@ public class MetadataMapper {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			return constructDTO(apiResponse, dtoClass, objectMapper);
+			long start = System.currentTimeMillis();
+			T s = constructDTO(apiResponse, dtoClass, objectMapper);
+			System.out.println("Time taken for mapping: " +(System.currentTimeMillis() - start));
+			return s;
 		}catch(Exception e) {
 			logger.debug(ErrorMessage.MAPPER_EXCEPTION_MSG, e.getMessage(), e);
 			return null;
@@ -94,7 +97,6 @@ public class MetadataMapper {
 					// break the loop when the first priority assignment has value
 					break;
 				}
-
 			}
 			return dtoInstance;
 		} catch (Exception e) {

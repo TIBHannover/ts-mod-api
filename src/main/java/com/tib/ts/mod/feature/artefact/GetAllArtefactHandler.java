@@ -2,7 +2,6 @@ package com.tib.ts.mod.feature.artefact;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;

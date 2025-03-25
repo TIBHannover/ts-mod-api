@@ -31,6 +31,7 @@ import com.tib.ts.mod.entities.SemanticArtefactCatalogRecord;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
+import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -128,7 +129,11 @@ class SearchMetadataAndContentHandler implements ServiceHandler {
 			responseDto.setContext(Context.getContext());
 			
 			if (!semanticArtefacts.isEmpty()) {
-				responseDto.setResult(semanticArtefacts);
+				if(request.getFormat().equals(FormatOption.jsonld)) {
+					responseDto.setJsonResult(semanticArtefacts);
+				}else {
+					responseDto.setOtherFormatResult(semanticArtefacts);
+				}
 				results = ResponseConverter.convert(responseDto, request.getFormat());
 			} 
 		} catch (Exception e) {

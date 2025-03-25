@@ -30,13 +30,16 @@ public class ResponseDTO<T> {
 	private String type;
 	
 	@JsonProperty("totalItems")
-	private int totalItems;
+	private Integer totalItems;
 	
 	@JsonProperty("itemsPerPage")
-	private int itemsPerPage;
+	private Integer itemsPerPage;
 
-	@JsonProperty("collection")
-	private T result;
+	@JsonProperty("member")
+	private T jsonResult;
+	
+	@JsonProperty("@graph")
+	private T otherFormatResult;
 	
 	@JsonProperty("view")
 	private HydraView view;

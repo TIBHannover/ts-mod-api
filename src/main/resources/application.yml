@@ -1,6 +1,8 @@
 spring:
   application:
     name: ts-mod-api
+  profiles:
+    active: demo
 
   # Swagger UI configuration via springdoc
   doc:

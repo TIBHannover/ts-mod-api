@@ -1,11 +1,13 @@
 package com.tib.ts.mod.common.constants;
 
+import org.springframework.stereotype.Component;
+
 /**
  *@author Deepan Anbalagan
  *@email deepan.anbalagan@tib.eu
  *TIB-Leibniz Information Center for Science and Technology
 */
-
+@Component
 public class ErrorMessage {
 	
 	public static final String NO_ERROR = "";

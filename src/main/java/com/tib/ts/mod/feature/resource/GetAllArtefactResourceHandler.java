@@ -111,15 +111,17 @@ class GetAllArtefactResourceHandler implements ServiceHandler{
 		responseDto.setContext(Context.getContext());
 		
 		if (!artefactResources.isEmpty()) {
-			responseDto.setResult(artefactResources);
 			
 			if(request.getFormat().equals(FormatOption.jsonld)) {
+				responseDto.setJsonResult(artefactResources);
 				Context.addPaginationContext();
 				responseDto.setView(helper.getView(request.getBaseUrl(), responseObject));
 				responseDto.setId(request.getBaseUrl());
 				responseDto.setType("Collection");
 				responseDto.setTotalItems(responseObject.get("totalElements").getAsInt());
 				responseDto.setItemsPerPage(responseObject.get("numElements").getAsInt());
+			}else {
+				responseDto.setOtherFormatResult(artefactResources);
 			}
 			
 			responseDto.setContext(Context.getContext());

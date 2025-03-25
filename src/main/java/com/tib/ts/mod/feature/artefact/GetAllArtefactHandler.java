@@ -148,15 +148,17 @@ class GetAllArtefactHandler implements ServiceHandler {
 			ResponseDTO<List<SemanticArtefact>> responseDto = new ResponseDTO<List<SemanticArtefact>>();
 			
 			if (!semanticArtefacts.isEmpty()) {
-				responseDto.setResult(semanticArtefacts);
 				
 				if(request.getFormat().equals(FormatOption.jsonld)) {
+					responseDto.setJsonResult(semanticArtefacts);
 					Context.addPaginationContext();
 					responseDto.setView(helper.getView(request.getBaseUrl(), responseObject));
 					responseDto.setId(request.getBaseUrl());
 					responseDto.setType("Collection");
 					responseDto.setTotalItems(responseObject.get("totalElements").getAsInt());
 					responseDto.setItemsPerPage(responseObject.get("numElements").getAsInt());
+				}else {
+					responseDto.setOtherFormatResult(semanticArtefacts);
 				}
 				
 				responseDto.setContext(Context.getContext());

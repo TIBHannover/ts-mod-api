@@ -25,7 +25,7 @@ public class SemanticArtefactCatalogRecord extends CatalogRecord {
 	private Object semanticArtefactCatalogRecordId;
 	
 	@JsonProperty("@type")
-	private Object semanticAArtefactCatalogRecordType;
+	private Object semanticArtefactCatalogRecordType;
 
 	@JsonProperty("dcterms:dateSubmitted")
 	private List<Map<String, String>> dateSubmitted;

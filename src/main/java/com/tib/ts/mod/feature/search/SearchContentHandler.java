@@ -30,6 +30,7 @@ import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.entities.enums.ArtefactResourceType;
+import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -172,7 +173,11 @@ class SearchContentHandler implements ServiceHandler {
 		responseDto.setContext(Context.getContext());
 
 		if (!artefactResources.isEmpty()) {
-			responseDto.setResult(artefactResources);
+			if(request.getFormat().equals(FormatOption.jsonld)) {
+				responseDto.setJsonResult(artefactResources);
+			}else {
+				responseDto.setOtherFormatResult(artefactResources);
+			}
 			results = ResponseConverter.convert(responseDto, request.getFormat());
 		}
 		return results;

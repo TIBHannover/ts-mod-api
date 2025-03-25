@@ -38,7 +38,7 @@ public class SearchController {
 	@GetMapping
 	@Operation(summary = "Search all of the metadata and content in a catlogue", description = "The returned data should include a decription of the type of data that is being returned.")
 	public ResponseEntity<String> SearchMetadataAndContent(
-			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
@@ -68,7 +68,7 @@ public class SearchController {
 	@GetMapping("/content")
 	@Operation(summary = "Search all of the content in a catalogue", description = "The returned data should include a decription of the type of data that is being returned. For example the resturned content could be SKOS Concepts or OWL Classes.")
 	public ResponseEntity<String> SearchContent(
-			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -96,7 +96,7 @@ public class SearchController {
 	@GetMapping("/metadata")
 	@Operation(summary = "Search all of the metadata in a catlogue", description = "The returned data should include a decription of the type of data that is being returned.")
 	public ResponseEntity<String> SearchMetadata(
-			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "q", required = true) @Parameter(description = "The search query") String q,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,

@@ -48,7 +48,7 @@ public class ArtefactController {
 	@GetMapping(produces = "application/ld+json")
 	@Operation(summary = "Get information about all ontology", description = "Retrieves a collection of all ontology")
 	private ResponseEntity<String> getAllArtefacts(
-			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
@@ -83,7 +83,7 @@ public class ArtefactController {
 	public ResponseEntity<String> getArtefactByArtefactId(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
-			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format) throws BadRequestException {
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format) throws BadRequestException {
 		
 		//Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID).setArtefactId(artefactId).setFormat(format).setDisplay(display).build();

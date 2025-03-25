@@ -32,27 +32,24 @@ public class MetadataMapper {
 
 	private MappingRule config;
 	
-	private Set<String> processedClasses;
+	//private Set<String> processedClasses;
 	
 	public <T> T mapJsonToDto(String apiResponse, Class<T> dtoClass, MappingRule mergedConfigs) {
 
 		this.config = mergedConfigs;
 		
-		this.processedClasses = new HashSet<String>();
+		//this.processedClasses = new HashSet<String>();
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			long start = System.currentTimeMillis();
-			T s = constructDTO(apiResponse, dtoClass, objectMapper);
-			System.out.println("Time taken for mapping: " +(System.currentTimeMillis() - start));
-			return s;
+			return constructDTO(apiResponse, dtoClass, objectMapper, new HashSet<String>());
 		}catch(Exception e) {
 			logger.debug(ErrorMessage.MAPPER_EXCEPTION_MSG, e.getMessage(), e);
 			return null;
 		}
 	}
 
-	private <T> T constructDTO(String apiResponse, Class<T> dtoClass, ObjectMapper objectMapper) throws Exception {
+	private <T> T constructDTO(String apiResponse, Class<T> dtoClass, ObjectMapper objectMapper, Set<String> processedClasses) throws Exception {
 		try {
 			T dtoInstance = dtoClass.getDeclaredConstructor().newInstance();
 
@@ -61,14 +58,20 @@ public class MetadataMapper {
 				field.setAccessible(true);
 				String attributeName = field.getName();
 
-				logger.debug("Processing Attribute: {}", attributeName);				
+				logger.debug("Processing Attribute: {}", attributeName);			
+				
+				if(attributeName.equalsIgnoreCase("numberOfClasses")) {
+					logger.info("Found");
+				}
 				
 				if (isDTO(field)) {
 					if (processedClasses.add(dtoClass.getName())) {
-						Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper);
+						Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper, processedClasses);
 						field.set(dtoInstance, nestedDto);
 					}
 				}
+				
+				//System.out.println("processedClasses in : " + dtoClass.getName() + ": " + processedClasses);
 
 				List<MappingDetail> details = config.getModAttributes().get(attributeName);
 				if (details == null)

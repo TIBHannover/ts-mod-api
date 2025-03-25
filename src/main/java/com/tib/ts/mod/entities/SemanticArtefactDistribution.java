@@ -3,6 +3,7 @@ package com.tib.ts.mod.entities;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -17,6 +18,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SemanticArtefactDistribution extends Distribution {
+	
+	@JsonProperty("@context")
+	private Map<String, String> context;
+	
+	@JsonProperty("@id")
+	private Object semanticArtefactDistributionId;
+	
+	@JsonProperty("@type")
+	private Object semanticArtefactDistributionType;
 
 	@JsonProperty("cc:useGuidelines")
 	private List<Map<String, String>> useGuidelines;
@@ -106,28 +116,28 @@ public class SemanticArtefactDistribution extends Distribution {
 	private List<Map<String, String>> numberOfAxioms;
 
 	@JsonProperty("mod:numberOfClasses")
-	private List<Map<String, String>> numberOfClasses;
+	private String numberOfClasses;
 
 	@JsonProperty("mod:numberOfDataProperties")
-	private List<Map<String, String>> numberOfDataProperties;
+	private String numberOfDataProperties;
 
 	@JsonProperty("mod:numberOfDeprecated")
-	private List<Map<String, String>> numberOfDeprecated;
+	private String numberOfDeprecated;
 
 	@JsonProperty("mod:numberOfIndividuals")
-	private List<Map<String, String>> numberOfIndividuals;
+	private String numberOfIndividuals;
 
 	@JsonProperty("mod:numberOfLabels")
-	private List<Map<String, String>> numberOfLabels;
+	private String numberOfLabels;
 
 	@JsonProperty("mod:numberOfMappings")
-	private List<Map<String, String>> numberOfMappings;
+	private String numberOfMappings;
 
 	@JsonProperty("mod:numberOfObjectProperties")
-	private List<Map<String, String>> numberOfObjectProperties;
+	private String numberOfObjectProperties;
 
 	@JsonProperty("mod:numberOfProperties")
-	private List<Map<String, String>> numberOfProperties;
+	private String numberOfProperties;
 
 	@JsonProperty("mod:obsoleteParent")
 	private List<Map<String, String>> obsoleteParent;
@@ -156,4 +166,8 @@ public class SemanticArtefactDistribution extends Distribution {
 	@JsonProperty("sd:endpoint")
 	private List<Map<String, String>> endpoint;
 
+	@JsonGetter("@type")
+    public String getTypeAsString() {
+        return semanticArtefactDistributionType != null ? semanticArtefactDistributionType.toString() : "mod:SemanticArtefactDistribution";
+    }
 }

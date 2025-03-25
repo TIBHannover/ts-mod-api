@@ -1,0 +1,46 @@
+modAttributes:
+# SemanticArtefactDistribution Attributes
+    semanticArtefactDistributionId:
+      - jsonPath: "$.versioned_url"
+        fair: ['default']
+        priority: 1
+    created:
+      - jsonPath: "$.['http://purl.org/dc/terms/created']"
+        type: 'rdfs:Literal'
+        priority: 1
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/created']"
+        type: 'rdfs:Literal'
+        priority: 2
+    definitionProperty:
+      - jsonPath: "$.definitionProperty"
+        type: 'xsd:anyURI'
+        priority: 1
+    hierarchyProperty:
+      - jsonPath: "$.hierarchical_property"
+        type: 'xsd:anyURI'
+        priority: 1
+    metadataVoc:
+      - jsonPath: "$.voaf:metadataVoc"
+        type: 'xsd:anyURI'
+        priority: 1
+    numberOfClasses:
+      - jsonPath: "$.numberOfClasses"
+        priority: 1
+    numberOfIndividuals:
+      - jsonPath: "$.numberOfIndividuals"
+        priority: 1
+    numberOfProperties:
+      - jsonPath: "$.numberOfProperties"
+        priority: 1
+    prefLabelProperty:
+      - jsonPath: "$.label_property"
+        type: 'xsd:anyURI'
+        priority: 1
+    synonymProperty:
+      - jsonPath: "$.synonym_property"
+        type: 'xsd:anyURI'
+        priority: 1
+    imports:
+      - jsonPath: "$.importsFrom"
+        type: 'xsd:anyURI'
+        priority: 1

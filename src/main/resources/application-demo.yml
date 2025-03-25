@@ -1,0 +1,5 @@
+ols:
+  service:
+    url:
+      v1: "https://api.terminology.tib.eu/api"
+      v2: "https://api.terminology.tib.eu/api/v2"

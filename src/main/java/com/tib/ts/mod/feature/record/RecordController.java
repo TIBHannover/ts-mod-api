@@ -38,7 +38,7 @@ public class RecordController {
 	@GetMapping("records")
 	@Operation(summary = "Get information about all semantic artefact catalog records", description = "Retrieves a collection of semantic artefact catalog records")
 	public ResponseEntity<String> getAllCatalogRecord(
-			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
@@ -68,7 +68,7 @@ public class RecordController {
 	@Operation(summary = "Get information about semantic artefact catalog record", description = "Retrieves information about semantic artefact catalog record")
 	public ResponseEntity<String> getRecordByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display) throws BadRequestException {
 		
 		// Create a request DTO

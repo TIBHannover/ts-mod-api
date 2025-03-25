@@ -39,7 +39,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all resources within an ontology", description = "Retrieves a list of all resources within an ontology")
 	public ResponseEntity<String> getAllResourceByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
@@ -71,7 +71,7 @@ public class ResourceController {
 	public ResponseEntity<String> getResourceByResourceId(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
 			@PathVariable(value = "resourceID") @Parameter(description = "The ID of the resource") String resourceId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format) throws BadRequestException {
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format) throws BadRequestException {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES).setFormat(format).build();
 
@@ -91,7 +91,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all owl:classes within an ontology", description = "Retrieves a list of all owl:classes within an ontology")
 	public ResponseEntity<String> getAllClassByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
@@ -121,7 +121,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all skos:Concept within an ontology", description = "Retrieves a list of all skos:Concept within an ontology")
 	public ResponseEntity<String> getAllConceptByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
@@ -151,7 +151,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all rdf:Property within an ontology", description = "Retrieves a list of all rdf:Property within an ontology")
 	public ResponseEntity<String> getAllPropertiesByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
@@ -181,7 +181,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all the instances (owl individuals) within an ontology", description = "Retrieves a list of all he instances (owl individuals) within an ontology")
 	public ResponseEntity<String> getAllIndividualsByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
@@ -211,7 +211,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all skos:Scheme within an ontology", description = "Retrieves a list of all skos:Scheme within an ontology")
 	public ResponseEntity<String> getAllSchemeByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
@@ -241,7 +241,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all skos:Collection within an ontology", description = "Retrieves a list of all skos:Collection within an ontology")
 	public ResponseEntity<String> getAllCollectionByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
@@ -271,7 +271,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all skos-xl:Label within an ontology", description = "Retrieves a list of all skos-xl:Label within an ontology")
 	public String getAllLabelByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize) {
 		return null;

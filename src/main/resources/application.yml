@@ -13,6 +13,7 @@ springdoc:
 
 server:
   port: 8080
+  forward-headers-strategy: native
   #url: "http://nfdi4chemdemo21.service.tib.eu:8080"
 
 logging:

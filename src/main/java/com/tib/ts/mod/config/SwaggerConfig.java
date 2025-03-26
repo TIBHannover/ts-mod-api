@@ -19,8 +19,8 @@ import jakarta.servlet.ServletContext;
 @Configuration
 public class SwaggerConfig {
 	
-	@Value("${server.url}")
-	private String MOD_SERVER_URL;
+	//@Value("${server.url}")
+	private String MOD_SERVER_URL = "http://nfdi4chemdemo21.service.tib.eu:8080";
 	private final String description = "This Application Programming Interface (API) has been developed to promote interoperability of Ontology Catalogues in the European Open Science Cloud (EOSC) ecosystem and beyond.";
 	private final String title = "MOD API";
 

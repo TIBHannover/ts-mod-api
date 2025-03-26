@@ -8,7 +8,6 @@ spring:
 springdoc:
   swagger-ui:
     enabled: true
-    url: http://nfdi4chemdemo21.service.tib.eu:8080
     path: /swagger-ui.html
 
 server:

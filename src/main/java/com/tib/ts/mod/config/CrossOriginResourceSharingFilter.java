@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -20,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
-@Configuration
+@Component
 public class CrossOriginResourceSharingFilter implements Filter{
 
 	private Logger logger = LoggerFactory.getLogger(getClass());

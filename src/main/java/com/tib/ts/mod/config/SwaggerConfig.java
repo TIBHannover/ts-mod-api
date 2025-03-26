@@ -1,5 +1,6 @@
 package com.tib.ts.mod.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,7 +19,8 @@ import jakarta.servlet.ServletContext;
 @Configuration
 public class SwaggerConfig {
 	
-	private final String MOD_SERVER_URL = "http://localhost:8080";
+	@Value("${server.url}")
+	private String MOD_SERVER_URL;
 	private final String description = "This Application Programming Interface (API) has been developed to promote interoperability of Ontology Catalogues in the European Open Science Cloud (EOSC) ecosystem and beyond.";
 	private final String title = "MOD API";
 

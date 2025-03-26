@@ -3,3 +3,5 @@ ols:
     url:
       v1: "https://api.terminology.tib.eu/api"
       v2: "https://api.terminology.tib.eu/api/v2"
+server:
+  url: "http://nfdi4chemdemo21.service.tib.eu:8080"

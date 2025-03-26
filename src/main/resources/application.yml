@@ -7,11 +7,13 @@ spring:
   # Swagger UI configuration via springdoc
   doc:
     swagger-ui:
+      enabled: true
+      url: http://nfdi4chemdemo21.service.tib.eu:8080
       path: /swagger-ui.html
 
 server:
   port: 8080
-  url: "http://nfdi4chemdemo21.service.tib.eu:8080"
+  #url: "http://nfdi4chemdemo21.service.tib.eu:8080"
 
 logging:
   level:

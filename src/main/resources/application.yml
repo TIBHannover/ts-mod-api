@@ -14,7 +14,7 @@ spring:
 server:
   port: 8080
   forward-headers-strategy: framework
-  url: "https://service.tib.eu/terminology/mod-api/"
+  url: "https://service.tib.eu/terminology/mod-api"
 
 logging:
   level:

@@ -9,12 +9,12 @@ spring:
     swagger-ui:
       enabled: true
       url: /v3/api-docs
-      path: /swagger-ui.html
+      path: /swagger-ui/
 
 server:
   port: 8080
   forward-headers-strategy: native
-  url: "http://nfdi4chemdemo21.service.tib.eu:8080"
+  url: "https://service.tib.eu/terminology/mod-api/"
 
 logging:
   level:

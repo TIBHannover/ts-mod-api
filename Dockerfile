@@ -10,6 +10,8 @@ RUN mkdir -p /opt/mod/ts-mod-api
 COPY ./pom.xml ./ts-mod-api
 RUN mkdir -p ~/.m2/repository && mvn -f ./ts-mod-api/pom.xml dependency:go-offline
 
+#RUN mkdir -p ~/.m2/repository && mvn -f ./ts-mod-api/pom.xml clean install
+
 #Copy source code
 COPY ./ ./ts-mod-api
 
@@ -21,6 +23,8 @@ FROM eclipse-temurin:17-jdk-alpine
 
 #Copy compied jar from build stage
 COPY --from=build /opt/mod/ts-mod-api/target/ts-mod-api-1.0.0-SNAPSHOT.jar /app/ts-mod-api.jar
+
+#COPY /opt/mod/ts-mod-api/target/ts-mod-api-1.0.0-SNAPSHOT.jar /app/ts-mod-api.jar
 
 #Expose application port
 EXPOSE 8080

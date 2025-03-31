@@ -4,4 +4,4 @@ ols:
       v1: "https://api.terminology.tib.eu/api"
       v2: "https://api.terminology.tib.eu/api/v2"
 server:
-  url: "https://service.tib.eu/terminology/mod-api"
+  url: "https://service.tib.eu/terminology/mod/api"

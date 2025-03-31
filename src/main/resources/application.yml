@@ -8,7 +8,8 @@ spring:
 springdoc:
   swagger-ui:
     enabled: true
-    url: /v3/api-docs
+    url: /mod/api/v3/api-docs
+    path: /mod/api/swagger-ui.html
 
 server:
   port: 8080

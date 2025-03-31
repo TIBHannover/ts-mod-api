@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriUtils;
 
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
@@ -47,7 +48,7 @@ public class ResourceController {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.ENTITIES)
-										   .setArtefactId(artefactId)
+										   .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
@@ -73,7 +74,12 @@ public class ResourceController {
 			@PathVariable(value = "resourceID") @Parameter(description = "The ID of the resource") String resourceId,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGIES).setFormat(format).build();
+		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID_AND_IRI)
+										   .setResourceType(ArtefactResourceType.ANY)
+										   .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
+										   .setResourceId(resourceId)
+										   .setFormat(format)
+										   .build();
 
 		// invoke service impl
 		String response = service.getArtefactResourceByArtefactIdAndResourceId(request);
@@ -98,7 +104,7 @@ public class ResourceController {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.CLASSES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.CLASS)
-										   .setArtefactId(artefactId)
+										   .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
@@ -128,7 +134,7 @@ public class ResourceController {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 				   						   .setResourceType(ArtefactResourceType.CONCEPT)
-				   						   .setArtefactId(artefactId)
+				   						   .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
 				   						   .setFormat(format)
 				   						   .setPage(page)
 				   						   .setPageSize(pageSize)
@@ -158,7 +164,7 @@ public class ResourceController {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.PROPERTIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.PROPERTY)
-										   .setArtefactId(artefactId)
+										   .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
@@ -188,7 +194,7 @@ public class ResourceController {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.INDIVIDUALS_BY_ONTOLOGY_ID)
 				   					       .setResourceType(ArtefactResourceType.INDIVIDUAL)
-				   					       .setArtefactId(artefactId)
+				   					       .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
 				   					       .setFormat(format)
 				   					       .setPage(page)
 				   					       .setPageSize(pageSize)
@@ -218,7 +224,7 @@ public class ResourceController {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.SCHEME)
-										   .setArtefactId(artefactId)
+										   .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
@@ -248,7 +254,7 @@ public class ResourceController {
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ENTITIES_BY_ONTOLOGY_ID)
 										   .setResourceType(ArtefactResourceType.COLLECTION)
-										   .setArtefactId(artefactId)
+										   .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)

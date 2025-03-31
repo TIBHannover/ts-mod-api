@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriUtils;
 
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
@@ -73,7 +74,7 @@ public class RecordController {
 		
 		// Create a request DTO
 		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID)
-										   .setArtefactId(artefactId)
+										   .setArtefactId(UriUtils.decode(artefactId, "UTF-8"))
 										   .setFormat(format)
 										   .setDisplay(display).build();
 

@@ -23,6 +23,9 @@ class ArtefactResourceServiceImpl implements ArtefactResourceService {
 	
 	@Autowired
 	GetAllArtefactResourceHandler getAllArtefactResourceHandler;
+	
+	@Autowired
+	GetArtefactResourceClassHandler getArtefactResourceClassHandler;
 
 	@Override
 	public String getAllArtefactResource(RequestDTO request) throws BadRequestException {
@@ -33,8 +36,28 @@ class ArtefactResourceServiceImpl implements ArtefactResourceService {
 
 	@Override
 	public String getArtefactResourceByArtefactIdAndResourceId(RequestDTO request) throws BadRequestException {
-		// TODO Auto-generated method stub
-		return null;
+		// invoke preHandler for validating the request
+		String validationMessage = getArtefactResourceClassHandler.preHandler(request);
+
+		if (!validationMessage.isBlank()) {
+			logger.info(ErrorMessage.VALIDATION_EXCEPTION_MSG, validationMessage);
+			throw new BadRequestException(validationMessage);
+		}
+
+		// invoke execute to retrieve the data
+		String olsResponse = getArtefactResourceClassHandler.execute(request);
+		if (olsResponse == null) {
+			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+		}
+
+		// invoke postHandler to process the response
+		String modResponse = getArtefactResourceClassHandler.postHandler(request, olsResponse);
+
+		if (modResponse == null) {
+			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+		}
+
+		return modResponse;
 	}
 
 	@Override

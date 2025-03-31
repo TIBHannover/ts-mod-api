@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tib.ts.mod.common.Helper;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.AttributeFile;
@@ -17,6 +18,7 @@ import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefactDistribution;
 import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -38,6 +40,9 @@ class GetLatestDistributionHandler implements ServiceHandler {
 	
 	@Autowired
 	DynamicConfigLoader configLoader;
+	
+	@Autowired
+	Helper helper;
 	
 	@Autowired
 	public GetLatestDistributionHandler(OlsRepository terminologyService, MetadataMapper mapper,
@@ -66,6 +71,20 @@ class GetLatestDistributionHandler implements ServiceHandler {
 	public String execute(RequestDTO request) throws BadRequestException {
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
+		
+		ActionType defaultActionType = request.getOperationType();
+
+		request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
+
+		String ontology = terminologyService.call(request);
+
+		String ontologyId = helper.fetchOntologyId(ontology);
+
+		if (ontologyId == null || ontologyId.isBlank())
+			throw new BadRequestException("Invalid artefactId provided.");
+
+		request.setOntologyId(ontologyId);
+		request.setOperationType(defaultActionType);
 
 		String result = terminologyService.call(request);
 		

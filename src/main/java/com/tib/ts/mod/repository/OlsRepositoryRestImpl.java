@@ -38,14 +38,16 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	public String call(RequestDTO request) throws BadRequestException {
 		String result = switch (request.getOperationType()) {
 			case ONTOLOGIES -> getOntologies(request.getPage(), request.getPageSize(), request.getFilterByOntology());
-			case ONTOLOGY_BY_ONTOLOGY_ID -> getOntologiesByOntologyId(request.getArtefactId());
-			case ENTITIES_BY_ONTOLOGY_ID -> getEntitiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
-			case CLASSES_BY_ONTOLOGY_ID -> getClassesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
-			case CLASSES_BY_ONTOLOGY_ID_AND_IRI -> getClassesByOntologyIdAndIri(request.getArtefactId(), request.getResourceId());
-			case INDIVIDUALS_BY_ONTOLOGY_ID -> getIndividualsByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
-			case INDIVIDUALS_BY_ONTOLOGY_ID_AND_IRI -> getIndividualsByOntologyIdAndIri(request.getArtefactId(), request.getResourceId());
-			case PROPERTIES_BY_ONTOLOGY_ID -> getPropertiesByOntologyId(request.getArtefactId(), request.getPage(), request.getPageSize());
-			case PROPERTIES_BY_ONTOLOGY_ID_AND_IRI -> getPropertiesByOntologyIdAndIri(request.getArtefactId(), request.getResourceId());
+			case ONTOLOGIES_BY_ONTOLOGY_IRI -> getOntologiesByOntologyIri(request.getPage(), request.getPageSize(), request.getArtefactId());
+			case ONTOLOGY_BY_ONTOLOGY_ID -> getOntologiesByOntologyId(request.getOntologyId());
+			case ENTITIES_BY_ONTOLOGY_ID -> getEntitiesByOntologyId(request.getOntologyId(), request.getPage(), request.getPageSize());
+			case ENTITIES_BY_ONTOLOGY_ID_AND_IRI -> getEntitiesByOntologyIdAndIri(request.getOntologyId(), request.getResourceId() , request.getPage(), request.getPageSize());
+			case CLASSES_BY_ONTOLOGY_ID -> getClassesByOntologyId(request.getOntologyId(), request.getPage(), request.getPageSize());
+			case CLASSES_BY_ONTOLOGY_ID_AND_IRI -> getClassesByOntologyIdAndIri(request.getOntologyId(), request.getResourceId());
+			case INDIVIDUALS_BY_ONTOLOGY_ID -> getIndividualsByOntologyId(request.getOntologyId(), request.getPage(), request.getPageSize());
+			case INDIVIDUALS_BY_ONTOLOGY_ID_AND_IRI -> getIndividualsByOntologyIdAndIri(request.getOntologyId(), request.getResourceId());
+			case PROPERTIES_BY_ONTOLOGY_ID -> getPropertiesByOntologyId(request.getOntologyId(), request.getPage(), request.getPageSize());
+			case PROPERTIES_BY_ONTOLOGY_ID_AND_IRI -> getPropertiesByOntologyIdAndIri(request.getOntologyId(), request.getResourceId());
 			case V1Search -> searchMetadataAndContent(request.getQuery(), request.getPage(), request.getPageSize(), request.getFilterByType());
 			default -> throw new IllegalArgumentException();
 		};
@@ -53,6 +55,30 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return result;
 	}
 	
+	private String getEntitiesByOntologyIdAndIri(String ontologyId, String resourceId, Integer page, Integer pageSize) {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ENTITY_BY_ONTOLOGY_ID_AND_IRI)
+										 .buildAndExpand(ontologyId, resourceId).toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+
+	private String getOntologiesByOntologyIri(Integer page, Integer pageSize, String artefactId) {
+		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ONTOLOGIES)
+										  .queryParam("search", artefactId)
+										  .queryParam("searchFields", "iri")
+										  .queryParam("start", page)
+										  .queryParam("rows", pageSize);
+
+
+		String url = builder.toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+
 	private String searchMetadataAndContent(String query, Integer page, Integer pageSize, Set<String> filterByType) {
 		
 		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.SEARCH)

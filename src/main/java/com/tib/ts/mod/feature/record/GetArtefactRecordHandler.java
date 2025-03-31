@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tib.ts.mod.common.Helper;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.AttributeFile;
@@ -15,9 +16,9 @@ import com.tib.ts.mod.common.mapper.DynamicConfigLoader;
 import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
-import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.SemanticArtefactCatalogRecord;
 import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.repository.OlsRepository;
 
 /**
@@ -43,6 +44,9 @@ class GetArtefactRecordHandler implements ServiceHandler {
 	
 	@Autowired
 	DynamicConfigLoader configLoader;
+	
+	@Autowired
+	Helper helper;
 
 	/**
      * {@inheritDoc}
@@ -80,6 +84,20 @@ class GetArtefactRecordHandler implements ServiceHandler {
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 
+		ActionType defaultActionType = request.getOperationType();
+
+		request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
+
+		String ontology = terminologyService.call(request);
+
+		String ontologyId = helper.fetchOntologyId(ontology);
+
+		if (ontologyId == null || ontologyId.isBlank())
+			throw new BadRequestException("Invalid artefactId provided.");
+
+		request.setOntologyId(ontologyId);
+		request.setOperationType(defaultActionType);
+		
 		String result = terminologyService.call(request);
 		
 		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(),

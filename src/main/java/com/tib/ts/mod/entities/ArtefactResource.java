@@ -1,6 +1,5 @@
 package com.tib.ts.mod.entities;
 
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,6 +16,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ArtefactResource {
+	
+	@JsonProperty("@context")
+	private Map<String, String> context;
 	
 	@JsonProperty("@type")
 	private String type;

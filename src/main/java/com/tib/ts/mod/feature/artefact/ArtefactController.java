@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriUtils;
 
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
@@ -86,7 +87,7 @@ public class ArtefactController {
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format) throws BadRequestException {
 		
 		//Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID).setArtefactId(artefactId).setFormat(format).setDisplay(display).build();
+		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID).setArtefactId(UriUtils.decode(artefactId, "UTF-8")).setFormat(format).setDisplay(display).build();
 		
 		//invoke service impl
 		String response = service.getArtefactByArtefactId(request);

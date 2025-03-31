@@ -14,6 +14,6 @@ public enum ArtefactResourceType {
 	INDIVIDUAL,
 	SCHEME,
 	COLLECTION,
-	CONCEPT
-
+	CONCEPT,
+	ANY
 }

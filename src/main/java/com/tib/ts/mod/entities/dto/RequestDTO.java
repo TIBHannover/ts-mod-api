@@ -18,6 +18,7 @@ public class RequestDTO {
 	private String artefactId;
 	private String distributionId;
 	private String resourceId;
+	private String ontologyId;
 	private String query;
 	private FormatOption format;
 	private Integer page;
@@ -118,9 +119,14 @@ public class RequestDTO {
 	public String getBaseUrl() {
 		return baseUrl;
 	}
+	
+	public String getOntologyId() {
+		return ontologyId;
+	}
 
-
-
+	public void setOntologyId(String ontologyId) {
+		this.ontologyId = ontologyId;
+	}
 
 	public static class Builder {
 		private String artefactId;

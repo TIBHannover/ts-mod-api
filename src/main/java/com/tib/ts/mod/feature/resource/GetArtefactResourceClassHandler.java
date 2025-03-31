@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.tib.ts.mod.common.Helper;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.ErrorMessage;
@@ -18,9 +19,9 @@ import com.tib.ts.mod.common.converter.ResponseConverter;
 import com.tib.ts.mod.common.mapper.ArtefactResourceMapper;
 import com.tib.ts.mod.entities.ArtefactResource;
 import com.tib.ts.mod.entities.Context;
-import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
+import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.repository.OlsRepository;
 
@@ -40,6 +41,9 @@ class GetArtefactResourceClassHandler implements ServiceHandler{
 	
 	@Autowired
 	ArtefactResourceMapper artefactResourceMapper;
+	
+	@Autowired
+	Helper helper;
 
 	@Override
 	public String preHandler(RequestDTO request) throws BadRequestException {
@@ -48,13 +52,7 @@ class GetArtefactResourceClassHandler implements ServiceHandler{
 			return ErrorMessage.INVALID_PARAMETERS;
 		}
 		
-		boolean isPaginationValid = Validation.ValidatePage(request.getPage(), request.getPageSize());
-		
-		if (!isPaginationValid) {
-			logger.info(ErrorMessage.INVALID_PAGE_MSG, request.getPage(), request.getPageSize());
-		}
-		
-		return isPaginationValid ? ErrorMessage.NO_ERROR : ErrorMessage.INVALID_PARAMETERS;
+		return ErrorMessage.NO_ERROR;
 	}
 
 	@Override
@@ -62,6 +60,20 @@ class GetArtefactResourceClassHandler implements ServiceHandler{
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 
+		ActionType defaultActionType = request.getOperationType();
+
+		request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
+
+		String ontology = terminologyService.call(request);
+
+		String ontologyId = helper.fetchOntologyId(ontology);
+
+		if (ontologyId == null || ontologyId.isBlank())
+			throw new BadRequestException("Invalid artefactId provided.");
+
+		request.setOntologyId(ontologyId);
+		request.setOperationType(defaultActionType);
+		
 		String result = terminologyService.call(request);
 		
 		return result;
@@ -69,48 +81,21 @@ class GetArtefactResourceClassHandler implements ServiceHandler{
 
 	@Override
 	public String postHandler(RequestDTO request, String response) {
-		
-		String results = "";
-		
-		List<ArtefactResource> artefactResources = new LinkedList<ArtefactResource>();
-		
-		var responseObject = JsonParser.parseString(response).getAsJsonObject();
-		
-		if (!responseObject.has("elements") || responseObject.get("elements").isJsonNull()) {
-			logger.warn("Response does not contain any resources");
-			return "";
-		}
-		
-		var resources = responseObject.get("elements").getAsJsonArray();
 
-		for (JsonElement resource : resources) {
-			if (resource == null || resource.isJsonNull()) {
-				logger.debug("Skipping null resource");
-				continue;
-			}
-			
-			ArtefactResource artefactResource = artefactResourceMapper.mapJsonToDTO(request, resource.toString());
-			
-			logger.debug("Mapped Artefact Resource: {}", artefactResource);
-			
-			if (artefactResource != null) {
-				artefactResources.add(artefactResource);
-			}
-		}
+		String result = "";
+
+		ArtefactResource artefactResource = null;
+
+		artefactResource = artefactResourceMapper.mapJsonToDTO(request, response);
+
+		logger.debug("Mapped Artefact Resource: {}", artefactResource);
+
 		
-		ResponseDTO<List<ArtefactResource>> responseDto = new ResponseDTO<List<ArtefactResource>>();
-		responseDto.setContext(Context.getContext());
+		artefactResource.setContext(Context.getContext());
+		result = ResponseConverter.convert(artefactResource, request.getFormat());
+
 		
-		if (!artefactResources.isEmpty()) {
-			if(request.getFormat().equals(FormatOption.jsonld)) {
-				responseDto.setJsonResult(artefactResources);
-			}else {
-				responseDto.setOtherFormatResult(artefactResources);
-			}
-			
-			results = ResponseConverter.convert(responseDto, request.getFormat());
-		} 
-		return results;
+		return result;
 	}
 
 }

@@ -52,7 +52,12 @@ class GetArtefactResourceClassHandler implements ServiceHandler{
 			return ErrorMessage.INVALID_PARAMETERS;
 		}
 		
-		return ErrorMessage.NO_ERROR;
+		boolean isartefactIdValid = Validation.ValidateURI(request.getArtefactId());
+		
+		if (!isartefactIdValid)
+			logger.info(ErrorMessage.INVALID_ARTEFACT_ID_MSG, request.getArtefactId());
+		
+		return isartefactIdValid ? ErrorMessage.NO_ERROR : ErrorMessage.INVALID_PARAMETERS;
 	}
 
 	@Override

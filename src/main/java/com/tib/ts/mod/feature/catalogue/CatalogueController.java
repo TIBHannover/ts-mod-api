@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tib.ts.mod.entities.enums.FormatOption;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
+@Hidden
 @RestController
 @RequestMapping("/")
 @Tag(name = "Catalogue", description = "Get information about semantic artefact catalogue")

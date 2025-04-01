@@ -18,6 +18,7 @@ import com.tib.ts.mod.entities.enums.ArtefactResourceType;
 import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.entities.enums.ResponseType;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -273,6 +274,7 @@ public class ResourceController {
 		return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.JSON_LD.getType())).body(response);
 	}
 	
+	@Hidden
 	@GetMapping("/labels")
 	@Operation(summary = "Get a list of all skos-xl:Label within an ontology", description = "Retrieves a list of all skos-xl:Label within an ontology")
 	public String getAllLabelByArtefact(

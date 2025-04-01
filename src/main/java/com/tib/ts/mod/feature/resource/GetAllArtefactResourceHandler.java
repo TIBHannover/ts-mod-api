@@ -54,12 +54,16 @@ class GetAllArtefactResourceHandler implements ServiceHandler{
 		}
 		
 		boolean isPaginationValid = Validation.ValidatePage(request.getPage(), request.getPageSize());
+		boolean isartefactIdValid = Validation.ValidateURI(request.getArtefactId());
 		
 		if (!isPaginationValid) {
 			logger.info(ErrorMessage.INVALID_PAGE_MSG, request.getPage(), request.getPageSize());
 		}
 		
-		return isPaginationValid ? ErrorMessage.NO_ERROR : ErrorMessage.INVALID_PARAMETERS;
+		if (!isartefactIdValid)
+			logger.info(ErrorMessage.INVALID_ARTEFACT_ID_MSG, request.getArtefactId());
+		
+		return (isPaginationValid && isartefactIdValid) ? ErrorMessage.NO_ERROR : ErrorMessage.INVALID_PARAMETERS;
 	}
 
 	@Override

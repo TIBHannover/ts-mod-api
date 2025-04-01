@@ -16,6 +16,7 @@ import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.entities.enums.ResponseType;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,6 +40,7 @@ public class DistributionController {
 		this.distributionService = distributionService;
 	}
 
+	@Hidden
 	@GetMapping
 	@Operation(summary = "Get information about a ontology distributions", description = "Retrieves a collection of a ontology distributions")
 	public String getOntologyDistributions(
@@ -50,6 +52,7 @@ public class DistributionController {
 		return null;
 	}
 
+	@Hidden
 	@GetMapping("/{distributionID}")
 	@Operation(summary = "Get information about a ontology distribution", description = "Retrieves information about a ontology distribution")
 	public String getOntologyDistributionByDistributionId(

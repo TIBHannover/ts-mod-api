@@ -60,11 +60,15 @@ class GetLatestDistributionHandler implements ServiceHandler {
 		}
 
 		boolean isDisplayValid = Validation.ValidateDisplay(request.getDisplay());
+		boolean isartefactIdValid = Validation.ValidateURI(request.getArtefactId());
 		
 		if (!isDisplayValid)
 			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
+		
+		if (!isartefactIdValid)
+			logger.info(ErrorMessage.INVALID_ARTEFACT_ID_MSG, request.getArtefactId());
 
-		return (isDisplayValid) ? "" : ErrorMessage.INVALID_PARAMETERS;
+		return (isDisplayValid && isartefactIdValid) ? ErrorMessage.NO_ERROR : ErrorMessage.INVALID_PARAMETERS;
 	}
 
 	@Override

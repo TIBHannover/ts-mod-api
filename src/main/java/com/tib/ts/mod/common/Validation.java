@@ -1,5 +1,7 @@
 package com.tib.ts.mod.common;
 
+import java.net.URI;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +19,16 @@ public class Validation {
 	
 	public static boolean ValidateDisplay(String display) {		
 		return true; //display != null && (display.equalsIgnoreCase("all") || display.equalsIgnoreCase("default"));
+	}
+	
+	public static boolean ValidateURI(String uri) {
+		try {
+			URI.create(uri).toURL();
+		}catch(Exception e) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }

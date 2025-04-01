@@ -8,15 +8,13 @@ spring:
 springdoc:
   swagger-ui:
     enabled: true
-    url: /v3/api-docs
-    path: /swagger-ui.html
 
 server:
   port: 8080
   forward-headers-strategy: framework
   #url: "https://service.tib.eu/terminology/mod/api"
   servlet:
-    context-path: /mod
+    context-path: /mod/api
 
 logging:
   level:

@@ -12,8 +12,6 @@ springdoc:
 server:
   port: 8080
   forward-headers-strategy: framework
-  servlet:
-    context-path: /terminology
   #url: "https://service.tib.eu/terminology/mod/api"
 
 logging:

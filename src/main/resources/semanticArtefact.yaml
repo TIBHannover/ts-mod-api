@@ -14,18 +14,19 @@ modAttributes:
     alternative:
       - jsonPath: "$.['http://purl.org/dc/terms/alternative']"
         type: 'rdfs:Literal'
-        context-reference: 'dcterms:alternative'
+        contextReference: 'dcterms:alternative'
         priority: 1
     audience:
       - jsonPath: "$.['http://purl.org/dc/terms/audience']"
         type: 'dcterms:audience'
         priority: 1
       - jsonPath: "$.['https://schema.org/audience']"
-        type: 'dcterms:audience'
-        context-reference: 'dcterms:alternative'
+        type: 'schema:audience'
+        contextReference: 'schema:audience'
         priority: 2
       - jsonPath: "$.['http://usefulinc.com/ns/doap#audience']"
-        type: 'dcterms:audience'
+        type: 'doap:audience'
+        contextReference: 'doap:audience'
         priority: 3
     bibliographicCitation:
       - jsonPath: "$.['http://purl.org/dc/terms/bibliographicCitation']"

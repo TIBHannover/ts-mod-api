@@ -9,11 +9,12 @@ modAttributes:
         type: 'dcterms:abstract'
         priority: 1
       - jsonPath: "$.['http://purl.org/dc/elements/1.1/abstract']"
-        type: 'dcterms:abstract'
+        type: 'dc:abstract'
         priority: 2
     alternative:
       - jsonPath: "$.['http://purl.org/dc/terms/alternative']"
         type: 'rdfs:Literal'
+        context-reference: 'dcterms:alternative'
         priority: 1
     audience:
       - jsonPath: "$.['http://purl.org/dc/terms/audience']"
@@ -21,6 +22,7 @@ modAttributes:
         priority: 1
       - jsonPath: "$.['https://schema.org/audience']"
         type: 'dcterms:audience'
+        context-reference: 'dcterms:alternative'
         priority: 2
       - jsonPath: "$.['http://usefulinc.com/ns/doap#audience']"
         type: 'dcterms:audience'

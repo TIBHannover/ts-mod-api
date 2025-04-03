@@ -1,7 +1,5 @@
 package com.tib.ts.mod.config;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,20 +25,7 @@ public class DefaultValueProvider {
 	}
 	
 	@ModelAttribute("defaultSemanticArtefactAttributes")
-	public List<String> getSemanticArtefactDefaultAttributes() {
-		return List.of("dcterms:accessRights",
-				       "mod:acronym",
-				       "dcat:contactPoint", 
-				       "dcterms:creator", 
-				       "dcterms:description", 
-				       "dcterms:identifier", 
-				       "dcat:keyword", 
-				       "dcat:landingPage", 
-				       "dcterms:license", 
-				       "dcterms:rightsHolder", 
-				       "dcterms:subject", 
-				       "dcterms:title", 
-				       "dcterms:type", 
-				       "owl:versionIRI");
+	public String getSemanticArtefactDefaultAttributes() {
+		return "dcterms:accessRights, mod:acronym, dcat:contactPoint, dcterms:creator, dcterms:description, dcterms:identifier, dcat:keyword, dcat:landingPage, dcterms:license, dcterms:rightsHolder, dcterms:subject, dcterms:title, dcterms:type, owl:versionIRI";
 	}
 }

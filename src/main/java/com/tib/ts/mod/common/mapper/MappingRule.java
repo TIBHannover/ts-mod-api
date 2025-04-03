@@ -41,6 +41,8 @@ public class MappingRule {
 		private int priority;
 
 		private String type;
+		
+		private String contextReference;
 
 		private List<String> fair;
 	}

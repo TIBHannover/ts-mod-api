@@ -1,12 +1,14 @@
 modAttributes:
   # DCATDataServiceAttributes
     endpointDescription:
-      - jsonPath: "$['http://purl.org/dc/terms/conformsTo']"
-        type: 'foaf:agent'
+      - jsonPath: "$.endpointDescription"
+        type: 'rdfs:Literal'
+        contextReference: 'dcat:endpointDescription'
         fair: ['default']
         priority: 1
     endpointURL:
-      - jsonPath: "$.mailing_list"
-        type: 'vcard:kind'
+      - jsonPath: "$.endpointURL"
+        type: 'rdfs:Literal'
+        contextReference: 'dcat:endpointURL'
         fair: ['default']
         priority: 1

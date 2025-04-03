@@ -18,25 +18,25 @@ import lombok.Setter;
 @Setter
 public class Catalog {
 	
-	@JsonProperty("dcat:dataset")
+	@JsonProperty("dataset")
 	private DataSet dataset;
 
-	@JsonProperty("dct:hasPart")
+	@JsonProperty("hasPart")
 	private Resource hasPart;
 
-	@JsonProperty("foaf:homepage")
+	@JsonProperty("homepage")
 	private List<Map<String, String>> homepage;
 
-	@JsonProperty("dcat:record")
+	@JsonProperty("record")
 	private CatalogRecord record;
 
-	@JsonProperty("dcat:resource")
+	@JsonProperty("resource")
 	private Resource resource;
 
-	@JsonProperty("dcat:service")
+	@JsonProperty("service")
 	private DataService service;
 
-	@JsonProperty("dcat:themeTaxonomy")
+	@JsonProperty("themeTaxonomy")
 	private List<Map<String, String>> themeTaxonomy;
 
 

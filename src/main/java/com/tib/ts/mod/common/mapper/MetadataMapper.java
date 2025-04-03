@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.tib.ts.mod.common.constants.ErrorMessage;
 import com.tib.ts.mod.common.mapper.MappingRule.MappingDetail;
+import com.tib.ts.mod.entities.Context;
 
 /**
  *@author Deepan Anbalagan
@@ -103,7 +104,7 @@ public class MetadataMapper {
 			}
 			return dtoInstance;
 		} catch (Exception e) {
-			logger.debug(ErrorMessage.MAPPER_RESPONSE_CONSTRUCT_EXCEPTION_MSG, dtoClass.getSimpleName(), e);
+			logger.info(ErrorMessage.MAPPER_RESPONSE_CONSTRUCT_EXCEPTION_MSG, dtoClass.getSimpleName(), e);
 			return null;
 		}
 	}
@@ -120,20 +121,26 @@ public class MetadataMapper {
 			if (!valueList.isEmpty()) {
 				for (String str : valueList) {
 					var mapField = new HashMap<String, String>();
+					String type = detail.getType();
 					
-					switch (detail.getType().toLowerCase()) {
-						case "rdfs:Literal" -> mapField.put("@value", str);
-						case "skos:Concept" -> mapField.put("skos:prefLabel", str);
-						default -> mapField.put(check_URL(str) ? "@id" : "@value", str);
-					}
-					
-					if (!detail.getType().equalsIgnoreCase("rdfs:resource") ||
-						!detail.getType().equalsIgnoreCase("rdfs:Literal")) {
-						mapField.put("@type", detail.getType());
+					if (type != null) {
+						switch (detail.getType()) {
+							case "rdfs:Literal" -> mapField.put("@value", str);
+							case "skos:Concept" -> mapField.put("skos:prefLabel", str);
+							default -> mapField.put(check_URL(str) ? "@id" : "@value", str);
+						}
+
+						if (!detail.getType().equalsIgnoreCase("rdfs:resource")
+								|| !detail.getType().equalsIgnoreCase("rdfs:Literal")) {
+							mapField.put("@type", detail.getType());
+						}
+					}else {
+						mapField.put(check_URL(str) ? "@id" : "@value", str);
 					}
 					
 					listMapField.add(mapField);
 				}
+				Context.addContext(field.getName(), detail.getContextReference());
 				field.set(dtoInstance, listMapField);
 			}
 		} catch (IllegalAccessException e) {

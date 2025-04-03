@@ -27,19 +27,19 @@ public class SemanticArtefactCatalogRecord extends CatalogRecord {
 	@JsonProperty("@type")
 	private Object semanticArtefactCatalogRecordType;
 
-	@JsonProperty("dcterms:dateSubmitted")
+	@JsonProperty("dateSubmitted")
 	private List<Map<String, String>> dateSubmitted;
 
-	@JsonProperty("foaf:homepage")
+	@JsonProperty("homepage")
 	private List<Map<String, String>> homepage;
 
-	@JsonProperty("dcterms:created")
+	@JsonProperty("created")
 	private List<Map<String, String>> created;
 
-	@JsonProperty("mod:curatedBy")
+	@JsonProperty("curatedBy")
 	private List<Map<String, String>> curatedBy;
 
-	@JsonProperty("mod:curatedOn")
+	@JsonProperty("curatedOn")
 	private List<Map<String, String>> curatedOn;
 
 }

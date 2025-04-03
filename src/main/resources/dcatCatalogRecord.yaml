@@ -3,15 +3,18 @@ modAttributes:
     catalogRecordDescription:
       - jsonPath: "$.description"
         type: 'rdfs:Literal'
+        contextReference: 'dcterms:description'
         fair: ['default']
         priority: 1
     catalogRecordIssued:
       - jsonPath: "$.loaded"
         type: 'rdfs:Literal'
+        contextReference: 'dcterms:issued'
         fair: ['default']
         priority: 1
     catalogRecordTitle:
       - jsonPath: "$.title"
-        type: 'dcterms:identifier'
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
         fair: ['default']
         priority: 1

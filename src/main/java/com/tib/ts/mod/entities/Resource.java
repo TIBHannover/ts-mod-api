@@ -19,70 +19,70 @@ import lombok.Setter;
 
 public class Resource {
 	
-	@JsonProperty("dcterms:accessRights")
+	@JsonProperty("accessRights")
 	private List<Map<String, String>> accessRights;
 	
-	@JsonProperty("dcterms:conformsTo")
+	@JsonProperty("conformsTo")
 	private List<Map<String, String>> conformsTo;
 	
-	@JsonProperty("dcat:contactPoint")
+	@JsonProperty("contactPoint")
 	private List<Map<String, String>> contactPoint;
 	
-	@JsonProperty("dcterms:creator")
+	@JsonProperty("creator")
 	private List<Map<String, String>> creator;
 	
-	@JsonProperty("dcterms:description")
+	@JsonProperty("description")
 	private List<Map<String, String>> description;
 	
-	@JsonProperty("odrl:hasPolicy")
+	@JsonProperty("hasPolicy")
 	private List<Map<String, String>> hasPolicy;
 	
-	@JsonProperty("dcterms:identifier")
+	@JsonProperty("identifier")
 	private List<Map<String, String>> identifier;
 	
-	@JsonProperty("dcterms:isReferencedBy")
+	@JsonProperty("isReferencedBy")
 	private List<Map<String, String>> isReferencedBy;
 	
-	@JsonProperty("dcterms:issued")
+	@JsonProperty("issued")
 	private List<Map<String, String>> issued;
 	
-	@JsonProperty("dcat:keyword")
+	@JsonProperty("keyword")
 	private List<Map<String, String>> keyword;
 	
-	@JsonProperty("dcat:landingPage")
+	@JsonProperty("landingPage")
 	private List<Map<String, String>> landingPage;
 	
-	@JsonProperty("dcterms:language")
+	@JsonProperty("language")
 	private List<Map<String, String>> language;
 	
-	@JsonProperty("dcterms:license")
+	@JsonProperty("license")
 	private List<Map<String, String>> license;
 	
-	@JsonProperty("dcterms:modified")
+	@JsonProperty("modified")
 	private List<Map<String, String>> modified;
 	
-	@JsonProperty("dcterms:publisher")
+	@JsonProperty("publisher")
 	private List<Map<String, String>> publisher;
 	
-	@JsonProperty("prov:qualifiedAttribution")
+	@JsonProperty("qualifiedAttribution")
 	private List<Map<String, String>> qualifiedAttribution;
 	
-	@JsonProperty("dcat:qualifiedRelation")
+	@JsonProperty("qualifiedRelation")
 	private List<Map<String, String>> qualifiedRelation;
 	
-	@JsonProperty("dcterms:relation")
+	@JsonProperty("relation")
 	private List<Map<String, String>> relation;
 	
-	@JsonProperty("dcterms:rights")
+	@JsonProperty("rights")
 	private List<Map<String, String>> rights;
 	
-	@JsonProperty("dcterms:subject")
+	@JsonProperty("subject")
 	private List<Map<String, String>> subject;
 	
-	@JsonProperty("dcterms:title")
+	@JsonProperty("title")
 	private List<Map<String, String>> title;
 	
-	@JsonProperty("dcterms:type")
+	@JsonProperty("type")
 	private List<Map<String, String>> type;
 
 }

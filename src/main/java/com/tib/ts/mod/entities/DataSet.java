@@ -18,25 +18,25 @@ import lombok.Setter;
 @Setter
 public class DataSet extends Resource {
 	
-	@JsonProperty("dcterms:accrualPeriodicity")
+	@JsonProperty("accrualPeriodicity")
 	private List<Map<String, String>> accrualPeriodicity;
 
-	@JsonProperty("dcat:distribution")
+	@JsonProperty("distribution")
 	private Distribution distribution;
 
-	@JsonProperty("dcterms:spatial")
+	@JsonProperty("spatial")
 	private List<Map<String, String>> spatial;
 
-	@JsonProperty("dcat:spatialResolutionInMeters")
+	@JsonProperty("spatialResolutionInMeters")
 	private List<Map<String, String>> spatialResolutionInMeters;
 
-	@JsonProperty("dcterms:temporal")
+	@JsonProperty("temporal")
 	private List<Map<String, String>> temporal;
 
-	@JsonProperty("dcat:temporalResolution")
+	@JsonProperty("temporalResolution")
 	private List<Map<String, String>> temporalResolution;
 
-	@JsonProperty("prov:wasGeneratedBy")
+	@JsonProperty("wasGeneratedBy")
 	private List<Map<String, String>> wasGeneratedBy;
 
 }

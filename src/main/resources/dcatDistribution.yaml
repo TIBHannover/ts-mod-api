@@ -2,49 +2,60 @@ modAttributes:
   # DCATDataServiceAttributes
     downloadURL:
       - jsonPath: "$.ontologyPurl"
-        type: 'foaf:agent'
+        type: 'rdfs:Resource'
+        contextReference: 'dcat:downloadURL'
         fair: ['default']
         priority: 1
     description:
       - jsonPath: "$.description"
-        type: 'dcterms:identifier'
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:description'
         fair: ['default']
         priority: 1
     issued:
       - jsonPath: "$['http://purl.org/dc/terms/issued']"
         type: 'dcterms:identifier'
+        contextReference: 'dcterms:issued'
         priority: 1
     license:
       - jsonPath: "$['http://purl.org/dc/terms/license']"
         type: 'dcterms:LicenseDocument'
+        contextReference: 'dcterms:license'
         fair: ['default']
         priority: 1
       - jsonPath: "$.license.url"
         type: 'dcterms:LicenseDocument'
+        contextReference: 'dcterms:license'
         fair: ['default']
         priority: 2
     modified:
       - jsonPath: "$['http://purl.org/dc/terms/modified']"
         type: 'rdfs:Literal'
+        contextReference: 'dcterms:modified'
         priority: 1
     rights:
       - jsonPath: "$['http://purl.org/dc/terms/rights']"
         type: 'dcterms:RightsStatement'
+        contextReference: 'dcterms:rights'
         priority: 1
       - jsonPath: "$['http://purl.org/dc/elements/1.1/rights']"
         type: 'dcterms:RightsStatement'
+        contextReference: 'dcterms:rights'
         priority: 2
     title:
       - jsonPath: "$.title"
-        type: 'dcterms:identifier'
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
         fair: ['default']
         priority: 1
       - jsonPath: "$['http://purl.org/dc/terms/title']"
-        type: 'dcterms:identifier'
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
         fair: ['default']
         priority: 2
       - jsonPath: "$['http://purl.org/dc/elements/1.1/title']"
-        type: 'dcterms:identifier'
+        type: 'rdfs:Literal'
+        contextReference: 'dc:title'
         fair: ['default']
         priority: 3
         

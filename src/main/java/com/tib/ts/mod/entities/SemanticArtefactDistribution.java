@@ -28,142 +28,142 @@ public class SemanticArtefactDistribution extends Distribution {
 	@JsonProperty("@type")
 	private Object semanticArtefactDistributionType;
 
-	@JsonProperty("cc:useGuidelines")
+	@JsonProperty("useGuidelines")
 	private List<Map<String, String>> useGuidelines;
 
-	@JsonProperty("dcterms:created")
+	@JsonProperty("created")
 	private List<Map<String, String>> created;
 
-	@JsonProperty("dcterms:dateSubmitted")
+	@JsonProperty("dateSubmitted")
 	private List<Map<String, String>> dateSubmitted;
 
-	@JsonProperty("dcterms:valid")
+	@JsonProperty("valid")
 	private List<Map<String, String>> valid;
 
-	@JsonProperty("mod:authorProperty")
+	@JsonProperty("authorProperty")
 	private List<Map<String, String>> authorProperty;
 
-	@JsonProperty("mod:averageChildCount")
+	@JsonProperty("averageChildCount")
 	private List<Map<String, String>> averageChildCount;
 
-	@JsonProperty("mod:browsingUI")
+	@JsonProperty("browsingUI")
 	private List<Map<String, String>> browsingUI;
 
-	@JsonProperty("mod:classesWithMoreThan25Children")
+	@JsonProperty("classesWithMoreThan25Children")
 	private List<Map<String, String>> classesWithMoreThan25Children;
 
-	@JsonProperty("mod:classesWithNoAuthorMetadata")
+	@JsonProperty("classesWithNoAuthorMetadata")
 	private List<Map<String, String>> classesWithNoAuthorMetadata;
 
-	@JsonProperty("mod:classesWithNoDateMetadata")
+	@JsonProperty("classesWithNoDateMetadata")
 	private List<Map<String, String>> classesWithNoDateMetadata;
 
-	@JsonProperty("mod:classesWithNoDefinition")
+	@JsonProperty("classesWithNoDefinition")
 	private List<Map<String, String>> classesWithNoDefinition;
 
-	@JsonProperty("mod:classesWithNoFormalDefinition")
+	@JsonProperty("classesWithNoFormalDefinition")
 	private List<Map<String, String>> classesWithNoFormalDefinition;
 
-	@JsonProperty("mod:classesWithNoLabel")
+	@JsonProperty("classesWithNoLabel")
 	private List<Map<String, String>> classesWithNoLabel;
 
-	@JsonProperty("mod:classesWithOneChild")
+	@JsonProperty("classesWithOneChild")
 	private List<Map<String, String>> classesWithOneChild;
 
-	@JsonProperty("mod:conformsToKnowledgeRepresentationParadigm")
+	@JsonProperty("conformsToKnowledgeRepresentationParadigm")
 	private List<Map<String, String>> conformsToKnowledgeRepresentationParadigm;
 
-	@JsonProperty("mod:createdProperty")
+	@JsonProperty("createdProperty")
 	private List<Map<String, String>> createdProperty;
 
-	@JsonProperty("mod:curatedOn")
+	@JsonProperty("curatedOn")
 	private List<Map<String, String>> curatedOn;
 
-	@JsonProperty("mod:definitionProperty")
+	@JsonProperty("definitionProperty")
 	private List<Map<String, String>> definitionProperty;
 
-	@JsonProperty("mod:fairAssessment")
+	@JsonProperty("fairAssessment")
 	private List<Map<String, String>> fairAssessment;
 
-	@JsonProperty("mod:fairScore")
+	@JsonProperty("fairScore")
 	private List<Map<String, String>> fairScore;
 
-	@JsonProperty("mod:hasRepresentationLanguage")
+	@JsonProperty("hasRepresentationLanguage")
 	private List<Map<String, String>> hasRepresentationLanguage;
 
-	@JsonProperty("mod:hasSyntax")
+	@JsonProperty("hasSyntax")
 	private List<Map<String, String>> hasSyntax;
 
-	@JsonProperty("mod:hierarchyProperty")
+	@JsonProperty("hierarchyProperty")
 	private List<Map<String, String>> hierarchyProperty;
 
-	@JsonProperty("mod:maxChildCount")
+	@JsonProperty("maxChildCount")
 	private List<Map<String, String>> maxChildCount;
 
-	@JsonProperty("mod:maxDepth")
+	@JsonProperty("maxDepth")
 	private List<Map<String, String>> maxDepth;
 
-	@JsonProperty("mod:metadataVoc")
+	@JsonProperty("metadataVoc")
 	private List<Map<String, String>> metadataVoc;
 
-	@JsonProperty("mod:metrics")
+	@JsonProperty("metrics")
 	private List<Map<String, String>> metrics;
 
-	@JsonProperty("mod:modifiedProperty")
+	@JsonProperty("modifiedProperty")
 	private List<Map<String, String>> modifiedProperty;
 
-	@JsonProperty("mod:numberOfAxioms")
+	@JsonProperty("numberOfAxioms")
 	private List<Map<String, String>> numberOfAxioms;
 
-	@JsonProperty("mod:numberOfClasses")
+	@JsonProperty("numberOfClasses")
 	private String numberOfClasses;
 
-	@JsonProperty("mod:numberOfDataProperties")
+	@JsonProperty("numberOfDataProperties")
 	private String numberOfDataProperties;
 
-	@JsonProperty("mod:numberOfDeprecated")
+	@JsonProperty("numberOfDeprecated")
 	private String numberOfDeprecated;
 
-	@JsonProperty("mod:numberOfIndividuals")
+	@JsonProperty("numberOfIndividuals")
 	private String numberOfIndividuals;
 
-	@JsonProperty("mod:numberOfLabels")
+	@JsonProperty("numberOfLabels")
 	private String numberOfLabels;
 
-	@JsonProperty("mod:numberOfMappings")
+	@JsonProperty("numberOfMappings")
 	private String numberOfMappings;
 
-	@JsonProperty("mod:numberOfObjectProperties")
+	@JsonProperty("numberOfObjectProperties")
 	private String numberOfObjectProperties;
 
-	@JsonProperty("mod:numberOfProperties")
+	@JsonProperty("numberOfProperties")
 	private String numberOfProperties;
 
-	@JsonProperty("mod:obsoleteParent")
+	@JsonProperty("obsoleteParent")
 	private List<Map<String, String>> obsoleteParent;
 
-	@JsonProperty("mod:obsoleteProperty")
+	@JsonProperty("obsoleteProperty")
 	private List<Map<String, String>> obsoleteProperty;
 
-	@JsonProperty("mod:prefLabelProperty")
+	@JsonProperty("prefLabelProperty")
 	private List<Map<String, String>> prefLabelProperty;
 
-	@JsonProperty("mod:sampleQueries")
+	@JsonProperty("sampleQueries")
 	private List<Map<String, String>> sampleQueries;
 
-	@JsonProperty("mod:synonymProperty")
+	@JsonProperty("synonymProperty")
 	private List<Map<String, String>> synonymProperty;
 
-	@JsonProperty("mod:usedEngineeringMethodology")
+	@JsonProperty("usedEngineeringMethodology")
 	private List<Map<String, String>> usedEngineeringMethodology;
 
-	@JsonProperty("owl:deprecated")
+	@JsonProperty("deprecated")
 	private List<Map<String, String>> deprecated;
 
-	@JsonProperty("owl:imports")
+	@JsonProperty("imports")
 	private List<Map<String, String>> imports;
 
-	@JsonProperty("sd:endpoint")
+	@JsonProperty("endpoint")
 	private List<Map<String, String>> endpoint;
 
 	@JsonGetter("@type")

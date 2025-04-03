@@ -18,12 +18,12 @@ import lombok.Setter;
 @Setter
 public class DataService extends Resource{
 
-	@JsonProperty("dcat:endpointDescription")
+	@JsonProperty("endpointDescription")
 	private List<Map<String, String>> endpointDescription;
 
-	@JsonProperty("dcat:endpointURL")
+	@JsonProperty("endpointURL")
 	private List<Map<String, String>> endpointURL;
 
-	@JsonProperty("dcat:servesDataset")
+	@JsonProperty("servesDataset")
 	private DataSet servesDataset;
 }

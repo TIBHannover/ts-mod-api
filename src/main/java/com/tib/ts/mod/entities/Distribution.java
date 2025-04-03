@@ -18,61 +18,61 @@ import lombok.Setter;
 @Setter
 public class Distribution {
 	
-	@JsonProperty("dcat:accessService")
+	@JsonProperty("accessService")
 	private DataService accessService;
 	
-	@JsonProperty("dcterms:accessRights")
+	@JsonProperty("accessRights")
     private List<Map<String, String>> accessRights;
 
-    @JsonProperty("dcat:accessURL")
+    @JsonProperty("accessURL")
     private List<Map<String, String>> accessURL;
 
-    @JsonProperty("dcat:byteSize")
+    @JsonProperty("byteSize")
     private List<Map<String, String>> byteSize;
 
-    @JsonProperty("dcat:compressFormat")
+    @JsonProperty("compressFormat")
     private List<Map<String, String>> compressFormat;
 
-    @JsonProperty("dcterms:conformsTo")
+    @JsonProperty("conformsTo")
     private List<Map<String, String>> conformsTo;
 
-    @JsonProperty("dcterms:description")
+    @JsonProperty("description")
     private List<Map<String, String>> description;
 
-    @JsonProperty("dcat:downloadURL")
+    @JsonProperty("downloadURL")
     private List<Map<String, String>> downloadURL;
 
-    @JsonProperty("dcterms:format")
+    @JsonProperty("format")
     private List<Map<String, String>> format;
 
-    @JsonProperty("odrl:hasPolicy")
+    @JsonProperty("hasPolicy")
     private List<Map<String, String>> hasPolicy;
 
-    @JsonProperty("dcterms:issued")
+    @JsonProperty("issued")
     private List<Map<String, String>> issued;
 
-    @JsonProperty("dcterms:license")
+    @JsonProperty("license")
     private List<Map<String, String>> license;
 
-    @JsonProperty("dcat:mediaType")
+    @JsonProperty("mediaType")
     private List<Map<String, String>> mediaType;
 
-    @JsonProperty("dcterms:modified")
+    @JsonProperty("modified")
     private List<Map<String, String>> modified;
 
-    @JsonProperty("dcat:packageFormat")
+    @JsonProperty("packageFormat")
     private List<Map<String, String>> packageFormat;
 
-    @JsonProperty("dcterms:rights")
+    @JsonProperty("rights")
     private List<Map<String, String>> rights;
 
-    @JsonProperty("dcat:spatialResolutionInMeters")
+    @JsonProperty("spatialResolutionInMeters")
     private List<Map<String, String>> spatialResolutionInMeters;
 
-    @JsonProperty("dcat:temporalResolution")
+    @JsonProperty("temporalResolution")
     private List<Map<String, String>> temporalResolution;
 
-    @JsonProperty("dcterms:title")
+    @JsonProperty("title")
     private List<Map<String, String>> title;
 
 }

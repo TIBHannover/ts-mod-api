@@ -88,23 +88,25 @@ class GetArtefactRecordHandler implements ServiceHandler {
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 
-		ActionType defaultActionType = request.getOperationType();
-
-		request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
-
-		String ontology = terminologyService.call(request);
-
-		String ontologyId = helper.fetchOntologyId(ontology);
-
-		if (ontologyId == null || ontologyId.isBlank())
-			throw new BadRequestException("Invalid artefactId provided.");
-
-		request.setOntologyId(ontologyId);
-		request.setOperationType(defaultActionType);
-		
+		/*
+		 * ActionType defaultActionType = request.getOperationType();
+		 * 
+		 * request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
+		 * 
+		 * String ontology = terminologyService.call(request);
+		 * 
+		 * String ontologyId = helper.fetchOntologyId(ontology);
+		 * 
+		 * if (ontologyId == null || ontologyId.isBlank()) throw new
+		 * BadRequestException("Invalid artefactId provided.");
+		 * 
+		 * request.setOntologyId(ontologyId);
+		 * request.setOperationType(defaultActionType);
+		 */
+		request.setOntologyId(request.getArtefactId());
 		String result = terminologyService.call(request);
 		
-		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(),
+		MappingRule rules = configLoader.mergeConfiguration(String.join(",", request.getDisplay()),
 															AttributeFile.DCAT_RESOURCE,
 															AttributeFile.DCAT_CATALOG_RECORD,
 															AttributeFile.SEMANTIC_ARTEFACT_CATALOG_RECORD);
@@ -133,7 +135,7 @@ class GetArtefactRecordHandler implements ServiceHandler {
 			
 			if (semanticArtefactCatalogRecord != null) {
 				semanticArtefactCatalogRecord.setContext(Context.getContext());
-				result = ResponseConverter.convert(semanticArtefactCatalogRecord, request.getFormat());
+				result = ResponseConverter.convert(semanticArtefactCatalogRecord, request.getFormat(), request.getDisplay());
 			}
 
 		} catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.tib.ts.mod.feature.search;
 
+import java.util.List;
 import java.util.Set;
 
 import org.apache.coyote.BadRequestException;
@@ -49,7 +50,7 @@ public class SearchController {
 		RequestDTO request = new RequestDTO.Builder(ActionType.V1Search)
 										   .setQuery(q)
 										   .setFormat(format)
-										   .setDisplay(display)
+										   .setDisplay(List.of(display))
 										   .setPage(page)
 										   .setPageSize(pageSize)
 										   .setBaseUrl(baseUrl)
@@ -107,7 +108,7 @@ public class SearchController {
 										   .setQuery(q)
 										   .setFilterByType(Set.of("ontology"))
 										   .setFormat(format)
-										   .setDisplay(display)
+										   .setDisplay(List.of(display))
 										   .setPage(page)
 										   .setPageSize(pageSize)
 										   .setBaseUrl(baseUrl)

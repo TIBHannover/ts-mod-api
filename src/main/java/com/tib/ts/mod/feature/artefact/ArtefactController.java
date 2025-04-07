@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
 
+import com.tib.ts.mod.config.DefaultFields;
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
@@ -52,7 +53,7 @@ public class ArtefactController {
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pagesize,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
+			@RequestParam(value = "display", defaultValue = DefaultFields.SEMANTIC_ARTEFACT) @Parameter(description = "The parameters to display") List<String> display,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		
 		long start = System.currentTimeMillis();
@@ -83,7 +84,7 @@ public class ArtefactController {
 	@ApiResponse(responseCode = "400", description = "Bad request", content = {@Content(mediaType = "text/html")})
 	public ResponseEntity<String> getArtefactByArtefactId(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
+			@RequestParam(value = "display", defaultValue = DefaultFields.SEMANTIC_ARTEFACT) @Parameter(description = "The parameters to display") List<String> display,
 			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format) throws BadRequestException {
 		
 		//Create a request DTO

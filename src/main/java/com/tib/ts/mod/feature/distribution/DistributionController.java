@@ -1,5 +1,7 @@
 package com.tib.ts.mod.feature.distribution;
 
+import java.util.List;
+
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -70,7 +72,7 @@ public class DistributionController {
 			@RequestParam(value = "display", defaultValue = "all") @Parameter(description = "The parameters to display") String display,
 			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID).setArtefactId(UriUtils.decode(artefactId, "UTF-8")).setDisplay(display).setFormat(format).build();
+		RequestDTO request = new RequestDTO.Builder(ActionType.ONTOLOGY_BY_ONTOLOGY_ID).setArtefactId(UriUtils.decode(artefactId, "UTF-8")).setDisplay(List.of(display)).setFormat(format).build();
 
 		// invoke service impl
 		String response = distributionService.getLatestDistributionByArtefactId(request);

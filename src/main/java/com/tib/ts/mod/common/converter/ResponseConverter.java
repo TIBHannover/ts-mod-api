@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.List;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.tib.ts.mod.config.DynamicSerializer;
 import com.tib.ts.mod.entities.enums.FormatOption;
 
 /**
@@ -31,15 +34,15 @@ import com.tib.ts.mod.entities.enums.FormatOption;
 public class ResponseConverter {
 
 	private static final Logger logger = LoggerFactory.getLogger(ResponseConverter.class);
-
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+	
+	private ObjectMapper objectMapper = new ObjectMapper()
 			.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-	public static <T> String convert(T response, FormatOption format) {
+	public static <T> String convert(T response, FormatOption format, List<String> defaultFields) {
 		String results = "";
-
+		
 		try {
-			results = OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(response);
+			results = convertToJsonld(format, response, defaultFields);//objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
 
 			return results = switch (format) {
 				case rdfxml -> convertToRDF(results);
@@ -50,6 +53,27 @@ public class ResponseConverter {
 			logger.error("Error in converting response to JSON-LD");
 			return "";
 		}
+	}
+
+	private static <T> String convertToJsonld(FormatOption format, T response, List<String> defaultFields) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		SimpleModule module = new SimpleModule();
+		
+		switch (format) {
+			case jsonld: {
+				if (defaultFields != null && !defaultFields.isEmpty()) {
+					module.addSerializer(new DynamicSerializer<T>((Class<T>) response.getClass(), defaultFields));
+					objectMapper.registerModule(module);
+				} else {
+					objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				}
+			}
+			default: {
+				objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			};
+		};
+		
+		return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
 	}
 
 	private static String convertToRDF(String inputToConvert) {

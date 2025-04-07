@@ -94,6 +94,7 @@ public class MetadataMapper {
 							handleListField(dtoInstance, field, detail, value);
 						} else {
 							field.set(dtoInstance, value);
+							Context.addContext(field.getName(), detail.getContextReference());
 						}
 					} catch (IllegalAccessException e) {
 						logger.error(ErrorMessage.MAPPER_FIELD_EXCEPTION_MSG, field.getName(), e);

@@ -65,20 +65,22 @@ class GetArtefactResourceClassHandler implements ServiceHandler{
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 
-		ActionType defaultActionType = request.getOperationType();
-
-		request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
-
-		String ontology = terminologyService.call(request);
-
-		String ontologyId = helper.fetchOntologyId(ontology);
-
-		if (ontologyId == null || ontologyId.isBlank())
-			throw new BadRequestException("Invalid artefactId provided.");
-
-		request.setOntologyId(ontologyId);
-		request.setOperationType(defaultActionType);
-		
+		/*
+		 * ActionType defaultActionType = request.getOperationType();
+		 * 
+		 * request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
+		 * 
+		 * String ontology = terminologyService.call(request);
+		 * 
+		 * String ontologyId = helper.fetchOntologyId(ontology);
+		 * 
+		 * if (ontologyId == null || ontologyId.isBlank()) throw new
+		 * BadRequestException("Invalid artefactId provided.");
+		 * 
+		 * request.setOntologyId(ontologyId);
+		 * request.setOperationType(defaultActionType);
+		 */
+		request.setOntologyId(request.getArtefactId());
 		String result = terminologyService.call(request);
 		
 		return result;
@@ -97,7 +99,7 @@ class GetArtefactResourceClassHandler implements ServiceHandler{
 
 		
 		artefactResource.setContext(Context.getContext());
-		result = ResponseConverter.convert(artefactResource, request.getFormat());
+		result = ResponseConverter.convert(artefactResource, request.getFormat(), null);
 
 		
 		return result;

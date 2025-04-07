@@ -76,23 +76,26 @@ class GetLatestDistributionHandler implements ServiceHandler {
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 		
-		ActionType defaultActionType = request.getOperationType();
-
-		request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
-
-		String ontology = terminologyService.call(request);
-
-		String ontologyId = helper.fetchOntologyId(ontology);
-
-		if (ontologyId == null || ontologyId.isBlank())
-			throw new BadRequestException("Invalid artefactId provided.");
-
-		request.setOntologyId(ontologyId);
-		request.setOperationType(defaultActionType);
-
+		/*
+		 * ActionType defaultActionType = request.getOperationType();
+		 * 
+		 * request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
+		 * 
+		 * String ontology = terminologyService.call(request);
+		 * 
+		 * String ontologyId = helper.fetchOntologyId(ontology);
+		 * 
+		 * if (ontologyId == null || ontologyId.isBlank()) throw new
+		 * BadRequestException("Invalid artefactId provided.");
+		 * 
+		 * request.setOntologyId(ontologyId);
+		 * request.setOperationType(defaultActionType);
+		 */
+		
+		request.setOntologyId(request.getArtefactId());
 		String result = terminologyService.call(request);
 		
-		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(),
+		MappingRule rules = configLoader.mergeConfiguration(String.join(",", request.getDisplay()),
 															AttributeFile.SEMANTIC_ARTEFACT_DISTRIBUTION,
 															AttributeFile.DCAT_DISTRIBUTION,
 															AttributeFile.DCAT_RESOURCE,
@@ -115,7 +118,7 @@ class GetLatestDistributionHandler implements ServiceHandler {
 			
 			if (semanticArtefactDistribution != null) {
 				semanticArtefactDistribution.setContext(Context.getContext());
-				result = ResponseConverter.convert(semanticArtefactDistribution, request.getFormat());
+				result = ResponseConverter.convert(semanticArtefactDistribution, request.getFormat(), request.getDisplay());
 			}
 
 		} catch (Exception e) {

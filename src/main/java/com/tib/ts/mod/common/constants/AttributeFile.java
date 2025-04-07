@@ -21,4 +21,5 @@ public class AttributeFile {
 	public static final String DCAT_CATALOG_RECORD = "dcatCatalogRecord" + YAML;
 	public static final String DCAT_DISTRIBUTION = "dcatDistribution" + YAML;
 	public static final String DCAT_DATA_SET = "dcatDataSet" + YAML;
+	public static final String DCAT_CATALOG = "dcatCatalog" + YAML;
 }

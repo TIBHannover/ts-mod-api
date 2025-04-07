@@ -1,5 +1,6 @@
 package com.tib.ts.mod.entities.dto;
 
+import java.util.List;
 import java.util.Set;
 
 import com.tib.ts.mod.common.mapper.MappingRule;
@@ -23,7 +24,7 @@ public class RequestDTO {
 	private FormatOption format;
 	private Integer page;
 	private Integer pageSize;
-	private String display;
+	private List<String> display;
 	private ActionType operationType;
 	private MappingRule mappingRule;
 	private ArtefactResourceType resourceType;
@@ -75,7 +76,7 @@ public class RequestDTO {
 		return pageSize;
 	}
 
-	public String getDisplay() {
+	public List<String> getDisplay() {
 		return display;
 	}
 
@@ -136,7 +137,7 @@ public class RequestDTO {
 		private FormatOption format;
 		private Integer page;
 		private Integer pageSize;
-		private String display;
+		private List<String> display;
 		private ActionType operationType;
 		private MappingRule mappingRule;
 		private ArtefactResourceType resourceType;
@@ -182,7 +183,7 @@ public class RequestDTO {
 			return this;
 		}
 
-		public Builder setDisplay(String display) {
+		public Builder setDisplay(List<String> display) {
 			this.display = display;
 			return this;
 		}

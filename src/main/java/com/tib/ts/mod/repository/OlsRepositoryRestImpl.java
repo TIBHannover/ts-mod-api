@@ -37,6 +37,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	@Override
 	public String call(RequestDTO request) throws BadRequestException {
 		String result = switch (request.getOperationType()) {
+			case CATALOG -> getCatalog();
 			case ONTOLOGIES -> getOntologies(request.getPage(), request.getPageSize(), request.getFilterByOntology());
 			case ONTOLOGIES_BY_ONTOLOGY_IRI -> getOntologiesByOntologyIri(request.getPage(), request.getPageSize(), request.getArtefactId());
 			case ONTOLOGY_BY_ONTOLOGY_ID -> getOntologiesByOntologyId(request.getOntologyId());
@@ -55,6 +56,14 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 		return result;
 	}
 	
+	private String getCatalog() {
+		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_CATALOG).toUriString();
+		
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+
 	private String getEntitiesByOntologyIdAndIri(String ontologyId, String resourceId, Integer page, Integer pageSize) {
 		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ENTITY_BY_ONTOLOGY_ID_AND_IRI)
 										 .buildAndExpand(ontologyId, resourceId).toUriString();

@@ -1,6 +1,7 @@
 package com.tib.ts.mod.common.mapper;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
@@ -31,12 +32,12 @@ public class DynamicConfigLoader {
 		this.yamlMapper = new ObjectMapper(new YAMLFactory());
 	}
 	
-	public MappingRule mergeConfiguration( String display, String... configFiles) throws BadRequestException {
+	public MappingRule mergeConfiguration(String display, String... configFiles) throws BadRequestException {
 		MappingRule mergedConfig = new MappingRule();
 		
 		for (String configFile : configFiles) {
 			logger.info("Loading config file: {}", configFile);
-			MappingRule rule = loadConfiguration(configFile, display);
+			MappingRule rule = loadConfiguration(configFile);
 			mergedConfig.merge(rule, display);
 		}
 		
@@ -48,7 +49,7 @@ public class DynamicConfigLoader {
 		}
 	}
 
-	private MappingRule loadConfiguration(String configFile, String display) {
+	private MappingRule loadConfiguration(String configFile) {
 
 		try {
 			Resource resource = new ClassPathResource(configFile);

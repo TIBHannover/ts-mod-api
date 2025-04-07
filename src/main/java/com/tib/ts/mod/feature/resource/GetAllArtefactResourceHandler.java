@@ -71,20 +71,22 @@ class GetAllArtefactResourceHandler implements ServiceHandler{
 		if (request == null || request.getOperationType() == null)
 			throw new IllegalArgumentException();
 		
-		ActionType defaultActionType = request.getOperationType();
-
-		request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
-
-		String ontology = terminologyService.call(request);
-
-		String ontologyId = helper.fetchOntologyId(ontology);
-
-		if (ontologyId == null || ontologyId.isBlank())
-			throw new BadRequestException("Invalid artefactId provided.");
-
-		request.setOntologyId(ontologyId);
-		request.setOperationType(defaultActionType);
-
+		/*
+		 * ActionType defaultActionType = request.getOperationType();
+		 * 
+		 * request.setOperationType(ActionType.ONTOLOGIES_BY_ONTOLOGY_IRI);
+		 * 
+		 * String ontology = terminologyService.call(request);
+		 * 
+		 * String ontologyId = helper.fetchOntologyId(ontology);
+		 * 
+		 * if (ontologyId == null || ontologyId.isBlank()) throw new
+		 * BadRequestException("Invalid artefactId provided.");
+		 * 
+		 * request.setOntologyId(ontologyId);
+		 * request.setOperationType(defaultActionType);
+		 */
+		request.setOntologyId(request.getArtefactId());
 		String result = terminologyService.call(request);
 		
 		return result;
@@ -144,7 +146,7 @@ class GetAllArtefactResourceHandler implements ServiceHandler{
 			}
 			
 			responseDto.setContext(Context.getContext());
-			results = ResponseConverter.convert(responseDto, request.getFormat());
+			results = ResponseConverter.convert(responseDto, request.getFormat(), null);
 		} 
 		return results;
 	}

@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 */
 
 @RestControllerAdvice
-public class DefaultValueProvider {
+public class BaseUrlProvider {
 
 	@ModelAttribute("baseUrl")
 	public String getApiBaseUrl(HttpServletRequest request) {
@@ -24,8 +24,5 @@ public class DefaultValueProvider {
 	            .toUriString();
 	}
 	
-	@ModelAttribute("defaultSemanticArtefactAttributes")
-	public String getSemanticArtefactDefaultAttributes() {
-		return "dcterms:accessRights, mod:acronym, dcat:contactPoint, dcterms:creator, dcterms:description, dcterms:identifier, dcat:keyword, dcat:landingPage, dcterms:license, dcterms:rightsHolder, dcterms:subject, dcterms:title, dcterms:type, owl:versionIRI";
-	}
+	
 }

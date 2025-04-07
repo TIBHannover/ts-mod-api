@@ -178,7 +178,7 @@ class SearchContentHandler implements ServiceHandler {
 			}else {
 				responseDto.setOtherFormatResult(artefactResources);
 			}
-			results = ResponseConverter.convert(responseDto, request.getFormat());
+			results = ResponseConverter.convert(responseDto, request.getFormat(), null);
 		}
 		return results;
 	}

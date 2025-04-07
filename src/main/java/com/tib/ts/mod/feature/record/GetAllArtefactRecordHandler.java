@@ -99,7 +99,7 @@ class GetAllArtefactRecordHandler implements ServiceHandler {
 
 		String result = terminologyService.call(request);
 
-		MappingRule rules = configLoader.mergeConfiguration(request.getDisplay(),
+		MappingRule rules = configLoader.mergeConfiguration(String.join(",", request.getDisplay()),
 															AttributeFile.DCAT_RESOURCE,
 															AttributeFile.DCAT_CATALOG_RECORD,
 															AttributeFile.SEMANTIC_ARTEFACT_CATALOG_RECORD);
@@ -163,7 +163,7 @@ class GetAllArtefactRecordHandler implements ServiceHandler {
 				}
 				
 				responseDto.setContext(Context.getContext());
-				results = ResponseConverter.convert(responseDto, request.getFormat());
+				results = ResponseConverter.convert(responseDto, request.getFormat(), request.getDisplay());
 			} 
 		} catch (Exception e) {
 			logger.error("Error processing response in postHandler", e);

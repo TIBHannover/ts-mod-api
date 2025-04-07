@@ -128,7 +128,7 @@ public class ResourceController {
 	@Operation(summary = "Get a list of all skos:Concept within an ontology", description = "Retrieves a list of all skos:Concept within an ontology")
 	public ResponseEntity<String> getAllConceptByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,
-			@RequestParam(value = "format", defaultValue = "html") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
+			@RequestParam(value = "format", defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `jsonld`.") FormatOption format,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "pagesize", defaultValue = "50") Integer pageSize,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
@@ -244,7 +244,7 @@ public class ResourceController {
 		return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.JSON_LD.getType())).body(response);
 	}
 	
-	@GetMapping("/collection")
+	@GetMapping("/collections")
 	@Operation(summary = "Get a list of all skos:Collection within an ontology", description = "Retrieves a list of all skos:Collection within an ontology")
 	public ResponseEntity<String> getAllCollectionByArtefact(
 			@PathVariable(value = "artefactID") @Parameter(description = "The ID of the artefact") String artefactId,

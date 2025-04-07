@@ -112,7 +112,7 @@ public class SemanticArtefact extends Resource {
 	private List<Map<String, String>> logo;
 
 	@JsonProperty("acronym")
-	private List<Map<String, String>> acronym;
+	private String acronym;
 
 	@JsonProperty("analytics")
 	private List<Map<String, String>> analytics;

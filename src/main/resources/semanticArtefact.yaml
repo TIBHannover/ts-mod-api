@@ -115,18 +115,22 @@ modAttributes:
         contextReference: 'http://www.wurvoc.org/vocabularies/WV/logo'
         priority: 3
     acronym:
-      - jsonPath: "$.['https://w3id.org/mod#acronym']"
+      - jsonPath: "$.ontologyId"
         type: 'xsd:string'
         contextReference: 'mod:acronym'
         priority: 1
+      - jsonPath: "$.['https://w3id.org/mod#acronym']"
+        type: 'xsd:string'
+        contextReference: 'mod:acronym'
+        priority: 2
       - jsonPath: "$.['https://www.omg.org/spec/Commons/AnnotationVocabulary/acronym']"
         type: 'xsd:string'
         contextReference: 'https://www.omg.org/spec/Commons/AnnotationVocabulary/acronym'
-        priority: 2
+        priority: 3
       - jsonPath: "$.['http://omv.ontoware.org/2005/05/ontologyacronym']"
         type: 'xsd:string'
         contextReference: 'http://omv.ontoware.org/2005/05/ontologyacronym'
-        priority: 3
+        priority: 4
     competencyQuestion:
       - jsonPath: "$.['https://www.tno.nl/agrifood/ontology/common-greenhouse-ontology#competencyQuestion']"
         type: 'xsd:string'

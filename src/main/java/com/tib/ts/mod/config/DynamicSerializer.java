@@ -43,21 +43,21 @@ public class DynamicSerializer<T> extends StdSerializer<T> {
 			try {
 				Object attributeValue = field.get(value);
 				String attributeName = field.getName();
-				
-				if(attributeName.equalsIgnoreCase("uriregexpattern")) {
+
+				if (attributeName.equalsIgnoreCase("uriregexpattern")) {
 					System.out.println("Found");
 				}
 
 				if (attributeValue != null && isDTO(attributeValue)) {
 					JsonRootName jsonProperty = attributeValue.getClass().getDeclaredAnnotation(JsonRootName.class);
-					//attributeValue.getClass().getDeclaredFields()
+					// attributeValue.getClass().getDeclaredFields()
 					if (jsonProperty != null && !jsonProperty.value().isEmpty()) {
 						attributeName = jsonProperty.value();
 					}
 					gen.writeFieldName(attributeName);
 					serialize((T) attributeValue, gen, provider);
-					
-				} else if(attributeValue != null && isListOfDTO(attributeValue)) {
+
+				} else if (attributeValue != null && isListOfDTO(attributeValue)) {
 					JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
 
 					if (jsonProperty != null && !jsonProperty.value().isEmpty()) {
@@ -66,7 +66,7 @@ public class DynamicSerializer<T> extends StdSerializer<T> {
 					gen.writeFieldName(attributeName);
 					gen.writeStartArray();
 					List<?> list = (List<?>) attributeValue;
-					for(Object item : list) {
+					for (Object item : list) {
 						serialize((T) item, gen, provider);
 					}
 					gen.writeEndArray();

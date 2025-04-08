@@ -131,7 +131,7 @@ public class MetadataMapper {
 		try {
 			if (value instanceof List) {
 				List<String> valueList = (List<String>) value;
-				if (valueList.isEmpty())
+				if (valueList.isEmpty() || valueList.stream().filter(str -> str != null).toList().isEmpty())
 					return;
 				Object attributeValue;
 

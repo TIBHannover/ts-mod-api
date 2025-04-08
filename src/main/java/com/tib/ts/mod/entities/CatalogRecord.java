@@ -1,8 +1,5 @@
 package com.tib.ts.mod.entities;
 
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -19,19 +16,19 @@ import lombok.Setter;
 public class CatalogRecord {
 	
 	@JsonProperty("conformsTo")
-	private List<Map<String, String>> catalogRecordConformsTo;
+	private Object catalogRecordConformsTo;
 
 	@JsonProperty("description")
-	private List<Map<String, String>> catalogRecordDescription;
+	private Object catalogRecordDescription;
 
 	@JsonProperty("issued")
-	private List<Map<String, String>> catalogRecordIssued;
+	private Object catalogRecordIssued;
 
 	@JsonProperty("modified")
-	private List<Map<String, String>> catalogRecordModified;
+	private Object catalogRecordModified;
 
 	@JsonProperty("title")
-	private List<Map<String, String>> catalogRecordTitle;
+	private Object catalogRecordTitle;
 
 	@JsonProperty("primaryTopic")
 	private Resource catalogRecordPrimaryTopic;

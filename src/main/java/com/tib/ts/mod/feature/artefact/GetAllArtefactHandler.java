@@ -100,8 +100,7 @@ class GetAllArtefactHandler implements ServiceHandler {
 
 		MappingRule rules = configLoader.mergeConfiguration(String.join(",",request.getDisplay()),
 															AttributeFile.SEMANTIC_ARTEFACT,
-															AttributeFile.DCAT_RESOURCE,
-															AttributeFile.DCAT_DATA_SERVICE);
+															AttributeFile.DCAT_RESOURCE);
 
 		request.setMappingRule(rules);
 
@@ -141,6 +140,7 @@ class GetAllArtefactHandler implements ServiceHandler {
 				logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
 				
 				if (semanticArtefact != null) {
+					semanticArtefact.setSemanticArtefactType("mod:semanticArtefact");
 					semanticArtefacts.add(semanticArtefact);
 				}
 			}

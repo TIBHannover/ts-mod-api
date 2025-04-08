@@ -5,6 +5,9 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tib.ts.mod.config.DynamicSerializer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +20,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonSerialize(using = DynamicSerializer.class)
+@JsonRootName(value = "mod:SemanticArtefactDistribution")
 public class SemanticArtefactDistribution extends Distribution {
 	
 	@JsonProperty("@context")
@@ -29,142 +34,142 @@ public class SemanticArtefactDistribution extends Distribution {
 	private Object semanticArtefactDistributionType;
 
 	@JsonProperty("useGuidelines")
-	private List<Map<String, String>> useGuidelines;
+	private Object useGuidelines;
 
 	@JsonProperty("created")
-	private List<Map<String, String>> created;
+	private Object created;
 
 	@JsonProperty("dateSubmitted")
-	private List<Map<String, String>> dateSubmitted;
+	private Object dateSubmitted;
 
 	@JsonProperty("valid")
-	private List<Map<String, String>> valid;
+	private Object valid;
 
 	@JsonProperty("authorProperty")
-	private List<Map<String, String>> authorProperty;
+	private Object authorProperty;
 
 	@JsonProperty("averageChildCount")
-	private List<Map<String, String>> averageChildCount;
+	private Object averageChildCount;
 
 	@JsonProperty("browsingUI")
-	private List<Map<String, String>> browsingUI;
+	private Object browsingUI;
 
 	@JsonProperty("classesWithMoreThan25Children")
-	private List<Map<String, String>> classesWithMoreThan25Children;
+	private Object classesWithMoreThan25Children;
 
 	@JsonProperty("classesWithNoAuthorMetadata")
-	private List<Map<String, String>> classesWithNoAuthorMetadata;
+	private Object classesWithNoAuthorMetadata;
 
 	@JsonProperty("classesWithNoDateMetadata")
-	private List<Map<String, String>> classesWithNoDateMetadata;
+	private Object classesWithNoDateMetadata;
 
 	@JsonProperty("classesWithNoDefinition")
-	private List<Map<String, String>> classesWithNoDefinition;
+	private Object classesWithNoDefinition;
 
 	@JsonProperty("classesWithNoFormalDefinition")
-	private List<Map<String, String>> classesWithNoFormalDefinition;
+	private Object classesWithNoFormalDefinition;
 
 	@JsonProperty("classesWithNoLabel")
-	private List<Map<String, String>> classesWithNoLabel;
+	private Object classesWithNoLabel;
 
 	@JsonProperty("classesWithOneChild")
-	private List<Map<String, String>> classesWithOneChild;
+	private Object classesWithOneChild;
 
 	@JsonProperty("conformsToKnowledgeRepresentationParadigm")
-	private List<Map<String, String>> conformsToKnowledgeRepresentationParadigm;
+	private Object conformsToKnowledgeRepresentationParadigm;
 
 	@JsonProperty("createdProperty")
-	private List<Map<String, String>> createdProperty;
+	private Object createdProperty;
 
 	@JsonProperty("curatedOn")
-	private List<Map<String, String>> curatedOn;
+	private Object curatedOn;
 
 	@JsonProperty("definitionProperty")
-	private List<Map<String, String>> definitionProperty;
+	private Object definitionProperty;
 
 	@JsonProperty("fairAssessment")
-	private List<Map<String, String>> fairAssessment;
+	private Object fairAssessment;
 
 	@JsonProperty("fairScore")
-	private List<Map<String, String>> fairScore;
+	private Object fairScore;
 
 	@JsonProperty("hasRepresentationLanguage")
-	private List<Map<String, String>> hasRepresentationLanguage;
+	private Object hasRepresentationLanguage;
 
 	@JsonProperty("hasSyntax")
-	private List<Map<String, String>> hasSyntax;
+	private Object hasSyntax;
 
 	@JsonProperty("hierarchyProperty")
-	private List<Map<String, String>> hierarchyProperty;
+	private Object hierarchyProperty;
 
 	@JsonProperty("maxChildCount")
-	private List<Map<String, String>> maxChildCount;
+	private Object maxChildCount;
 
 	@JsonProperty("maxDepth")
-	private List<Map<String, String>> maxDepth;
+	private Object maxDepth;
 
 	@JsonProperty("metadataVoc")
-	private List<Map<String, String>> metadataVoc;
+	private Object metadataVoc;
 
 	@JsonProperty("metrics")
-	private List<Map<String, String>> metrics;
+	private Object metrics;
 
 	@JsonProperty("modifiedProperty")
-	private List<Map<String, String>> modifiedProperty;
+	private Object modifiedProperty;
 
 	@JsonProperty("numberOfAxioms")
-	private List<Map<String, String>> numberOfAxioms;
+	private Object numberOfAxioms;
 
 	@JsonProperty("numberOfClasses")
-	private String numberOfClasses;
+	private Object numberOfClasses;
 
 	@JsonProperty("numberOfDataProperties")
-	private String numberOfDataProperties;
+	private Object numberOfDataProperties;
 
 	@JsonProperty("numberOfDeprecated")
-	private String numberOfDeprecated;
+	private Object numberOfDeprecated;
 
 	@JsonProperty("numberOfIndividuals")
-	private String numberOfIndividuals;
+	private Object numberOfIndividuals;
 
 	@JsonProperty("numberOfLabels")
-	private String numberOfLabels;
+	private Object numberOfLabels;
 
 	@JsonProperty("numberOfMappings")
-	private String numberOfMappings;
+	private Object numberOfMappings;
 
 	@JsonProperty("numberOfObjectProperties")
-	private String numberOfObjectProperties;
+	private Object numberOfObjectProperties;
 
 	@JsonProperty("numberOfProperties")
-	private String numberOfProperties;
+	private Object numberOfProperties;
 
 	@JsonProperty("obsoleteParent")
-	private List<Map<String, String>> obsoleteParent;
+	private Object obsoleteParent;
 
 	@JsonProperty("obsoleteProperty")
-	private List<Map<String, String>> obsoleteProperty;
+	private Object obsoleteProperty;
 
 	@JsonProperty("prefLabelProperty")
-	private List<Map<String, String>> prefLabelProperty;
+	private Object prefLabelProperty;
 
 	@JsonProperty("sampleQueries")
-	private List<Map<String, String>> sampleQueries;
+	private Object sampleQueries;
 
 	@JsonProperty("synonymProperty")
-	private List<Map<String, String>> synonymProperty;
+	private Object synonymProperty;
 
 	@JsonProperty("usedEngineeringMethodology")
-	private List<Map<String, String>> usedEngineeringMethodology;
+	private Object usedEngineeringMethodology;
 
 	@JsonProperty("deprecated")
-	private List<Map<String, String>> deprecated;
+	private Object deprecated;
 
 	@JsonProperty("imports")
-	private List<Map<String, String>> imports;
+	private Object imports;
 
 	@JsonProperty("endpoint")
-	private List<Map<String, String>> endpoint;
+	private Object endpoint;
 
 	@JsonGetter("@type")
     public String getTypeAsString() {

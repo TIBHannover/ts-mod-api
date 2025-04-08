@@ -1,8 +1,5 @@
 package com.tib.ts.mod.entities;
 
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -22,57 +19,57 @@ public class Distribution {
 	private DataService accessService;
 	
 	@JsonProperty("accessRights")
-    private List<Map<String, String>> accessRights;
+    private Object accessRights;
 
     @JsonProperty("accessURL")
-    private List<Map<String, String>> accessURL;
+    private Object accessURL;
 
     @JsonProperty("byteSize")
-    private List<Map<String, String>> byteSize;
+    private Object byteSize;
 
     @JsonProperty("compressFormat")
-    private List<Map<String, String>> compressFormat;
+    private Object compressFormat;
 
     @JsonProperty("conformsTo")
-    private List<Map<String, String>> conformsTo;
+    private Object conformsTo;
 
     @JsonProperty("description")
-    private List<Map<String, String>> description;
+    private Object description;
 
     @JsonProperty("downloadURL")
-    private List<Map<String, String>> downloadURL;
+    private Object downloadURL;
 
     @JsonProperty("format")
-    private List<Map<String, String>> format;
+    private Object format;
 
     @JsonProperty("hasPolicy")
-    private List<Map<String, String>> hasPolicy;
+    private Object hasPolicy;
 
     @JsonProperty("issued")
-    private List<Map<String, String>> issued;
+    private Object issued;
 
     @JsonProperty("license")
-    private List<Map<String, String>> license;
+    private Object license;
 
     @JsonProperty("mediaType")
-    private List<Map<String, String>> mediaType;
+    private Object mediaType;
 
     @JsonProperty("modified")
-    private List<Map<String, String>> modified;
+    private Object modified;
 
     @JsonProperty("packageFormat")
-    private List<Map<String, String>> packageFormat;
+    private Object packageFormat;
 
     @JsonProperty("rights")
-    private List<Map<String, String>> rights;
+    private Object rights;
 
     @JsonProperty("spatialResolutionInMeters")
-    private List<Map<String, String>> spatialResolutionInMeters;
+    private Object spatialResolutionInMeters;
 
     @JsonProperty("temporalResolution")
-    private List<Map<String, String>> temporalResolution;
+    private Object temporalResolution;
 
     @JsonProperty("title")
-    private List<Map<String, String>> title;
+    private Object title;
 
 }

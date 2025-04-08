@@ -1,65 +1,73 @@
 modAttributes:
   # DCATResourceAttributes
+    
+    accessRights:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:accessRights'
+        priority: 1
     conformsTo:
       - jsonPath: "$['http://purl.org/dc/terms/conformsTo']"
-        type: 'foaf:Agent'
+        type: 'string'
         contextReference: 'dcterms:conformsTo'
-        fair: ['default']
         priority: 1
     contactPoint:
       - jsonPath: "$.mailing_list"
         type: 'vcard:kind'
         contextReference: 'dcat:contactPoint'
-        fair: ['default']
         priority: 1
     creator:
       - jsonPath: "$.creator"
-        type: 'foaf:Agent'
+        type: 'string'
         contextReference: 'dcterms:creator'
-        fair: ['default']
         priority: 1
     description:
       - jsonPath: "$.description"
         type: 'rdfs:Literal'
         contextReference: 'dcterms:description'
-        fair: ['default']
         priority: 1
     identifier:
       - jsonPath: "$['http://purl.org/dc/terms/identifier']"
-        type: 'dcterms:identifier'
+        type: 'rdfs:Literal'
         contextReference: 'dcterms:identifier'
         priority: 1
     isReferencedBy:
       - jsonPath: "$['http://purl.org/dc/terms/isReferencedBy']"
-        type: 'dcterms:isReferencedBy'
+        type: 'string'
         contextReference: 'dcterms:isReferencedBy'
         priority: 1
     issued:
       - jsonPath: "$['http://purl.org/dc/terms/issued']"
-        type: 'rdfs:Literal'
+        type: 'string'
         contextReference: 'dcterms:issued'
+        priority: 1
+    keyword:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:keyword'
+        priority: 1
+    landingPage:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:landingPage'
         priority: 1
     language:
       - jsonPath: "$.language"
-        type: 'dcterms:LinguisticSystem'
+        type: 'string'
         contextReference: 'dcterms:language'
-        fair: ['default']
         priority: 1
       - jsonPath: "$.defaultLanguage"
-        type: 'dcterms:LinguisticSystem'
+        type: 'string'
         contextReference: 'dcterms:language'
-        fair: ['default']
         priority: 2
     license:
       - jsonPath: "$['http://purl.org/dc/terms/license']"
-        type: 'dcterms:LicenseDocument'
+        type: 'string'
         contextReference: 'dcterms:license'
-        fair: ['default']
         priority: 1
       - jsonPath: "$.license.url"
-        type: 'dcterms:LicenseDocument'
+        type: 'string'
         contextReference: 'dcterms:license'
-        fair: ['default']
         priority: 2
     modified:
       - jsonPath: "$['http://purl.org/dc/terms/modified']"
@@ -68,43 +76,41 @@ modAttributes:
         priority: 1
     publisher:
       - jsonPath: "$['http://purl.org/dc/terms/publisher']"
-        type: 'foaf:Agent'
+        type: 'string'
         contextReference: 'dcterms:publisher'
         priority: 1
     rights:
       - jsonPath: "$['http://purl.org/dc/terms/rights']"
-        type: 'dcterms:RightsStatement'
+        type: 'string'
         contextReference: 'dcterms:rights'
         priority: 1
       - jsonPath: "$['http://purl.org/dc/elements/1.1/rights']"
-        type: 'dcterms:RightsStatement'
-        contextReference: 'dc:rights'
+        type: 'string'
+        contextReference: 'dcterms:rights'
         priority: 2
     subject:
       - jsonPath: "$.classifications[*].subject[*]"
+        type: 'string'
         contextReference: 'dcterms:subject'
         priority: 1
     title:
       - jsonPath: "$.title"
         type: 'rdfs:Literal'
         contextReference: 'dcterms:title'
-        fair: ['default']
         priority: 1
       - jsonPath: "$['http://purl.org/dc/terms/title']"
         type: 'rdfs:Literal'
         contextReference: 'dcterms:title'
-        fair: ['default']
         priority: 2
       - jsonPath: "$['http://purl.org/dc/elements/1.1/title']"
         type: 'rdfs:Literal'
-        contextReference: 'dc:title'
-        fair: ['default']
+        contextReference: 'dcterms:title'
         priority: 3
     type:
       - jsonPath: "$.type"
+        type: 'string'
         contextReference: 'dcterms:type'
-        fair: ['default']
-        priority: 1     
+        priority: 1  
         
         
         

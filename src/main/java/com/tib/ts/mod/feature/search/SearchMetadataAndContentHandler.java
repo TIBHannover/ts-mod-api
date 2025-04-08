@@ -121,6 +121,7 @@ class SearchMetadataAndContentHandler implements ServiceHandler {
 				logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
 				
 				if (semanticArtefact != null) {
+					semanticArtefact.setSemanticArtefactType("mod:semanticArtefact");
 					semanticArtefacts.add(semanticArtefact);
 				}
 			}

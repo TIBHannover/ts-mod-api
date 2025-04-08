@@ -2,7 +2,7 @@ modAttributes:
 # SemanticArtefactDistribution Attributes
     semanticArtefactDistributionId:
       - jsonPath: "$.versioned_url"
-        fair: ['default']
+        type: 'string'
         priority: 1
     created:
       - jsonPath: "$.['http://purl.org/dc/terms/created']"
@@ -30,14 +30,17 @@ modAttributes:
         priority: 1
     numberOfClasses:
       - jsonPath: "$.numberOfClasses"
+        type: 'integer'
         contextReference: 'mod:numberOfClasses'
         priority: 1
     numberOfIndividuals:
       - jsonPath: "$.numberOfIndividuals"
+        type: 'integer'
         contextReference: 'mod:numberOfIndividuals'
         priority: 1
     numberOfProperties:
       - jsonPath: "$.numberOfProperties"
+        type: 'integer'
         contextReference: 'mod:numberOfProperties'
         priority: 1
     prefLabelProperty:

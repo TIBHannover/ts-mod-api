@@ -1,8 +1,5 @@
 package com.tib.ts.mod.entities;
 
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -16,13 +13,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DataService extends Resource{
+public class DataService extends Resource {
 
 	@JsonProperty("endpointDescription")
-	private List<Map<String, String>> endpointDescription;
+	private Object endpointDescription;
 
 	@JsonProperty("endpointURL")
-	private List<Map<String, String>> endpointURL;
+	private Object endpointURL;
 
 	@JsonProperty("servesDataset")
 	private DataSet servesDataset;

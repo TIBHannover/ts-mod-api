@@ -1,9 +1,11 @@
 package com.tib.ts.mod.entities;
 
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tib.ts.mod.config.DynamicSerializer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +17,8 @@ import lombok.Setter;
 */
 
 @Getter
-@Setter
+@Setter@JsonSerialize(using = DynamicSerializer.class)
+@JsonRootName(value = "mod:SemanticArtefactCatalogRecord")
 public class SemanticArtefactCatalogRecord extends CatalogRecord {
 	
 	@JsonProperty("@context")
@@ -28,18 +31,18 @@ public class SemanticArtefactCatalogRecord extends CatalogRecord {
 	private Object semanticArtefactCatalogRecordType;
 
 	@JsonProperty("dateSubmitted")
-	private List<Map<String, String>> dateSubmitted;
+	private Object dateSubmitted;
 
 	@JsonProperty("homepage")
-	private List<Map<String, String>> homepage;
+	private Object homepage;
 
 	@JsonProperty("created")
-	private List<Map<String, String>> created;
+	private Object created;
 
 	@JsonProperty("curatedBy")
-	private List<Map<String, String>> curatedBy;
+	private Object curatedBy;
 
 	@JsonProperty("curatedOn")
-	private List<Map<String, String>> curatedOn;
+	private Object curatedOn;
 
 }

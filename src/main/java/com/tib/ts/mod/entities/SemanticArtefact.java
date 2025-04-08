@@ -1,10 +1,12 @@
 package com.tib.ts.mod.entities;
 
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tib.ts.mod.config.DynamicSerializer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +21,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SemanticArtefact extends Resource {
+@JsonSerialize(using = DynamicSerializer.class)
+@JsonRootName(value = "mod:SemanticArtefact")
+public class SemanticArtefact extends Resource{
 	
 	@JsonProperty("@context")
 	private Map<String, String> context;
@@ -31,256 +35,271 @@ public class SemanticArtefact extends Resource {
 	private Object semanticArtefactType;
 	
 	@JsonProperty("useGuidelines")
-	private List<Map<String, String>> useGuidelines;
+	private Object useGuidelines;
 
 	@JsonProperty("morePermissions")
-	private List<Map<String, String>> morePermissions;
+	private Object morePermissions;
 
-	@JsonProperty("downloadURL")
-	private List<Map<String, String>> downloadURL;
+	//@JsonProperty("downloadURL")
+	//private Object downloadURL;
 
 	@JsonProperty("primaryTopic")
-	private List<Map<String, String>> primaryTopic;
+	private Object primaryTopic;
 
 	@JsonProperty("abstract")
-	private List<Map<String, String>> abstracts;
+	private Object abstracts;
 
 	@JsonProperty("accrualMethod")
-	private List<Map<String, String>> accrualMethod;
+	private Object accrualMethod;
 
 	@JsonProperty("accrualPeriodicity")
-	private List<Map<String, String>> accrualPeriodicity;
+	private Object accrualPeriodicity;
 
 	@JsonProperty("accrualPolicy")
-	private List<Map<String, String>> accrualPolicy;
+	private Object accrualPolicy;
 
 	@JsonProperty("alternative")
-	private List<Map<String, String>> alternative;
+	private Object alternative;
 
 	@JsonProperty("audience")
-	private List<Map<String, String>> audience;
+	private Object audience;
 
 	@JsonProperty("bibliographicCitation")
-	private List<Map<String, String>> bibliographicCitation;
+	private Object bibliographicCitation;
 
 	@JsonProperty("contributor")
-	private List<Map<String, String>> contributor;
+	private Object contributor;
 
 	@JsonProperty("coverage")
-	private List<Map<String, String>> coverage;
+	private Object coverage;
 
 	@JsonProperty("hasFormat")
-	private List<Map<String, String>> hasFormat;
+	private Object hasFormat;
 
 	@JsonProperty("hasPart")
-	private List<Map<String, String>> hasPart;
+	private Object hasPart;
 
 	@JsonProperty("hasVersion")
-	private List<Map<String, String>> hasVersion;
+	private Object hasVersion;
 
 	@JsonProperty("isFormatOf")
-	private List<Map<String, String>> isFormatOf;
+	private Object isFormatOf;
 
 	@JsonProperty("isPartOf")
-	private List<Map<String, String>> isPartOf;
+	private Object isPartOf;
 
 	@JsonProperty("rightsHolder")
-	private List<Map<String, String>> rightsHolder;
+	private Object rightsHolder;
 
 	@JsonProperty("source")
-	private List<Map<String, String>> source;
+	private Object source;
 
 	@JsonProperty("bug-database")
-	private List<Map<String, String>> bugDatabase;
+	private Object bugDatabase;
 
 	@JsonProperty("mailing-list")
-	private List<Map<String, String>> mailingList;
+	private Object mailingList;
 
 	@JsonProperty("repository")
-	private List<Map<String, String>> repository;
+	private Object repository;
 
 	@JsonProperty("depiction")
-	private List<Map<String, String>> depiction;
+	private Object depiction;
 
 	@JsonProperty("fundedBy")
-	private List<Map<String, String>> fundedBy;
+	private Object fundedBy;
 
 	@JsonProperty("homepage")
-	private List<Map<String, String>> homepage;
+	private Object homepage;
 
 	@JsonProperty("logo")
-	private List<Map<String, String>> logo;
+	private Object logo;
 
 	@JsonProperty("acronym")
-	private String acronym;
+	private Object acronym;
 
 	@JsonProperty("analytics")
-	private List<Map<String, String>> analytics;
+	private Object analytics;
 
 	@JsonProperty("comesFromTheSameDomain")
-	private List<Map<String, String>> comesFromTheSameDomain;
+	private Object comesFromTheSameDomain;
 
 	@JsonProperty("competencyQuestion")
-	private List<Map<String, String>> competencyQuestion;
+	private Object competencyQuestion;
 
-	@JsonProperty("curatedBy")
-	private List<Map<String, String>> curatedBy;
+	//@JsonProperty("curatedBy")
+	//private Object curatedBy;
 
-	@JsonProperty("createdWith")
-	private List<Map<String, String>> createdWith;
+	//@JsonProperty("createdWith")
+	//private Object createdWith;
 
 	@JsonProperty("designedForTask")
-	private SemanticArtefactService designedForTask;
+	private Object designedForTask;
 
 	@JsonProperty("endorsedBy")
-	private List<Map<String, String>> endorsedBy;
+	private Object endorsedBy;
 
 	@JsonProperty("generalizes")
-	private List<Map<String, String>> generalizes;
+	private Object generalizes;
 
 	@JsonProperty("group")
-	private List<Map<String, String>> group;
+	private Object group;
 
 	@JsonProperty("hasDisjunctionsWith")
-	private List<Map<String, String>> hasDisjunctionsWith;
+	private Object hasDisjunctionsWith;
 
 	@JsonProperty("hasDisparateModelling")
-	private List<Map<String, String>> hasDisparateModelling;
+	private Object hasDisparateModelling;
 
 	@JsonProperty("hasEquivalencesWith")
-	private List<Map<String, String>> hasEquivalencesWith;
+	private Object hasEquivalencesWith;
 
 	@JsonProperty("hasEvaluation")
-	private List<Map<String, String>> hasEvaluation;
+	private Object hasEvaluation;
 
-	@JsonProperty("hasFormalityLevel")
-	private List<Map<String, String>> hasFormalityLevel;
+	//@JsonProperty("hasFormalityLevel")
+	//private Object hasFormalityLevel;
 
 	@JsonProperty("knownUsage")
-	private List<Map<String, String>> knownUsage;
+	private Object knownUsage;
 
 	@JsonProperty("metrics")
-	private List<Map<String, String>> metrics;
+	private Object metrics;
 
 	@JsonProperty("numberOfAgents")
-	private List<Map<String, String>> numberOfAgents;
+	private Object numberOfAgents;
 
-	@JsonProperty("numberOfEnsorments")
-	private List<Map<String, String>> numberOfEnsorments;
+	@JsonProperty("numberOfEndorsements")
+	private Object numberOfEndorsements;
 
 	@JsonProperty("numberOfEvaluations")
-	private List<Map<String, String>> numberOfEvaluations;
+	private Object numberOfEvaluations;
 
 	@JsonProperty("numberOfNotes")
-	private List<Map<String, String>> numberOfNotes;
+	private Object numberOfNotes;
 
 	@JsonProperty("numberOfUsers")
-	private List<Map<String, String>> numberOfUsers;
+	private Object numberOfUsers;
 
 	@JsonProperty("numberOfUsingProjects")
-	private List<Map<String, String>> numberOfUsingProjects;
+	private Object numberOfUsingProjects;
 
 	@JsonProperty("reliesOn")
-	private List<Map<String, String>> reliesOn;
+	private Object reliesOn;
 
 	@JsonProperty("semanticArtefactRelation")
-	private List<Map<String, String>> semanticArtefactRelation;
+	private Object semanticArtefactRelation;
 
 	@JsonProperty("similar")
-	private List<Map<String, String>> similar;
+	private Object similar;
 
 	@JsonProperty("specializes")
-	private List<Map<String, String>> specializes;
+	private Object specializes;
 
 	@JsonProperty("status")
-	private List<Map<String, String>> status;
+	private Object status;
 
 	@JsonProperty("toDoList")
-	private List<Map<String, String>> toDoList;
+	private Object toDoList;
 
 	@JsonProperty("URI")
-	private List<Map<String, String>> uri;
+	private Object uri;
 
 	@JsonProperty("usedBy")
-	private List<Map<String, String>> usedBy;
+	private Object usedBy;
 
 	@JsonProperty("usedInProject")
-	private List<Map<String, String>> usedInProject;
+	private Object usedInProject;
+	
+	@JsonProperty("backwardCompatibleWith")
+	private Object backwardCompatibleWith;
 
 	@JsonProperty("deprecated")
-	private List<Map<String, String>> deprecated;
+	private Object deprecated;
+	
+	@JsonProperty("incompatibleWith")
+	private Object incompatibleWith;
 
 	@JsonProperty("priorVersion")
-	private List<Map<String, String>> priorVersion;
+	private Object priorVersion;
 
 	@JsonProperty("versionInfo")
-	private List<Map<String, String>> versionInfo;
+	private Object versionInfo;
 
 	@JsonProperty("versionIRI")
-	private List<Map<String, String>> versionIRI;
+	private Object versionIRI;
+	
+	@JsonProperty("curatedBy")
+	private Object curatedBy;
+	
+	@JsonProperty("createdWith")
+	private Object createdWith;
 
 	@JsonProperty("wasGeneratedBy")
-	private List<Map<String, String>> wasGeneratedBy;
+	private Object wasGeneratedBy;
 
 	@JsonProperty("wasInvalidatedBy")
-	private List<Map<String, String>> wasInvalidatedBy;
+	private Object wasInvalidatedBy;
 
 	@JsonProperty("comment")
-	private List<Map<String, String>> comment;
+	private Object comment;
 
 	@JsonProperty("associatedMedia")
-	private List<Map<String, String>> associatedMedia;
+	private Object associatedMedia;
 
 	@JsonProperty("award")
-	private List<Map<String, String>> award;
+	private Object award;
 
 	@JsonProperty("schemaComment")
-	private List<Map<String, String>> schemaComment;
+	private Object schemaComment;
 
 	@JsonProperty("funding")
-	private List<Map<String, String>> funding;
+	private Object funding;
 
 	@JsonProperty("includedInDataCatalog")
-	private List<Map<String, String>> includedInDataCatalog;
+	private Object includedInDataCatalog;
 
 	@JsonProperty("translator")
-	private List<Map<String, String>> translator;
+	private Object translator;
+
+	@JsonProperty("workTranslation")
+	private Object workTranslation;
 
 	@JsonProperty("hiddenLabel")
-	private List<Map<String, String>> hiddenLabel;
+	private Object hiddenLabel;
 
 	@JsonProperty("changes")
-	private List<Map<String, String>> changes;
+	private Object changes;
 
 	@JsonProperty("example")
-	private List<Map<String, String>> example;
+	private Object example;
 
 	@JsonProperty("preferredNamespacePrefix")
-	private List<Map<String, String>> preferredNamespacePrefix;
+	private Object preferredNamespacePrefix;
 
 	@JsonProperty("preferredNamespaceUri")
-	private List<Map<String, String>> preferredNamespaceUri;
+	private Object preferredNamespaceUri;
 
 	@JsonProperty("openSearchDescription")
-	private List<Map<String, String>> openSearchDescription;
+	private Object openSearchDescription;
 
 	@JsonProperty("classPartition")
-	private List<Map<String, String>> classPartition;
+	private Object classPartition;
 
 	@JsonProperty("exampleResource")
-	private List<Map<String, String>> exampleResource;
+	private Object exampleResource;
 
 	@JsonProperty("rootResource")
-	private List<Map<String, String>> rootResource;
+	private Object rootResource;
 
 	@JsonProperty("propertyPartition")
-	private List<Map<String, String>> propertyPartition;
+	private Object propertyPartition;
 
 	@JsonProperty("uriLookupEndpoint")
-	private List<Map<String, String>> uriLookupEndpoint;
+	private Object uriLookupEndpoint;
 
 	@JsonProperty("uriRegexPattern")
-	private List<Map<String, String>> uriRegexPattern;
+	private Object uriRegexPattern;
 
 	@JsonGetter("@id")
     public String getIdAsString() {

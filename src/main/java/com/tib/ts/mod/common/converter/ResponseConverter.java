@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.tib.ts.mod.config.DynamicSerializer;
+import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.enums.FormatOption;
 
 /**
@@ -35,9 +36,6 @@ public class ResponseConverter {
 
 	private static final Logger logger = LoggerFactory.getLogger(ResponseConverter.class);
 	
-	private ObjectMapper objectMapper = new ObjectMapper()
-			.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
 	public static <T> String convert(T response, FormatOption format, List<String> defaultFields) {
 		String results = "";
 		

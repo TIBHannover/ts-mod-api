@@ -18,7 +18,7 @@ public class JacksonConfig {
 	@Bean
 	public ObjectMapper objectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+       // mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper;
 	}
 

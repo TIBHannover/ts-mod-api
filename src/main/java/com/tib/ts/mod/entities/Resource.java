@@ -1,9 +1,8 @@
 package com.tib.ts.mod.entities;
 
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tib.ts.mod.config.DynamicSerializer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,73 +15,73 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
+@JsonSerialize(using = DynamicSerializer.class)
 public class Resource {
 	
 	@JsonProperty("accessRights")
-	private List<Map<String, String>> accessRights;
+	private Object accessRights;
 	
 	@JsonProperty("conformsTo")
-	private List<Map<String, String>> conformsTo;
+	private Object conformsTo;
 	
 	@JsonProperty("contactPoint")
-	private List<Map<String, String>> contactPoint;
+	private Object contactPoint;
 	
 	@JsonProperty("creator")
-	private List<Map<String, String>> creator;
+	private Object creator;
 	
 	@JsonProperty("description")
-	private List<Map<String, String>> description;
+	private Object description;
 	
 	@JsonProperty("hasPolicy")
-	private List<Map<String, String>> hasPolicy;
+	private Object hasPolicy;
 	
 	@JsonProperty("identifier")
-	private List<Map<String, String>> identifier;
+	private Object identifier;
 	
 	@JsonProperty("isReferencedBy")
-	private List<Map<String, String>> isReferencedBy;
+	private Object isReferencedBy;
 	
 	@JsonProperty("issued")
-	private List<Map<String, String>> issued;
+	private Object issued;
 	
 	@JsonProperty("keyword")
-	private List<Map<String, String>> keyword;
+	private Object keyword;
 	
 	@JsonProperty("landingPage")
-	private List<Map<String, String>> landingPage;
+	private Object landingPage;
 	
 	@JsonProperty("language")
-	private List<Map<String, String>> language;
+	private Object language;
 	
 	@JsonProperty("license")
-	private List<Map<String, String>> license;
+	private Object license;
 	
 	@JsonProperty("modified")
-	private List<Map<String, String>> modified;
+	private Object modified;
 	
 	@JsonProperty("publisher")
-	private List<Map<String, String>> publisher;
+	private Object publisher;
 	
 	@JsonProperty("qualifiedAttribution")
-	private List<Map<String, String>> qualifiedAttribution;
+	private Object qualifiedAttribution;
 	
 	@JsonProperty("qualifiedRelation")
-	private List<Map<String, String>> qualifiedRelation;
+	private Object qualifiedRelation;
 	
 	@JsonProperty("relation")
-	private List<Map<String, String>> relation;
+	private Object relation;
 	
 	@JsonProperty("rights")
-	private List<Map<String, String>> rights;
+	private Object rights;
 	
 	@JsonProperty("subject")
-	private List<Map<String, String>> subject;
+	private Object subject;
 	
 	@JsonProperty("title")
-	private List<Map<String, String>> title;
+	private Object title;
 	
 	@JsonProperty("type")
-	private List<Map<String, String>> type;
+	private Object type;
 
 }

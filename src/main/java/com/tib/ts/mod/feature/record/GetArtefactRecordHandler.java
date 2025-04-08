@@ -16,8 +16,10 @@ import com.tib.ts.mod.common.mapper.DynamicConfigLoader;
 import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
+import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.SemanticArtefactCatalogRecord;
 import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.repository.OlsRepository;
 
@@ -134,8 +136,11 @@ class GetArtefactRecordHandler implements ServiceHandler {
 			logger.debug("Mapped SemanticArtefactCatalogRecord: {}", semanticArtefactCatalogRecord);
 			
 			if (semanticArtefactCatalogRecord != null) {
-				semanticArtefactCatalogRecord.setContext(Context.getContext());
-				result = ResponseConverter.convert(semanticArtefactCatalogRecord, request.getFormat(), request.getDisplay());
+				ResponseDTO<SemanticArtefactCatalogRecord> responseDto = new ResponseDTO<SemanticArtefactCatalogRecord>();
+				responseDto.setContext(Context.getContext());
+				semanticArtefactCatalogRecord.setSemanticArtefactCatalogRecordType("mod:SemanticArtefactCatalogRecord");
+				responseDto.setJsonResult(semanticArtefactCatalogRecord);
+				result = ResponseConverter.convert(responseDto, request.getFormat(), request.getDisplay());
 			}
 
 		} catch (Exception e) {

@@ -43,7 +43,7 @@ public class SemanticArtefactCatalog {
 	private String creator;
 	
 	@JsonProperty("description")
-	private String escription;
+	private String description;
 
 	@JsonProperty("identifier")
 	private String identifier;

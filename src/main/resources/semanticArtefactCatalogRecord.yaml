@@ -4,31 +4,17 @@ modAttributes:
       - jsonPath: "$.homepage"
         type: 'foaf:Document'
         contextReference: 'foaf:homepage'
-        fair: ['default']
         priority: 1
       - jsonPath: "$.['http://xmlns.com/foaf/0.1/homepage']"
         type: 'foaf:Document'
         contextReference: 'foaf:homepage'
-        fair: ['default']
         priority: 2
       - jsonPath: "$.['http://usefulinc.com/ns/doap#homepage']"
         type: 'foaf:Document'
         contextReference: 'doap:homepage'
-        fair: ['default']
         priority: 3
     created:
-      - jsonPath: "$.['http://purl.org/dc/terms/created']"
+      - jsonPath: "$.loaded"
         type: 'rdfs:Literal'
         contextReference: 'dcterms:created'
-        fair: ['default']
         priority: 1
-      - jsonPath: "$.['http://purl.org/dc/elements/1.1/created']"
-        type: 'rdfs:Literal'
-        contextReference: 'dc:created'
-        fair: ['default']
-        priority: 2
-      - jsonPath: "$.['http://www.geneontology.org/formats/oboInOwl#creation_date']"
-        type: 'rdfs:Literal'
-        contextReference: 'http://www.geneontology.org/formats/oboInOwl#creation_date'
-        fair: ['default']
-        priority: 3

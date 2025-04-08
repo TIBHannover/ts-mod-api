@@ -4,11 +4,9 @@ modAttributes:
       - jsonPath: "$.endpointDescription"
         type: 'rdfs:Literal'
         contextReference: 'dcat:endpointDescription'
-        fair: ['default']
         priority: 1
     endpointURL:
       - jsonPath: "$.endpointURL"
         type: 'rdfs:Literal'
         contextReference: 'dcat:endpointURL'
-        fair: ['default']
         priority: 1

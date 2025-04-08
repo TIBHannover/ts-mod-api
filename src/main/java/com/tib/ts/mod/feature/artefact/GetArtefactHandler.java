@@ -1,5 +1,7 @@
 package com.tib.ts.mod.feature.artefact;
 
+import java.util.List;
+
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.repository.OlsRepository;
 
@@ -108,9 +111,8 @@ class GetArtefactHandler implements ServiceHandler {
 		String result = terminologyService.call(request);
 		
 		MappingRule rules = configLoader.mergeConfiguration(String.join(",",request.getDisplay()), 
-															AttributeFile.SEMANTIC_ARTEFACT, 
-															AttributeFile.DCAT_RESOURCE,
-															AttributeFile.DCAT_DATA_SERVICE);
+															AttributeFile.SEMANTIC_ARTEFACT,
+															AttributeFile.DCAT_RESOURCE);
 
 		request.setMappingRule(rules);
 		
@@ -135,8 +137,12 @@ class GetArtefactHandler implements ServiceHandler {
 			logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
 			
 			if (semanticArtefact != null) {
-				semanticArtefact.setContext(Context.getContext());
-				result = ResponseConverter.convert(semanticArtefact, request.getFormat(), request.getDisplay());
+				ResponseDTO<SemanticArtefact> responseDto = new ResponseDTO<SemanticArtefact>();
+				responseDto.setContext(Context.getContext());
+				semanticArtefact.setSemanticArtefactType("mod:semanticArtefact");
+				responseDto.setJsonResult(semanticArtefact);
+				
+				result = ResponseConverter.convert(responseDto, request.getFormat(), request.getDisplay());
 			}
 
 		} catch (Exception e) {

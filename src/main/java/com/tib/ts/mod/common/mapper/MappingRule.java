@@ -44,7 +44,7 @@ public class MappingRule {
 		
 		private String contextReference;
 
-		private List<String> fair;
+		private boolean toBeIncluded;
 	}
 	
 	public void merge(MappingRule rule, String display) {
@@ -56,16 +56,14 @@ public class MappingRule {
 				
 				List<MappingDetail> filteredMappingRule = value;
 				
-				if(!display.toLowerCase().equalsIgnoreCase("all")) {
-					if (display.toLowerCase().equalsIgnoreCase("default")) {
-						filteredMappingRule = value.stream().filter(detail -> detail.getFair() != null && detail.getFair().contains(display)).collect(Collectors.toList());
-					}else {
-						List<String> filterByAttributes = Arrays.stream(display.toLowerCase().split(","))
-																.map(String::trim)
-																.collect(Collectors.toList());
-						if (!filterByAttributes.contains(key.toLowerCase())) {
-							filteredMappingRule = new ArrayList<MappingDetail>();
-						}
+				if (!display.toLowerCase().equalsIgnoreCase("all")) {
+
+					List<String> filterByAttributes = Arrays.stream(display.toLowerCase().split(","))
+															.map(String::trim)
+															.collect(Collectors.toList());
+					
+					if (!filterByAttributes.contains(key.toLowerCase()) && filteredMappingRule.stream().noneMatch(MappingDetail::isToBeIncluded)) {
+						filteredMappingRule = new ArrayList<MappingDetail>();
 					}
 				}
 				

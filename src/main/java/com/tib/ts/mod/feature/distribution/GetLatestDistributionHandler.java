@@ -16,8 +16,10 @@ import com.tib.ts.mod.common.mapper.DynamicConfigLoader;
 import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
+import com.tib.ts.mod.entities.SemanticArtefact;
 import com.tib.ts.mod.entities.SemanticArtefactDistribution;
 import com.tib.ts.mod.entities.dto.RequestDTO;
+import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
 import com.tib.ts.mod.repository.OlsRepository;
 
@@ -117,8 +119,11 @@ class GetLatestDistributionHandler implements ServiceHandler {
 			logger.debug("Mapped SemanticArtefactDistribution: {}", semanticArtefactDistribution);
 			
 			if (semanticArtefactDistribution != null) {
-				semanticArtefactDistribution.setContext(Context.getContext());
-				result = ResponseConverter.convert(semanticArtefactDistribution, request.getFormat(), request.getDisplay());
+				ResponseDTO<SemanticArtefactDistribution> responseDto = new ResponseDTO<SemanticArtefactDistribution>();
+				responseDto.setContext(Context.getContext());
+				semanticArtefactDistribution.setSemanticArtefactDistributionType("mod:SemanticArtefactDistribution");
+				responseDto.setJsonResult(semanticArtefactDistribution);
+				result = ResponseConverter.convert(responseDto, request.getFormat(), request.getDisplay());
 			}
 
 		} catch (Exception e) {

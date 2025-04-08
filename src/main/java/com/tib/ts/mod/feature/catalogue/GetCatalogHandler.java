@@ -51,7 +51,7 @@ public class GetCatalogHandler implements ServiceHandler {
 		String result = terminologyService.call(request);
 		
 		MappingRule rules = configLoader.mergeConfiguration(String.join(",", request.getDisplay()),
-															AttributeFile.DCAT_CATALOG);
+															AttributeFile.SEMANTIC_ARTEFACT_CATALOG);
 
 		request.setMappingRule(rules);
 

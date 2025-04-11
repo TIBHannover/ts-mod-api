@@ -1,11 +1,7 @@
 package com.tib.ts.mod.feature.documentation;
 
-import java.io.IOException;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *@author Deepan Anbalagan
@@ -13,12 +9,18 @@ import jakarta.servlet.http.HttpServletResponse;
  *TIB-Leibniz Information Center for Science and Technology
 */
 
-@RestController
+@Controller
 class DocumentationController {
 	
+	/*
+	 * @GetMapping("/doc/api") public void getAPIDocs(HttpServletResponse response)
+	 * throws IOException { response.sendRedirect("/swagger-ui/index.html");
+	 * 
+	 * }
+	 */
+	
 	@GetMapping("/doc/api")
-	public void getAPIDocs(HttpServletResponse response) throws IOException {
-		response.sendRedirect("/swagger-ui/index.html");
+	public String getAPIDocs() {
+		return "forward:/swagger-ui/index.html";
 	}
-
 }

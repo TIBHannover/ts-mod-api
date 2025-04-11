@@ -7,7 +7,7 @@ package com.tib.ts.mod.entities.enums;
 */
 
 public enum ResponseType {
-	JSON_LD("application/ld+json"),
+	JSON_LD("application/json"),
 	RDF_XML("application/rdf+xml"),
 	TTL("text/turtle");
 	

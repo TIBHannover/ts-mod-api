@@ -17,8 +17,7 @@ import lombok.Setter;
 */
 
 @Getter
-@Setter@JsonSerialize(using = DynamicSerializer.class)
-@JsonRootName(value = "mod:SemanticArtefactCatalogRecord")
+@Setter
 public class SemanticArtefactCatalogRecord extends CatalogRecord {
 	
 	@JsonProperty("@context")

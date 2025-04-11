@@ -65,6 +65,7 @@ public class ResponseConverter {
 				} else {
 					objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 				}
+				break;
 			}
 			default: {
 				objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

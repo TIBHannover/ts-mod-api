@@ -20,8 +20,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonSerialize(using = DynamicSerializer.class)
-@JsonRootName(value = "mod:SemanticArtefactDistribution")
 public class SemanticArtefactDistribution extends Distribution {
 	
 	@JsonProperty("@context")

@@ -15,7 +15,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonSerialize(using = DynamicSerializer.class)
 public class Resource {
 	
 	@JsonProperty("accessRights")

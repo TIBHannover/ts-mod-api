@@ -109,7 +109,7 @@ modAttributes:
     type:
       - jsonPath: "$.type"
         type: 'string'
-        contextReference: 'dcterms:type'
+        contextReference: 'http://purl.org/dc/terms/type'
         priority: 1  
         
         

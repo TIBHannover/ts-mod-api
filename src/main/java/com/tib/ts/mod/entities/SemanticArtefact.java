@@ -21,8 +21,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonSerialize(using = DynamicSerializer.class)
-@JsonRootName(value = "mod:SemanticArtefact")
 public class SemanticArtefact extends Resource{
 	
 	@JsonProperty("@context")

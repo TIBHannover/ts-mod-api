@@ -119,11 +119,12 @@ class GetLatestDistributionHandler implements ServiceHandler {
 			logger.debug("Mapped SemanticArtefactDistribution: {}", semanticArtefactDistribution);
 			
 			if (semanticArtefactDistribution != null) {
-				ResponseDTO<SemanticArtefactDistribution> responseDto = new ResponseDTO<SemanticArtefactDistribution>();
-				responseDto.setContext(Context.getContext());
+				//ResponseDTO<SemanticArtefactDistribution> responseDto = new ResponseDTO<SemanticArtefactDistribution>();
+				//responseDto.setContext(Context.getContext());
+				semanticArtefactDistribution.setContext(Context.getContext());
 				semanticArtefactDistribution.setSemanticArtefactDistributionType("mod:SemanticArtefactDistribution");
-				responseDto.setJsonResult(semanticArtefactDistribution);
-				result = ResponseConverter.convert(responseDto, request.getFormat(), request.getDisplay());
+				//responseDto.setJsonResult(semanticArtefactDistribution);
+				result = ResponseConverter.convert(semanticArtefactDistribution, request.getFormat(), request.getDisplay());
 			}
 
 		} catch (Exception e) {

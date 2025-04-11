@@ -49,13 +49,28 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 			case INDIVIDUALS_BY_ONTOLOGY_ID_AND_IRI -> getIndividualsByOntologyIdAndIri(request.getOntologyId(), request.getResourceId());
 			case PROPERTIES_BY_ONTOLOGY_ID -> getPropertiesByOntologyId(request.getOntologyId(), request.getPage(), request.getPageSize());
 			case PROPERTIES_BY_ONTOLOGY_ID_AND_IRI -> getPropertiesByOntologyIdAndIri(request.getOntologyId(), request.getResourceId());
-			case V1Search -> searchMetadataAndContent(request.getQuery(), request.getPage(), request.getPageSize(), request.getFilterByType());
+			case V1SEARCH -> searchMetadataAndContent(request.getQuery(), request.getPage(), request.getPageSize(), request.getFilterByType());
+			case SEARCH_ENTITIES -> searchContent(request.getQuery(), request.getPage(), request.getPageSize());
 			default -> throw new IllegalArgumentException();
 		};
 
 		return result;
 	}
 	
+	private String searchContent(String query, Integer page, Integer pageSize) {
+		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.SEARCH_ENTITIES)
+										  .queryParam("search", query)
+										  .queryParam("page", page)
+										  .queryParam("size", pageSize);
+
+
+		String url = builder.toUriString();
+
+		logger.info("calling external service: {}", url);
+
+		return invokeRest(url);
+	}
+
 	private String getCatalog() {
 		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_CATALOG).toUriString();
 		

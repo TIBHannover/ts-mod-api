@@ -142,6 +142,7 @@ class GetAllArtefactRecordHandler implements ServiceHandler {
 				logger.debug("Mapped SemanticArtefactCatalogRecord: {}", semanticArtefactCatalogRecord);
 				
 				if (semanticArtefactCatalogRecord != null) {
+					semanticArtefactCatalogRecord.setSemanticArtefactCatalogRecordType("mod:SemanticArtefactCatalogRecord");
 					semanticArtefactCatalogRecords.add(semanticArtefactCatalogRecord);
 				}
 			}

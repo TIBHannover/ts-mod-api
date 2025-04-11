@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
+import com.tib.ts.mod.entities.enums.ArtefactResourceType;
 import com.tib.ts.mod.entities.enums.FormatOption;
 import com.tib.ts.mod.entities.enums.ResponseType;
 
@@ -47,7 +48,7 @@ public class SearchController {
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.V1Search)
+		RequestDTO request = new RequestDTO.Builder(ActionType.V1SEARCH)
 										   .setQuery(q)
 										   .setFormat(format)
 										   .setDisplay(List.of(display))
@@ -75,9 +76,9 @@ public class SearchController {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.V1Search)
+		RequestDTO request = new RequestDTO.Builder(ActionType.SEARCH_ENTITIES)
 										   .setQuery(q)
-										   .setFilterByType(Set.of("class", "property", "individual"))
+										   .setResourceType(ArtefactResourceType.ANY)
 										   .setFormat(format)
 										   .setPage(page)
 										   .setPageSize(pageSize)
@@ -104,7 +105,7 @@ public class SearchController {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		// Create a request DTO
-		RequestDTO request = new RequestDTO.Builder(ActionType.V1Search)
+		RequestDTO request = new RequestDTO.Builder(ActionType.V1SEARCH)
 										   .setQuery(q)
 										   .setFilterByType(Set.of("ontology"))
 										   .setFormat(format)

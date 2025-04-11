@@ -136,11 +136,12 @@ class GetArtefactRecordHandler implements ServiceHandler {
 			logger.debug("Mapped SemanticArtefactCatalogRecord: {}", semanticArtefactCatalogRecord);
 			
 			if (semanticArtefactCatalogRecord != null) {
-				ResponseDTO<SemanticArtefactCatalogRecord> responseDto = new ResponseDTO<SemanticArtefactCatalogRecord>();
-				responseDto.setContext(Context.getContext());
+				//ResponseDTO<SemanticArtefactCatalogRecord> responseDto = new ResponseDTO<SemanticArtefactCatalogRecord>();
+				//responseDto.setContext(Context.getContext());
+				semanticArtefactCatalogRecord.setContext(Context.getContext());
 				semanticArtefactCatalogRecord.setSemanticArtefactCatalogRecordType("mod:SemanticArtefactCatalogRecord");
-				responseDto.setJsonResult(semanticArtefactCatalogRecord);
-				result = ResponseConverter.convert(responseDto, request.getFormat(), request.getDisplay());
+				//responseDto.setJsonResult(semanticArtefactCatalogRecord);
+				result = ResponseConverter.convert(semanticArtefactCatalogRecord, request.getFormat(), request.getDisplay());
 			}
 
 		} catch (Exception e) {

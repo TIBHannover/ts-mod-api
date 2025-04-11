@@ -19,6 +19,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.tib.ts.mod.common.Helper;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.ErrorMessage;
@@ -50,6 +51,9 @@ class SearchContentHandler implements ServiceHandler {
 	@Autowired
 	ArtefactResourceMapper artefactResourceMapper;
 	
+	@Autowired
+	Helper helper;
+	
 
 	@Override
 	public String preHandler(RequestDTO request) throws BadRequestException {
@@ -73,58 +77,10 @@ class SearchContentHandler implements ServiceHandler {
 
 		String olsSearchResult = terminologyService.call(request);
 		
-		List<RequestDTO> searchRequests = constructAPIRequest(olsSearchResult);
-		
-		List<CompletableFuture<JsonObject>> futures = searchRequests.stream()
-					  												.map(searchRequest -> CompletableFuture.supplyAsync(() -> makeAPICall(searchRequest)))
-					  												.toList();
-		
-		
-		JsonArray response = futures.stream()
-									.map(CompletableFuture::join)
-									.filter(json -> json != null && !json.isJsonNull())
-									.collect(JsonArray::new, JsonArray::add, JsonArray::addAll);
-		
-		return response.toString();
+		return olsSearchResult;
 	}
 
-	private List<RequestDTO> constructAPIRequest(String olsSearchResult) {
-		
-		var responseObject = JsonParser.parseString(olsSearchResult).getAsJsonObject();
-		
-		if(Optional.ofNullable(responseObject)
-				.map(response -> response.getAsJsonObject("response"))
-				.map(response -> response.getAsJsonArray("docs"))				
-				.filter(doc -> !doc.isEmpty())
-				.isEmpty()) {
-			logger.warn("Response does not contain any search result");
-			return new ArrayList<RequestDTO>();
-		}
-		
-		var solrDocs = responseObject.getAsJsonObject("response").getAsJsonArray("docs");
-		
-		return StreamSupport.stream(solrDocs.spliterator(), true)
-										.filter(doc -> doc != null && !doc.isJsonNull())
-										.map(doc -> {
-											JsonObject jsonObject = doc.getAsJsonObject();
-											String type = jsonObject.get("type").getAsString();
-											String ontologyId = jsonObject.get("ontology_name").getAsString();
-											String iri = jsonObject.get("iri").getAsString();
-											ActionType actionType = switch(type) {
-												case "class" -> ActionType.CLASSES_BY_ONTOLOGY_ID_AND_IRI;
-												case "property" -> ActionType.PROPERTIES_BY_ONTOLOGY_ID_AND_IRI;
-												case "individual" -> ActionType.INDIVIDUALS_BY_ONTOLOGY_ID_AND_IRI;
-												default -> throw new IllegalArgumentException("Unexpected value: " + type);
-											};
-											RequestDTO request = new RequestDTO.Builder(actionType)
-																			   .setArtefactId(ontologyId)
-																			   .setResourceId(UriUtils.encode(iri, "UTF-8"))
-																			   .build();
-											return request;
-										})
-										.toList();
-	}
-
+	
 	@Override
 	public String postHandler(RequestDTO request, String response) {
 
@@ -132,10 +88,17 @@ class SearchContentHandler implements ServiceHandler {
 
 		List<ArtefactResource> artefactResources = new LinkedList<ArtefactResource>();
 
-		var resources = JsonParser.parseString(response).getAsJsonArray();
+		var responseObject = JsonParser.parseString(response).getAsJsonObject();
+
+		if (!responseObject.has("elements") || responseObject.get("elements").isJsonNull()) {
+			logger.warn("Response does not contain any resources");
+			throw new NotFoundException(ErrorMessage.RESOURCE_NOT_FOUND);
+		}
+
+		var resources = responseObject.get("elements").getAsJsonArray();
 
 		if (resources.isEmpty()) {
-			logger.warn("Response does not contain any content");
+			logger.warn("Response does not contain any resources");
 			throw new NotFoundException(ErrorMessage.RESOURCE_NOT_FOUND);
 		}
 
@@ -144,21 +107,6 @@ class SearchContentHandler implements ServiceHandler {
 				logger.debug("Skipping null resource");
 				continue;
 			}
-			
-			JsonArray ontologyTypes = resource.getAsJsonObject().getAsJsonArray("type");
-			
-			var resourceType = StreamSupport.stream(ontologyTypes.spliterator(), false)
-											.map(JsonElement::getAsString)
-											.map(String::toLowerCase)
-											.map(type -> switch(type) {
-												case "property" -> ArtefactResourceType.PROPERTY;
-												case "individual" -> ArtefactResourceType.INDIVIDUAL;
-												default -> ArtefactResourceType.CLASS;
-											})
-											.findFirst()
-											.orElse(ArtefactResourceType.CLASS);
-			
-			request.setResourceType(resourceType);
 
 			ArtefactResource artefactResource = artefactResourceMapper.mapJsonToDTO(request, resource.toString());
 
@@ -173,28 +121,22 @@ class SearchContentHandler implements ServiceHandler {
 		responseDto.setContext(Context.getContext());
 
 		if (!artefactResources.isEmpty()) {
-			if(request.getFormat().equals(FormatOption.jsonld)) {
+
+			if (request.getFormat().equals(FormatOption.jsonld)) {
 				responseDto.setJsonResult(artefactResources);
-			}else {
+				Context.addPaginationContext();
+				responseDto.setView(helper.getView(request.getBaseUrl(), responseObject));
+				responseDto.setId(request.getBaseUrl());
+				responseDto.setType("Collection");
+				responseDto.setTotalItems(responseObject.get("totalElements").getAsInt());
+				responseDto.setItemsPerPage(responseObject.get("numElements").getAsInt());
+			} else {
 				responseDto.setOtherFormatResult(artefactResources);
 			}
+
+			responseDto.setContext(Context.getContext());
 			results = ResponseConverter.convert(responseDto, request.getFormat(), null);
 		}
 		return results;
 	}
-	
-	private JsonObject makeAPICall(RequestDTO request){
-		String result = "";
-		try {
-			result = terminologyService.call(request);
-		} catch (BadRequestException e) {
-			logger.error("Invalid request for artefact: {} and iri: {}", request.getArtefactId(), request.getResourceId());
-			return null;
-		} catch (Exception e) {
-			logger.error("Unexpected error occurred for artefact: {} and iri: {}", request.getArtefactId(), request.getResourceId());
-			return null;
-		}
-		return JsonParser.parseString(result).getAsJsonObject();
-	}
-
 }

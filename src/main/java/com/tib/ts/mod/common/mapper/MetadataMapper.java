@@ -94,7 +94,9 @@ public class MetadataMapper {
 					}
 					if (value == null){
 						field.set(dtoInstance, null);
-						Context.addContext(attributeName, detail.getContextReference());
+						if(detail.getContextReference() != null) {
+							Context.addContext(attributeName, detail.getContextReference());
+						}
 						continue;
 					}
 					
@@ -162,7 +164,9 @@ public class MetadataMapper {
 				}
 				field.set(dtoInstance, attributeValue);
 			}
-			Context.addContext(attributeName, contextReference);
+			if(contextReference != null) {
+				Context.addContext(attributeName, contextReference);
+			}
 		} catch (Exception e) {
 			logger.error("Error while setting value for field '{}'", attributeName, e);
 		}

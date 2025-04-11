@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.tib.ts.mod.common.Helper;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
 import com.tib.ts.mod.common.constants.AttributeFile;
@@ -27,7 +28,6 @@ import com.tib.ts.mod.common.mapper.MappingRule;
 import com.tib.ts.mod.common.mapper.MetadataMapper;
 import com.tib.ts.mod.entities.Context;
 import com.tib.ts.mod.entities.SemanticArtefact;
-import com.tib.ts.mod.entities.SemanticArtefactCatalogRecord;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 import com.tib.ts.mod.entities.dto.ResponseDTO;
 import com.tib.ts.mod.entities.enums.ActionType;
@@ -53,6 +53,9 @@ class SearchMetadataAndContentHandler implements ServiceHandler {
 	
 	@Autowired
 	MetadataMapper mapper;
+	
+	@Autowired
+	Helper helper;
 
 	@Override
 	public String preHandler(RequestDTO request) throws BadRequestException {
@@ -132,6 +135,12 @@ class SearchMetadataAndContentHandler implements ServiceHandler {
 			if (!semanticArtefacts.isEmpty()) {
 				if(request.getFormat().equals(FormatOption.jsonld)) {
 					responseDto.setJsonResult(semanticArtefacts);
+					Context.addPaginationContext();
+					responseDto.setView(helper.getView(request.getBaseUrl(), responseObject));
+					responseDto.setId(request.getBaseUrl());
+					responseDto.setType("Collection");
+					responseDto.setTotalItems(responseObject.get("totalElements").getAsInt());
+					responseDto.setItemsPerPage(responseObject.get("numElements").getAsInt());
 				}else {
 					responseDto.setOtherFormatResult(semanticArtefacts);
 				}

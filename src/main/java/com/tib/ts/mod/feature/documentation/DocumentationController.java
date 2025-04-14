@@ -30,6 +30,7 @@ class DocumentationController {
 		String redirectURL = request.getContextPath() + "/swagger-ui/index.html";
 		response.setStatus(HttpStatus.MOVED_PERMANENTLY.value());
         response.setHeader("Location", "/swagger-ui/index.html");
+        response.setHeader("X-Forwarded-Prefix", "/terminology/mod/api");
         return redirectURL;
     }
 }

@@ -140,7 +140,7 @@ class GetAllArtefactHandler implements ServiceHandler {
 				logger.debug("Mapped SemanticArtefact: {}", semanticArtefact);
 				
 				if (semanticArtefact != null) {
-					semanticArtefact.setSemanticArtefactType("mod:semanticArtefact");
+					semanticArtefact.setSemanticArtefactType("mod:SemanticArtefact");
 					semanticArtefacts.add(semanticArtefact);
 				}
 			}

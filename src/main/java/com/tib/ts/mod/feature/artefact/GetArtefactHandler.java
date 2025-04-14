@@ -140,7 +140,7 @@ class GetArtefactHandler implements ServiceHandler {
 				//ResponseDTO<SemanticArtefact> responseDto = new ResponseDTO<SemanticArtefact>();
 				//responseDto.setContext(Context.getContext());
 				semanticArtefact.setContext(Context.getContext());
-				semanticArtefact.setSemanticArtefactType("mod:semanticArtefact");
+				semanticArtefact.setSemanticArtefactType("mod:SemanticArtefact");
 				//responseDto.setJsonResult(semanticArtefact);
 				
 				result = ResponseConverter.convert(semanticArtefact, request.getFormat(), request.getDisplay());

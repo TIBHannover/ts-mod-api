@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,11 +28,11 @@ class DocumentationController {
 	
 	@GetMapping("/doc/api")
     @Operation(summary = "Get API Documentation", description = "Returns the API documentation link")
-    public String showApiDocs(HttpServletRequest request, HttpServletResponse response) {
-		String redirectURL = request.getContextPath() + "/swagger-ui/index.html";
+    public String showApiDocs(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) {
+		baseUrl = baseUrl.contains("api") ? baseUrl.replace("api", "") : baseUrl;
+		String redirectURL = baseUrl + "/swagger-ui/index.html";
 		response.setStatus(HttpStatus.MOVED_PERMANENTLY.value());
         response.setHeader("Location", "/swagger-ui/index.html");
-        response.setHeader("X-Forwarded-Prefix", "/terminology/mod/");
         return redirectURL;
     }
 }

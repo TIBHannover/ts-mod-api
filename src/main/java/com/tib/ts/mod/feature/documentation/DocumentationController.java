@@ -29,10 +29,12 @@ class DocumentationController {
 	@GetMapping("/doc/api")
     @Operation(summary = "Get API Documentation", description = "Returns the API documentation link")
     public String showApiDocs(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) {
+		String forwardedPrefix = "/terminology/mod";
+		forwardedPrefix = baseUrl.contains(forwardedPrefix) ? forwardedPrefix : "";
 		baseUrl = baseUrl.contains("api") ? baseUrl.replace("api", "") : baseUrl;
 		String redirectURL = baseUrl + "/swagger-ui/index.html";
 		response.setStatus(HttpStatus.MOVED_PERMANENTLY.value());
-        response.setHeader("Location", "/swagger-ui/index.html");
+        response.setHeader("Location", forwardedPrefix+"/swagger-ui/index.html");
         return redirectURL;
     }
 }

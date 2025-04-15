@@ -16,7 +16,7 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.tib.ts.mod.common.constants.ErrorMessage;
-import com.tib.ts.mod.common.constants.OlsRestUrl;
+import com.tib.ts.mod.common.constants.olsRestlUrl;
 import com.tib.ts.mod.entities.dto.OlsErrorResponse;
 import com.tib.ts.mod.entities.dto.RequestDTO;
 
@@ -33,6 +33,9 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	
 	@Autowired
 	RestClient restClient;
+	
+	@Autowired
+	olsRestlUrl olsRestlUrl;
 	
 	@Override
 	public String call(RequestDTO request) throws BadRequestException {
@@ -58,7 +61,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 	
 	private String searchContent(String query, Integer page, Integer pageSize) {
-		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.SEARCH_ENTITIES)
+		var builder = UriComponentsBuilder.fromUriString(olsRestlUrl.getSearchEntities())
 										  .queryParam("search", query)
 										  .queryParam("page", page)
 										  .queryParam("size", pageSize);
@@ -72,7 +75,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 
 	private String getCatalog() {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_CATALOG).toUriString();
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getCatalog()).toUriString();
 		
 		logger.info("calling external service: {}", url);
 
@@ -80,7 +83,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 
 	private String getEntitiesByOntologyIdAndIri(String ontologyId, String resourceId, Integer page, Integer pageSize) {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ENTITY_BY_ONTOLOGY_ID_AND_IRI)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getEntityByOntologyIdAndIri())
 										 .buildAndExpand(ontologyId, resourceId).toUriString();
 
 		logger.info("calling external service: {}", url);
@@ -89,7 +92,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 
 	private String getOntologiesByOntologyIri(Integer page, Integer pageSize, String artefactId) {
-		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ONTOLOGIES)
+		var builder = UriComponentsBuilder.fromUriString(olsRestlUrl.getAllOntologies())
 										  .queryParam("search", artefactId)
 										  .queryParam("searchFields", "iri")
 										  .queryParam("start", page)
@@ -105,7 +108,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 
 	private String searchMetadataAndContent(String query, Integer page, Integer pageSize, Set<String> filterByType) {
 		
-		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.SEARCH)
+		var builder = UriComponentsBuilder.fromUriString(olsRestlUrl.getSearch())
 										  .queryParam("q", query)
 										  .queryParam("start", page)
 										  .queryParam("rows", pageSize);
@@ -120,7 +123,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 
 	private String getPropertiesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_PROPERTIES_BY_ONTOLOGY_ID)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getAllPropertiesByOntologyId())
 										 .queryParam("page", page)
 										 .queryParam("size", pageSize)
 										 .buildAndExpand(artefactId)
@@ -132,7 +135,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 	
 	private String getPropertiesByOntologyIdAndIri(String artefactId, String iri) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_PROPERTIES_BY_ONTOLOGY_ID_AND_IRI)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getPropertiesByOntologyIdAndIri())
 										 .buildAndExpand(artefactId, iri)
 										 .toUriString();
 
@@ -142,7 +145,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 	
 	private String getIndividualsByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_INDIVIDUALS_BY_ONTOLOGY_ID)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getAllIndividualsByOntologyId())
 										 .queryParam("page", page)
 										 .queryParam("size", pageSize)
 										 .buildAndExpand(artefactId)
@@ -154,7 +157,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 	
 	private String getIndividualsByOntologyIdAndIri(String artefactId, String iri) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_INDIVIDUALS_BY_ONTOLOGY_ID_AND_IRI)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getIndividualsByOntologyIdAndIri())
 										 .buildAndExpand(artefactId, iri)
 										 .toUriString();
 
@@ -164,7 +167,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 	
 	private String getClassesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_CLASSES_BY_ONTOLOGY_ID)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getAllClassesByOntologyId())
 										 .queryParam("page", page)
 										 .queryParam("size", pageSize)
 										 .buildAndExpand(artefactId)
@@ -176,7 +179,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 	
 	private String getClassesByOntologyIdAndIri(String artefactId, String iri) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_CLASSES_BY_ONTOLOGY_ID_AND_IRI)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getClassesByOntologyIdAndIri())
 										 .buildAndExpand(artefactId, iri)
 										 .toUriString();
 
@@ -186,7 +189,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 
 	private String getEntitiesByOntologyId(String artefactId, Integer page, Integer pageSize) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ENTITIES_BY_ONTOLOGY_ID)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getAllEntitiesByOntologyId())
 										 .queryParam("page", page)
 										 .queryParam("size", pageSize)
 										 .buildAndExpand(artefactId)
@@ -198,7 +201,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 	}
 
 	private String getOntologiesByOntologyId(final String artefactId) throws BadRequestException {
-		String url = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ONTOLOGY_BY_ONTOLOGY_ID)
+		String url = UriComponentsBuilder.fromUriString(olsRestlUrl.getOntologyByOntologyId())
 				                         .path(artefactId)
 				                         .toUriString();
 				
@@ -209,7 +212,7 @@ public class OlsRepositoryRestImpl implements OlsRepository{
 
 	private String getOntologies(final Integer page, final Integer size, Set<String> filterByOntology) throws BadRequestException {
 				
-		var builder = UriComponentsBuilder.fromUriString(OlsRestUrl.GET_ALL_ONTOLOGIES)
+		var builder = UriComponentsBuilder.fromUriString(olsRestlUrl.getAllOntologies())
 				 						  .queryParam("page", page)
 				 						  .queryParam("size", size);
 		

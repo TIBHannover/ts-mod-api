@@ -17,6 +17,11 @@ modAttributes:
         type: 'string'
         contextReference: 'dcterms:accessRights'
         priority: 1
+    accessURL:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:accessURL'
+        priority: 1
     contactPoint:
       - jsonPath: "$.NoMapping"
         type: 'string'

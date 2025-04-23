@@ -40,7 +40,7 @@ public class CatalogueController {
 	@GetMapping("")
 	@Operation(summary = "Get information about semantic artefact catalogue", description = "Retrieves information about semantic artefact catalogue")
 	public ResponseEntity<String> getCatalogue(
-			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `html`, `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
+			@RequestParam(defaultValue = "jsonld") @Parameter(description = "The response format.<br/> This will override any value of `Accept` in the request headers. Possible values are `json`, `ttl` and `xml`. The default value is `html`.") FormatOption format,
 			@RequestParam(value = "display", defaultValue = DefaultFields.SEMANTIC_ARTEFACT_CATALOG) @Parameter(description = "The parameters to display") List<String> display,
 			@ModelAttribute("baseUrl") @Parameter(hidden = true) String baseUrl) throws BadRequestException {
 		

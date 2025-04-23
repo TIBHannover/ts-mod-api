@@ -24,7 +24,8 @@ public class DefaultFields {
 											 "versionIRI";
 	
 	public static final String SEMANTIC_ARTEFACT_CATALOG = "accessRights, " + 
-														   "acronym, " + 
+			   											   "accessURL, " + 
+														   "created, " + 
 														   "contactPoint, " + 
 														   "creator, " + 
 														   "description, " + 	
@@ -32,11 +33,11 @@ public class DefaultFields {
 														   "keyword, " + 
 														   "landingPage, " + 
 														   "license, " + 
+														   "modified, " + 
 														   "rightsHolder, " + 
 														   "subject, " + 
 														   "title, " + 
-														   "type, " + 
-														   "versionIRI";
+														   "type";
 	
 	public static final String SEMANTIC_ARTEFACT_CATALOG_RECORD = "created, " + 
 			   													  "modified "; 

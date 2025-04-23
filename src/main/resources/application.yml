@@ -20,3 +20,23 @@ logging:
       springframework:
         core:
           env: DEBUG
+
+app:
+  ols4:
+    v1:
+      api: "${app.ols4.baseUrl}/api"
+      search: "${app.ols4.v1.api}/search"
+    v2:
+      api: "${app.ols4.baseUrl}/api/v2"
+      getAllOntologies: "${app.ols4.v2.api}/ontologies"
+      getOntologyByOntologyId: "${app.ols4.v2.api}/ontologies/"
+      getAllEntitiesByOntologyId: "${app.ols4.v2.api}/ontologies/{0}/entities"
+      getEntityByOntologyIdAndIri: "${app.ols4.v2.api}/ontologies/{0}/entities/{1}"
+      getAllClassesByOntologyId: "${app.ols4.v2.api}/ontologies/{0}/classes"
+      getClassesByOntologyIdAndIri: "${app.ols4.v2.api}/ontologies/{0}/classes/{1}"
+      getAllIndividualsByOntologyId: "${app.ols4.v2.api}/ontologies/{0}/individuals"
+      getIndividualsByOntologyIdAndIri: "${app.ols4.v2.api}/ontologies/{0}/individuals/{1}"
+      getAllPropertiesByOntologyId: "${app.ols4.v2.api}/ontologies/{0}/properties"
+      getPropertiesByOntologyIdAndIri: "${app.ols4.v2.api}/ontologies/{0}/properties/{1}"
+      searchEntities: "${app.ols4.v2.api}/entities"
+    docs: "${app.ols4.baseUrl}/v3/api-docs"

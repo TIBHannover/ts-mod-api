@@ -20,6 +20,7 @@ public class Context {
 	public static void addPaginationContext() {
 		Context.context.get().put("hydra", "http://www.w3.org/ns/hydra/core#");
 		Context.context.get().put("Collection", "hydra:Collection");
+		Context.context.get().put("member", "hydra:member");
 		Context.context.get().put("totalItems", "hydra:totalItems");
 		Context.context.get().put("itemsPerPage", "hydra:itemsPerPage");
 		Context.context.get().put("view", "hydra:view");

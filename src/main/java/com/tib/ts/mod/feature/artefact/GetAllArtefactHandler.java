@@ -154,7 +154,7 @@ class GetAllArtefactHandler implements ServiceHandler {
 					Context.addPaginationContext();
 					responseDto.setView(helper.getView(request.getBaseUrl(), responseObject));
 					responseDto.setId(request.getBaseUrl());
-					responseDto.setType("Collection");
+					responseDto.setType("hydra:Collection");
 					responseDto.setTotalItems(responseObject.get("totalElements").getAsInt());
 					responseDto.setItemsPerPage(responseObject.get("numElements").getAsInt());
 				}else {

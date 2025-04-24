@@ -57,7 +57,8 @@ public class MappingRule {
 				
 				List<MappingDetail> filteredMappingRule = value;
 				
-				if (!display.toLowerCase().equalsIgnoreCase("all")) {
+				// enable this only if you need "display" attributes in response
+				/*if (!display.toLowerCase().equalsIgnoreCase("all")) {
 
 					List<String> filterByAttributes = Arrays.stream(display.toLowerCase().split(","))
 															.map(String::trim)
@@ -66,7 +67,7 @@ public class MappingRule {
 					if (!filterByAttributes.contains(key.toLowerCase()) && filteredMappingRule.stream().noneMatch(MappingDetail::isToBeIncluded)) {
 						filteredMappingRule = new ArrayList<MappingDetail>();
 					}
-				}
+				}*/
 				
 				if (!filteredMappingRule.isEmpty()) {
 					this.modAttributes.merge(key, filteredMappingRule, (existing, newVal) -> {

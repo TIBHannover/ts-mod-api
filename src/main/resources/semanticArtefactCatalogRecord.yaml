@@ -1,10 +1,5 @@
 modAttributes:
   # MODCatalogRecordAttributes
-    semanticArtefactCatalogRecordId:
-      - jsonPath: "$.iri"
-        type: 'string'
-        toBeIncluded: true
-        priority: 1
     homepage:
       - jsonPath: "$.homepage"
         type: 'foaf:Document'

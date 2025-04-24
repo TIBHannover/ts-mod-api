@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonParser;
 import com.tib.ts.mod.common.Helper;
 import com.tib.ts.mod.common.ServiceHandler;
 import com.tib.ts.mod.common.Validation;
@@ -139,6 +140,7 @@ class GetArtefactRecordHandler implements ServiceHandler {
 				//ResponseDTO<SemanticArtefactCatalogRecord> responseDto = new ResponseDTO<SemanticArtefactCatalogRecord>();
 				//responseDto.setContext(Context.getContext());
 				semanticArtefactCatalogRecord.setContext(Context.getContext());
+				semanticArtefactCatalogRecord.setSemanticArtefactCatalogRecordId(request.getBaseUrl());
 				semanticArtefactCatalogRecord.setSemanticArtefactCatalogRecordType("mod:SemanticArtefactCatalogRecord");
 				//responseDto.setJsonResult(semanticArtefactCatalogRecord);
 				result = ResponseConverter.convert(semanticArtefactCatalogRecord, request.getFormat(), request.getDisplay());

@@ -31,6 +31,10 @@ modAttributes:
         type: 'rdfs:Literal'
         contextReference: 'dcterms:identifier'
         priority: 1
+      - jsonPath: "$.iri"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:identifier'
+        priority: 2
     isReferencedBy:
       - jsonPath: "$['http://purl.org/dc/terms/isReferencedBy']"
         type: 'string'

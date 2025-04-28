@@ -1,0 +1,249 @@
+modAttributes:
+# SemanticArtefact Attributes
+    semanticArtefactId:
+      - jsonPath: "$.iri"
+        type: 'string'
+        toBeIncluded: true
+        priority: 1
+    abstracts:
+      - jsonPath: "$.['http://purl.org/dc/terms/abstract']"
+        type: 'string'
+        contextReference: 'dcterms:abstract'
+        priority: 1
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/abstract']"
+        type: 'string'
+        contextReference: 'dcterms:abstract'
+        priority: 2
+    alternative:
+      - jsonPath: "$.['http://purl.org/dc/terms/alternative']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:alternative'
+        priority: 1
+    audience:
+      - jsonPath: "$.['http://purl.org/dc/terms/audience']"
+        type: 'string'
+        contextReference: 'dcterms:audience'
+        priority: 1
+      - jsonPath: "$.['https://schema.org/audience']"
+        type: 'string'
+        contextReference: 'schema:audience'
+        priority: 2
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#audience']"
+        type: 'string'
+        contextReference: 'doap:audience'
+        priority: 3
+    bibliographicCitation:
+      - jsonPath: "$.['http://purl.org/dc/terms/bibliographicCitation']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:bibliographicCitation'
+        priority: 1
+    contributor:
+      - jsonPath: "$.['http://purl.org/dc/terms/contributor']"
+        type: 'string'
+        contextReference: 'dcterms:contributor'
+        priority: 1
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/contributor']"
+        type: 'string'
+        contextReference: 'dcterms:contributor'
+        priority: 2
+    coverage:
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/coverage']"
+        type: 'string'
+        contextReference: 'dcterms:coverage'
+        priority: 1
+    rightsHolder:
+      - jsonPath: "$.['http://purl.org/dc/terms/rightsHolder']"
+        type: 'string'
+        contextReference: 'dcterms:rightsHolder'
+        priority: 1
+    source:
+      - jsonPath: "$.['http://purl.org/dc/terms/source']"
+        type: 'string'
+        contextReference: 'dcterms:source'
+        priority: 1
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/source']"
+        type: 'string'
+        contextReference: 'dcterms:source'
+        priority: 2
+    bugDatabase:
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#bug-database']"
+        type: 'string'
+        contextReference: 'doap:bug-database'
+        priority: 1
+      - jsonPath: "$.tracker"
+        type: 'string'
+        contextReference: 'doap:bug-database'
+        priority: 2
+    mailingList:
+      - jsonPath: "$.mailing_list"
+        type: 'string'
+        contextReference: 'doap:mailing-list'
+        priority: 1
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#mailing-list']"
+        type: 'string'
+        contextReference: 'doap:mailing-list'
+        priority: 2
+    repository:
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#repository']"
+        contextReference: 'doap:repository'
+        priority: 1
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#GitRepository']"
+        contextReference: 'doap:GitRepository'
+        priority: 2
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#SVNRepository']"
+        contextReference: 'doap:SVNRepository'
+        priority: 3
+      - jsonPath: "$.['http://edamontology.org/repository']"
+        contextReference: 'http://edamontology.org/repository'
+        priority: 4
+    fundedBy:
+      - jsonPath: "$.['http://xmlns.com/foaf/0.1/fundedBy']"
+        type: 'owl:Thing'
+        contextReference: 'foaf:fundedBy'
+        priority: 1
+    homepage:
+      - jsonPath: "$.homepage"
+        type: 'foaf:Document'
+        contextReference: 'doap:homepage'
+        priority: 1
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#homepage']"
+        type: 'foaf:Document'
+        contextReference: 'doap:homepage'
+        priority: 2
+      - jsonPath: "$.['http://xmlns.com/foaf/0.1/homepage']"
+        type: 'foaf:Document'
+        contextReference: 'foaf:homepage'
+        priority: 3
+    logo:
+      - jsonPath: "$.['http://xmlns.com/foaf/0.1/logo']"
+        type: 'owl:Thing'
+        contextReference: 'foaf:logo'
+        priority: 1
+      - jsonPath: "$.['https://schema.org/logo']"
+        type: 'foaf:Document'
+        contextReference: 'schema:logo'
+        priority: 2
+      - jsonPath: "$.['http://www.wurvoc.org/vocabularies/WV/logo']"
+        type: 'foaf:Document'
+        contextReference: 'http://www.wurvoc.org/vocabularies/WV/logo'
+        priority: 3
+    acronym:
+      - jsonPath: "$.ontologyId"
+        type: 'string'
+        contextReference: 'mod:acronym'
+        priority: 1
+      - jsonPath: "$.['https://w3id.org/mod#acronym']"
+        type: 'string'
+        contextReference: 'mod:acronym'
+        priority: 2
+      - jsonPath: "$.['https://www.omg.org/spec/Commons/AnnotationVocabulary/acronym']"
+        type: 'string'
+        contextReference: 'https://www.omg.org/spec/Commons/AnnotationVocabulary/acronym'
+        priority: 3
+      - jsonPath: "$.['http://omv.ontoware.org/2005/05/ontologyacronym']"
+        type: 'string'
+        contextReference: 'http://omv.ontoware.org/2005/05/ontologyacronym'
+        priority: 4
+    competencyQuestion:
+      - jsonPath: "$.['https://www.tno.nl/agrifood/ontology/common-greenhouse-ontology#competencyQuestion']"
+        type: 'string'
+        contextReference: 'https://www.tno.nl/agrifood/ontology/common-greenhouse-ontology#competencyQuestion'
+        priority: 1
+    designedForTask:
+      - jsonPath: "$['http://omv.ontoware.org/2005/05/ontology#designedForOntologyTask']"
+        type: 'mod:SemanticArtefactTask'
+        contextReference: 'mod:designedForTask'
+        priority: 1
+    hasEquivalencesWith:
+      - jsonPath: "$.voaf:hasEquivalencesWith"
+        type: 'string'
+        contextReference: 'mod:hasEquivalencesWith'
+        priority: 1
+    knownUsage:
+      - jsonPath: "$.['http://omv.ontoware.org/2005/05/ontologyknownUsage']"
+        type: 'string'
+        contextReference: 'http://omv.ontoware.org/2005/05/ontologyknownUsage'
+        priority: 1
+    reliesOn:
+      - jsonPath: "$.['http://purl.org/vocommons/voaf#reliesOn']"
+        type: 'string'
+        contextReference: 'http://purl.org/vocommons/voaf#reliesOn'
+        priority: 1
+    status:
+      - jsonPath: "$.['http://purl.org/ontology/bibo/status']"
+        type: 'string'
+        contextReference: 'http://purl.org/ontology/bibo/status'
+        priority: 1
+    uri:
+      - jsonPath: "$.ontology_purl"
+        type: 'string'
+        contextReference: 'mod:URI'
+        priority: 1
+    priorVersion:
+      - jsonPath: "$.['http://www.w3.org/2002/07/owl#priorVersion']"
+        type: 'owl:Ontology'
+        contextReference: 'owl:priorVersion'
+        priority: 1
+      - jsonPath: "$.[' http://purl.org/dc/terms/replaces/']"
+        type: 'owl:Ontology'
+        contextReference: 'dcterms:replaces'
+        priority: 2
+    versionInfo:
+      - jsonPath: "$.['http://www.w3.org/2002/07/owl#versionInfo']"
+        type: 'string'
+        contextReference: 'owl:versionInfo'
+        priority: 1
+    versionIRI:
+      - jsonPath: "$.['http://www.w3.org/2002/07/owl#versionIRI']"
+        type: 'owl:Ontology'
+        contextReference: 'owl:versionIRI'
+        priority: 1
+    comment:
+      - jsonPath: "$.['http://www.w3.org/2000/01/rdf-schema#comment']"
+        type: 'rdfs:Literal'
+        contextReference: 'rdfs:comment'
+        priority: 1
+    schemaComment:
+      - jsonPath: "$.['http://schema.org/comment']"
+        type: 'string'
+        contextReference: 'schema:comment'
+        priority: 1
+    funding:
+      - jsonPath: "$.['https://schema.org/funding']"
+        type: 'string'
+        contextReference: 'schema:funding'
+        priority: 1
+    includedInDataCatalog:
+      - jsonPath: "$.['http://schema.org/includedInDataCatalog']"
+        type: 'string'
+        contextReference: 'schema:includedInDataCatalog'
+        priority: 1
+    example:
+      - jsonPath: "$.['http://purl.org/vocab/vann/example']"
+        type: 'string'
+        contextReference: 'vann:example'
+        priority: 1
+      - jsonPath: "$.['http://purl.obolibrary.org/obo/IAO_0000112']"
+        type: 'string'
+        contextReference: 'vann:example'
+        priority: 2
+    preferredNamespacePrefix:
+      - jsonPath: "$.['http://purl.org/vocab/vann/preferredNamespacePrefix']"
+        type: 'string'
+        contextReference: 'vann:preferredNamespacePrefix'
+        priority: 1
+    preferredNamespaceUri:
+      - jsonPath: "$.['http://purl.org/vocab/vann/preferredNamespaceUri']"
+        type: 'string'
+        contextReference: 'vann:preferredNamespaceUri'
+        priority: 1
+    rootResource:
+      - jsonPath: "$.preferredRoot"
+        type: 'rdfs:Resource'
+        contextReference: 'http://purl.obolibrary.org/obo/IAO_0000700'
+        priority: 1
+      - jsonPath: "$.['http://purl.obolibrary.org/obo/IAO_0000700']"
+        type: 'rdfs:Resource'
+        contextReference: 'http://purl.obolibrary.org/obo/IAO_0000700'
+        priority: 2
+        

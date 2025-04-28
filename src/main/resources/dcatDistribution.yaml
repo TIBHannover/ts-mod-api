@@ -1,0 +1,55 @@
+modAttributes:
+  # DCATDataServiceAttributes
+    downloadURL:
+      - jsonPath: "$.ontologyPurl"
+        type: 'rdfs:Resource'
+        contextReference: 'dcat:downloadURL'
+        priority: 1
+    description:
+      - jsonPath: "$.description"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:description'
+        priority: 1
+    issued:
+      - jsonPath: "$['http://purl.org/dc/terms/issued']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:issued'
+        priority: 1
+    license:
+      - jsonPath: "$['http://purl.org/dc/terms/license']"
+        type: 'string'
+        contextReference: 'dcterms:license'
+        priority: 1
+      - jsonPath: "$.license.url"
+        type: 'string'
+        contextReference: 'dcterms:license'
+        priority: 2
+    modified:
+      - jsonPath: "$['http://purl.org/dc/terms/modified']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:modified'
+        priority: 1
+    rights:
+      - jsonPath: "$['http://purl.org/dc/terms/rights']"
+        type: 'string'
+        contextReference: 'dcterms:rights'
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/elements/1.1/rights']"
+        type: 'string'
+        contextReference: 'dcterms:rights'
+        priority: 2
+    title:
+      - jsonPath: "$.title"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/terms/title']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
+        priority: 2
+      - jsonPath: "$['http://purl.org/dc/elements/1.1/title']"
+        type: 'rdfs:Literal'
+        contextReference: 'dc:title'
+        priority: 3
+        
+        

@@ -1,0 +1,20 @@
+modAttributes:
+  # MODCatalogRecordAttributes
+    homepage:
+      - jsonPath: "$.homepage"
+        type: 'foaf:Document'
+        contextReference: 'foaf:homepage'
+        priority: 1
+      - jsonPath: "$.['http://xmlns.com/foaf/0.1/homepage']"
+        type: 'foaf:Document'
+        contextReference: 'foaf:homepage'
+        priority: 2
+      - jsonPath: "$.['http://usefulinc.com/ns/doap#homepage']"
+        type: 'foaf:Document'
+        contextReference: 'doap:homepage'
+        priority: 3
+    created:
+      - jsonPath: "$.loaded"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:created'
+        priority: 1

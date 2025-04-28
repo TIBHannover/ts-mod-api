@@ -1,0 +1,59 @@
+modAttributes:
+  # DCATCatalogAttributes
+    description:
+      - jsonPath: "$.info.description"
+        contextReference: 'dcterms:description'
+        priority: 1
+    license:
+      - jsonPath: "$.info.license.url"
+        contextReference: 'dcterms:License'
+        priority: 1
+    title:
+      - jsonPath: "$.info.title"
+        contextReference: 'dcterms:title'
+        priority: 1
+    accessRights:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:accessRights'
+        priority: 1
+    accessURL:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:accessURL'
+        priority: 1
+    contactPoint:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:contactPoint'
+        priority: 1
+    creator:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:creator'
+        priority: 1
+    identifier:
+      - jsonPath: "$.NoMapping"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:identifier'
+        priority: 1
+    keyword:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:keyword'
+        priority: 1
+    landingPage:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:landingPage'
+        priority: 1
+    subject:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:subject'
+        priority: 1
+    rightsHolder:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:rightsHolder'
+        priority: 1

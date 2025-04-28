@@ -1,0 +1,122 @@
+modAttributes:
+  # DCATResourceAttributes
+    
+    accessRights:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:accessRights'
+        priority: 1
+    conformsTo:
+      - jsonPath: "$['http://purl.org/dc/terms/conformsTo']"
+        type: 'string'
+        contextReference: 'dcterms:conformsTo'
+        priority: 1
+    contactPoint:
+      - jsonPath: "$.mailing_list"
+        type: 'vcard:kind'
+        contextReference: 'dcat:contactPoint'
+        priority: 1
+    creator:
+      - jsonPath: "$.creator"
+        type: 'string'
+        contextReference: 'dcterms:creator'
+        priority: 1
+    description:
+      - jsonPath: "$.description"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:description'
+        priority: 1
+    identifier:
+      - jsonPath: "$['http://purl.org/dc/terms/identifier']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:identifier'
+        priority: 1
+      - jsonPath: "$.iri"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:identifier'
+        priority: 2
+    isReferencedBy:
+      - jsonPath: "$['http://purl.org/dc/terms/isReferencedBy']"
+        type: 'string'
+        contextReference: 'dcterms:isReferencedBy'
+        priority: 1
+    issued:
+      - jsonPath: "$['http://purl.org/dc/terms/issued']"
+        type: 'string'
+        contextReference: 'dcterms:issued'
+        priority: 1
+    keyword:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:keyword'
+        priority: 1
+    landingPage:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcat:landingPage'
+        priority: 1
+    language:
+      - jsonPath: "$.language"
+        type: 'string'
+        contextReference: 'dcterms:language'
+        priority: 1
+      - jsonPath: "$.defaultLanguage"
+        type: 'string'
+        contextReference: 'dcterms:language'
+        priority: 2
+    license:
+      - jsonPath: "$['http://purl.org/dc/terms/license']"
+        type: 'string'
+        contextReference: 'dcterms:license'
+        priority: 1
+      - jsonPath: "$.license.url"
+        type: 'string'
+        contextReference: 'dcterms:license'
+        priority: 2
+    modified:
+      - jsonPath: "$['http://purl.org/dc/terms/modified']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:modified'
+        priority: 1
+    publisher:
+      - jsonPath: "$['http://purl.org/dc/terms/publisher']"
+        type: 'string'
+        contextReference: 'dcterms:publisher'
+        priority: 1
+    rights:
+      - jsonPath: "$['http://purl.org/dc/terms/rights']"
+        type: 'string'
+        contextReference: 'dcterms:rights'
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/elements/1.1/rights']"
+        type: 'string'
+        contextReference: 'dcterms:rights'
+        priority: 2
+    subject:
+      - jsonPath: "$.classifications[*].subject[*]"
+        type: 'string'
+        contextReference: 'dcterms:subject'
+        priority: 1
+    title:
+      - jsonPath: "$.title"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
+        priority: 1
+      - jsonPath: "$['http://purl.org/dc/terms/title']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
+        priority: 2
+      - jsonPath: "$['http://purl.org/dc/elements/1.1/title']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
+        priority: 3
+    type:
+      - jsonPath: "$.type"
+        type: 'string'
+        contextReference: 'http://purl.org/dc/terms/type'
+        priority: 1  
+        
+        
+        
+        
+        

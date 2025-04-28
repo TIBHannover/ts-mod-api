@@ -1,0 +1,3 @@
+app:
+  ols4:
+    baseUrl: "${OLS4_BASE_URL}"

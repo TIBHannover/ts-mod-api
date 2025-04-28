@@ -1,0 +1,12 @@
+modAttributes:
+  # DCATDataServiceAttributes
+    endpointDescription:
+      - jsonPath: "$.endpointDescription"
+        type: 'rdfs:Literal'
+        contextReference: 'dcat:endpointDescription'
+        priority: 1
+    endpointURL:
+      - jsonPath: "$.endpointURL"
+        type: 'rdfs:Literal'
+        contextReference: 'dcat:endpointURL'
+        priority: 1

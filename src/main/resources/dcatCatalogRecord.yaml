@@ -1,0 +1,30 @@
+modAttributes:
+  # DCATCatalogRecordAttributes
+    catalogRecordDescription:
+      - jsonPath: "$.description"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:description'
+        priority: 1
+    catalogRecordIssued:
+      - jsonPath: "$.['http://purl.org/dc/terms/created']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:issued'
+        priority: 1
+      - jsonPath: "$.['http://purl.org/dc/elements/1.1/created']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:issued'
+        priority: 2
+      - jsonPath: "$.['http://www.geneontology.org/formats/oboInOwl#creation_date']"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:issued'
+        priority: 3
+    catalogRecordTitle:
+      - jsonPath: "$.title"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:title'
+        priority: 1
+    catalogRecordModified:
+      - jsonPath: "$.NoMapping"
+        type: 'rdfs:Literal'
+        contextReference: 'dcterms:modified'
+        priority: 1

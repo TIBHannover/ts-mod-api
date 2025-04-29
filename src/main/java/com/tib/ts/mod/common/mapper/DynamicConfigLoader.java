@@ -41,7 +41,7 @@ public class DynamicConfigLoader {
 			mergedConfig.merge(rule, display);
 		}
 		
-		if (mergedConfig != null && !mergedConfig.getAttributes().get().isEmpty())
+		if (mergedConfig != null && !mergedConfig.getModAttributes().isEmpty())
 			return mergedConfig;
 		else {
 			logger.error("Incorrect display parameter provided: {}", display);

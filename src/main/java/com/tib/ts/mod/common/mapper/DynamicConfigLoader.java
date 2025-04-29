@@ -32,7 +32,7 @@ public class DynamicConfigLoader {
 		this.yamlMapper = new ObjectMapper(new YAMLFactory());
 	}
 	
-	public MappingRule mergeConfiguration(String display, String... configFiles) throws BadRequestException {
+	public synchronized MappingRule mergeConfiguration(String display, String... configFiles) throws BadRequestException {
 		MappingRule mergedConfig = new MappingRule();
 		
 		for (String configFile : configFiles) {
@@ -41,7 +41,7 @@ public class DynamicConfigLoader {
 			mergedConfig.merge(rule, display);
 		}
 		
-		if (mergedConfig != null && !mergedConfig.getModAttributes().isEmpty())
+		if (mergedConfig != null && !mergedConfig.getAttributes().get().isEmpty())
 			return mergedConfig;
 		else {
 			logger.error("Incorrect display parameter provided: {}", display);

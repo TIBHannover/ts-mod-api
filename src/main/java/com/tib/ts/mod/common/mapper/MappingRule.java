@@ -32,8 +32,10 @@ import lombok.Setter;
 //@Component
 @ConfigurationProperties(prefix = "mappings")
 public class MappingRule {
-
+	
 	private Map<String, List<MappingDetail>> modAttributes;
+
+	private ThreadLocal<Map<String, List<MappingDetail>>> attributes;
 
 	@Data
 	public static class MappingDetail {
@@ -48,7 +50,7 @@ public class MappingRule {
 		private boolean toBeIncluded;
 	}
 	
-	public void merge(MappingRule rule, String display) {
+	public synchronized void merge(MappingRule rule, String display) {
 		if (rule != null && rule.getModAttributes() != null) {
 			if(this.modAttributes == null) {
 				this.modAttributes = new HashMap<String, List<MappingDetail>>();
@@ -76,7 +78,7 @@ public class MappingRule {
 					});
 				}
 			});
-				
+			this.attributes = ThreadLocal.withInitial(() -> modAttributes);
 		}
 	}
 

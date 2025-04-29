@@ -77,7 +77,7 @@ public class MetadataMapper {
 				
 				//System.out.println("processedClasses in : " + dtoClass.getName() + ": " + processedClasses);
 
-				List<MappingDetail> details = config.getModAttributes().get(attributeName);
+				List<MappingDetail> details = config.getAttributes().get().get(attributeName);
 				if (details == null) {
 					field.set(dtoInstance, null);
 					continue;

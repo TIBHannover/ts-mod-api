@@ -69,6 +69,36 @@ public class SemanticArtefactCatalog {
 	@JsonProperty("title")
 	private String title;
 	
+	@JsonProperty("status")
+	private String status;
+	
+	@JsonProperty("language")
+	private String language;
+	
+	@JsonProperty("bibliographicCitation")
+	private String bibliographicCitation;
+	
+	@JsonProperty("createdWith")
+	private String createdWith;
+	
+	@JsonProperty("contributor")
+	private String contributor;
+	
+	@JsonProperty("publisher")
+	private String publisher;
+	
+	@JsonProperty("coverage")
+	private String coverage;
+	
+	@JsonProperty("accrualMethod")
+	private String accrualMethod;
+	
+	@JsonProperty("accrualPeriodicity")
+	private String accrualPeriodicity;
+	
+	@JsonProperty("wasGeneratedBy")
+	private String wasGeneratedBy;
+	
 	@JsonGetter("@type")
     public String getTypeAsString() {
         return catalogType != null ? catalogType : "mod:SemanticArtefactCatalog";

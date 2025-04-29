@@ -57,3 +57,54 @@ modAttributes:
         type: 'string'
         contextReference: 'dcterms:rightsHolder'
         priority: 1
+    status:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'mod:status'
+        priority: 1
+    language:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:language'
+        priority: 1
+    bibliographicCitation:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:bibliographicCitation'
+        priority: 1
+    createdWith:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'pav:createdWith'
+        priority: 1
+    contributor:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:contributor'
+        priority: 1
+    publisher:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:publisher'
+        priority: 1
+    coverage:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:coverage'
+        priority: 1
+    accrualMethod:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:accrualMethod'
+        priority: 1
+    accrualPeriodicity:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:accrualPeriodicity'
+        priority: 1
+    wasGeneratedBy:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'prov:wasGeneratedBy'
+        priority: 1
+     

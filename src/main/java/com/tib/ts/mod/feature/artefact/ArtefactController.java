@@ -71,7 +71,7 @@ public class ArtefactController {
 		
 		//invoke service impl
 		String response = service.getAllArtefact(request);
-		logger.info(response);
+		
 		if (format.equals(FormatOption.rdfxml))
 			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.RDF_XML.getType())).body(response);
 		else if (format.equals(FormatOption.ttl))

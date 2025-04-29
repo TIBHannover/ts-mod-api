@@ -246,4 +246,39 @@ modAttributes:
         type: 'rdfs:Resource'
         contextReference: 'http://purl.obolibrary.org/obo/IAO_0000700'
         priority: 2
+    publisher:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:publisher'
+        priority: 1
+    accrualMethod:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:accrualMethod'
+        priority: 1
+    accrualPeriodicity:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:accrualPeriodicity'
+        priority: 1
+    hasFormat:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'dcterms:hasFormat'
+        priority: 1
+    semanticArtefactRelation:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'mod:semanticArtefactRelation'
+        priority: 1
+    createdWith:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'pav:createdWith'
+        priority: 1
+    wasGeneratedBy:
+      - jsonPath: "$.NoMapping"
+        type: 'string'
+        contextReference: 'prov:wasGeneratedBy'
+        priority: 1
         

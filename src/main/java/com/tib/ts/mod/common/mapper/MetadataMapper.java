@@ -56,7 +56,6 @@ public class MetadataMapper {
 
 			List<Field> fields = getAllFields(new ArrayList<>(), dtoClass);
 			for (Field field : fields) {
-				//ReflectionUtils.makeAccessible(field);
 				field.setAccessible(true);
 				String attributeName = field.getName();
 
@@ -73,7 +72,6 @@ public class MetadataMapper {
 					}
 				}
 				
-				//System.out.println("processedClasses in : " + dtoClass.getName() + ": " + processedClasses);
 
 				List<MappingDetail> details = mergedConfigs.getModAttributes().get(attributeName);
 				if (details == null) {

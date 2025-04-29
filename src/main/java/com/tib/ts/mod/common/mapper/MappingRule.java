@@ -35,8 +35,6 @@ public class MappingRule {
 	
 	private Map<String, List<MappingDetail>> modAttributes;
 
-	//private ThreadLocal<Map<String, List<MappingDetail>>> attributes;
-
 	@Data
 	public static class MappingDetail {
 		private String jsonPath;
@@ -78,7 +76,6 @@ public class MappingRule {
 					});
 				}
 			});
-			//this.attributes = ThreadLocal.withInitial(() -> modAttributes);
 		}
 	}
 

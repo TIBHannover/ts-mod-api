@@ -9,12 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -33,26 +31,26 @@ public class MetadataMapper {
 
 	private static final Logger logger = LoggerFactory.getLogger(MetadataMapper.class);
 
-	private MappingRule config;
+	//private MappingRule config;
 	
 	//private Set<String> processedClasses;
 	
 	public <T> T mapJsonToDto(String apiResponse, Class<T> dtoClass, MappingRule mergedConfigs) {
 
-		this.config = mergedConfigs;
+		//this.config = mergedConfigs;
 		
 		//this.processedClasses = new HashSet<String>();
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			return constructDTO(apiResponse, dtoClass, objectMapper, new HashSet<String>());
+			return constructDTO(apiResponse, dtoClass, objectMapper, new HashSet<String>(), mergedConfigs);
 		}catch(Exception e) {
 			logger.debug(ErrorMessage.MAPPER_EXCEPTION_MSG, e.getMessage(), e);
 			return null;
 		}
 	}
 
-	private <T> T constructDTO(String apiResponse, Class<T> dtoClass, ObjectMapper objectMapper, Set<String> processedClasses) throws Exception {
+	private <T> T constructDTO(String apiResponse, Class<T> dtoClass, ObjectMapper objectMapper, Set<String> processedClasses, MappingRule mergedConfigs) throws Exception {
 		try {
 			T dtoInstance = dtoClass.getDeclaredConstructor().newInstance();
 
@@ -70,14 +68,14 @@ public class MetadataMapper {
 				
 				if (isDTO(field)) {
 					if (processedClasses.add(dtoClass.getName())) {
-						Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper, processedClasses);
+						Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper, processedClasses, mergedConfigs);
 						field.set(dtoInstance, nestedDto);
 					}
 				}
 				
 				//System.out.println("processedClasses in : " + dtoClass.getName() + ": " + processedClasses);
 
-				List<MappingDetail> details = config.getAttributes().get().get(attributeName);
+				List<MappingDetail> details = mergedConfigs.getAttributes().get().get(attributeName);
 				if (details == null) {
 					field.set(dtoInstance, null);
 					continue;

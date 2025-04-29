@@ -39,21 +39,54 @@ public class ArtefactResourceMapper {
 		
 		var skosType = readFromJsonPath(apiResponse, "$.['http://www.w3.org/1999/02/22-rdf-syntax-ns#type']");
 		
+		var skosCollection = readFromJsonPath(apiResponse, "$.['http://www.w3.org/2000/01/rdf-schema#domain']");
+		
 		if (entityType == null)
-			return artefactResource;
+			return null;
 		
 		List<String> entityTypeList = ((entityType instanceof List)) ? (List<String>) entityType : List.of(entityType.toString());
 		List<String> skosTypeList = ((skosType instanceof List)) ? (List<String>) skosType : List.of(skosType.toString());
+		List<String> skosCollectionList = ((skosCollection instanceof List)) ? (List<String>) skosCollection : List.of(skosCollection != null ? skosCollection.toString() : "");
 		List<String> prefLabelList = ((prefLabel instanceof List)) ? (List<String>) prefLabel : List.of(prefLabel.toString());
 		
-		artefactResource = switch (request.getResourceType()) {
-			case CLASS -> buildArtefactResource(artefactResource, "owl:Class", iri, null);
-			case PROPERTY -> buildArtefactResource(artefactResource, "rdfs:Property", iri, null);
-			case INDIVIDUAL -> buildArtefactResource(artefactResource, "owl:NamedIndividual", iri, null);
-			case COLLECTION -> buildArtefactResource(artefactResource, "skos:Collection", null, prefLabelList.get(0));
-			case CONCEPT -> buildArtefactResource(artefactResource, "skos:Concept", null, prefLabelList.get(0));
-			case SCHEME -> buildArtefactResource(artefactResource, "skos:ConceptScheme", null, prefLabelList.get(0));
-			default -> determineType(artefactResource, skosTypeList, entityTypeList, iri);
+		switch (request.getResourceType()) {
+			case CLASS:  {
+				if (entityTypeList.contains("class")) {
+					return buildArtefactResource(artefactResource, "owl:Class", iri, null);
+				}
+				return null;
+			}
+			case PROPERTY:  {
+				if (entityTypeList.contains("property")) {
+					return buildArtefactResource(artefactResource, "rdfs:Property", iri, null);
+				}
+				return null;
+			}
+			case INDIVIDUAL:  {
+				if (entityTypeList.contains("individual")) {
+					return buildArtefactResource(artefactResource, "owl:NamedIndividual", iri, null);
+				}
+				return null;
+			}
+			case COLLECTION:  {
+				if (skosTypeList.contains("http://www.w3.org/2004/02/skos/core#Collection")) {
+					return buildArtefactResource(artefactResource, "skos:Collection", null, prefLabelList.get(0));
+				}
+				return null;
+			}
+			case CONCEPT:  {
+				if (skosTypeList.contains("http://www.w3.org/2004/02/skos/core#Concept")) {
+					return buildArtefactResource(artefactResource, "skos:Concept", null, prefLabelList.get(0));
+				}
+				return null;
+			}
+			case SCHEME:  {
+				if (skosTypeList.contains("http://www.w3.org/2004/02/skos/core#ConceptScheme")) {
+					return buildArtefactResource(artefactResource, "skos:ConceptScheme", null, prefLabelList.get(0));
+				}
+				return null;
+			}
+			default: determineType(artefactResource, skosTypeList, entityTypeList, iri);
 		};
 		
 		return artefactResource;

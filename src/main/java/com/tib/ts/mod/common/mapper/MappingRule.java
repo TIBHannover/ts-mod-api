@@ -32,7 +32,7 @@ import lombok.Setter;
 //@Component
 @ConfigurationProperties(prefix = "mappings")
 public class MappingRule {
-
+	
 	private Map<String, List<MappingDetail>> modAttributes;
 
 	@Data
@@ -76,7 +76,6 @@ public class MappingRule {
 					});
 				}
 			});
-				
 		}
 	}
 

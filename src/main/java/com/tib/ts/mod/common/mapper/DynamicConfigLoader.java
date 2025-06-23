@@ -32,7 +32,7 @@ public class DynamicConfigLoader {
 		this.yamlMapper = new ObjectMapper(new YAMLFactory());
 	}
 	
-	public MappingRule mergeConfiguration(String display, String... configFiles) throws BadRequestException {
+	public synchronized MappingRule mergeConfiguration(String display, String... configFiles) throws BadRequestException {
 		MappingRule mergedConfig = new MappingRule();
 		
 		for (String configFile : configFiles) {

@@ -1,9 +1,10 @@
 package com.tib.ts.mod.feature.artefact;
 
-
 import java.util.List;
 
 import org.apache.coyote.BadRequestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @Tag(name = "Artefacts", description = "Get information about ontologies")
 public class ArtefactController {
 		
+	private static final Logger logger = LoggerFactory.getLogger(ArtefactController.class);
+	
 	@Autowired
 	private ArtefactService service;
 	
@@ -68,7 +71,7 @@ public class ArtefactController {
 		
 		//invoke service impl
 		String response = service.getAllArtefact(request);
-		System.out.println("Total time take: "+ (System.currentTimeMillis() - start));
+		
 		if (format.equals(FormatOption.rdfxml))
 			return ResponseEntity.ok().contentType(MediaType.valueOf(ResponseType.RDF_XML.getType())).body(response);
 		else if (format.equals(FormatOption.ttl))

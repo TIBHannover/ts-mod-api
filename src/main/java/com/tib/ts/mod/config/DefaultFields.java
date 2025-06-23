@@ -21,7 +21,21 @@ public class DefaultFields {
 											 "subject, " +
 											 "title, " +
 											 "type, " +
-											 "versionIRI";
+											 "versionIRI," +
+											 "status," +
+											 "URI," +
+											 "publisher," +
+											 "accrualMethod," +
+											 "accrualPeriodicity," +
+											 "bibliographicCitation," +
+											 "contributor," +
+											 "coverage," +
+											 "hasFormat," +
+											 "competencyQuestion," +
+											 "semanticArtefactRelation," +
+											 "createdWith," +
+											 "wasGeneratedBy," +
+											 "includedInDataCatalog";
 	
 	public static final String SEMANTIC_ARTEFACT_CATALOG = "accessRights, " + 
 			   											   "accessURL, " + 
@@ -37,7 +51,17 @@ public class DefaultFields {
 														   "rightsHolder, " + 
 														   "subject, " + 
 														   "title, " + 
-														   "type";
+														   "type," + 
+														   "status, " + 
+														   "language, " + 
+														   "bibliographicCitation, " + 
+														   "createdWith, " + 
+														   "contributor, " + 
+														   "publisher, " + 
+														   "coverage, " + 
+														   "accrualMethod, " + 
+														   "accrualPeriodicity, " + 
+														   "wasGeneratedBy";
 	
 	public static final String SEMANTIC_ARTEFACT_CATALOG_RECORD = "created, " + 
 			   													  "modified "; 

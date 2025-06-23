@@ -147,7 +147,9 @@ class GetAllArtefactResourceHandler implements ServiceHandler{
 			
 			responseDto.setContext(Context.getContext());
 			results = ResponseConverter.convert(responseDto, request.getFormat(), null);
-		} 
+		} else {
+			throw new NotFoundException(ErrorMessage.RESOURCE_NOT_FOUND);
+		}
 		return results;
 	}
 }

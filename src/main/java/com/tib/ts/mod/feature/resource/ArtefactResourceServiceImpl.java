@@ -1,6 +1,7 @@
 package com.tib.ts.mod.feature.resource;
 
 import org.apache.coyote.BadRequestException;
+import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +48,14 @@ class ArtefactResourceServiceImpl implements ArtefactResourceService {
 		// invoke execute to retrieve the data
 		String olsResponse = getArtefactResourceClassHandler.execute(request);
 		if (olsResponse == null) {
-			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+			throw new NotFoundException(ErrorMessage.ARTEFACT_NOT_FOUND);
 		}
 
 		// invoke postHandler to process the response
 		String modResponse = getArtefactResourceClassHandler.postHandler(request, olsResponse);
 
 		if (modResponse == null) {
-			throw new BadRequestException(ErrorMessage.INVALID_PARAMETERS);
+			throw new NotFoundException(ErrorMessage.ARTEFACT_NOT_FOUND);
 		}
 
 		return modResponse;

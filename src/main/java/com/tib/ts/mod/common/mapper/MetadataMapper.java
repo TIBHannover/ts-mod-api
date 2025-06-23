@@ -61,10 +61,6 @@ public class MetadataMapper {
 
 				logger.debug("Processing Attribute: {}", attributeName);			
 				
-				if(attributeName.equalsIgnoreCase("semanticArtefactId")) {
-					logger.info("Found");
-				}
-				
 				if (isDTO(field)) {
 					if (processedClasses.add(dtoClass.getName())) {
 						Object nestedDto = constructDTO(apiResponse, field.getType(), objectMapper, processedClasses, mergedConfigs);
@@ -86,7 +82,7 @@ public class MetadataMapper {
 					try {
 						value = JsonPath.read(apiResponse, detail.getJsonPath());
 					} catch (Exception e) {
-						logger.warn("Path not available in response: {}", detail.getJsonPath());
+						logger.debug("Path not available in response: {}", detail.getJsonPath());
 					}
 					if (value == null){
 						field.set(dtoInstance, null);

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.coyote.BadRequestException;
+import org.apache.jena.shared.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,11 +74,11 @@ class GetAllArtefactHandler implements ServiceHandler {
 		boolean isDisplayValid = Validation.ValidateDisplay(request.getDisplay());
 		
 		if (!isPaginationValid) {
-			logger.info(ErrorMessage.INVALID_PAGE_MSG, request.getPage(), request.getPageSize());
+			logger.debug(ErrorMessage.INVALID_PAGE_MSG, request.getPage(), request.getPageSize());
 		}
 
 		if (!isDisplayValid) {
-			logger.info(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
+			logger.debug(ErrorMessage.INVALID_DISPLAY_MSG, request.getDisplay());
 		}
 
 		return (isPaginationValid && isDisplayValid) ? ErrorMessage.NO_ERROR : ErrorMessage.INVALID_PARAMETERS;
@@ -123,8 +124,7 @@ class GetAllArtefactHandler implements ServiceHandler {
 			var responseObject = JsonParser.parseString(response).getAsJsonObject();
 
 			if (!responseObject.has("elements") || responseObject.get("elements").isJsonNull()) {
-				logger.warn("Response does not contain any ontologies");
-				return "";
+				throw new NotFoundException(ErrorMessage.ARTEFACT_NOT_FOUND);
 			}
 
 			var ontologies = responseObject.get("elements").getAsJsonArray();
@@ -163,7 +163,9 @@ class GetAllArtefactHandler implements ServiceHandler {
 				
 				responseDto.setContext(Context.getContext());
 				results = ResponseConverter.convert(responseDto, request.getFormat(), request.getDisplay());
-			} 
+			} else {
+				throw new NotFoundException(ErrorMessage.ARTEFACT_NOT_FOUND);
+			}
 		} catch (Exception e) {
 			logger.error("Error processing response in postHandler", e);
 		}

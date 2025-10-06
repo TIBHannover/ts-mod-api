@@ -27,7 +27,7 @@ COPY --from=build /opt/mod/ts-mod-api/target/ts-mod-api-1.0.0-SNAPSHOT.jar /app/
 #COPY /opt/mod/ts-mod-api/target/ts-mod-api-1.0.0-SNAPSHOT.jar /app/ts-mod-api.jar
 
 #Expose application port
-EXPOSE 8080
+EXPOSE 8081
 
 #Start the application
 ENTRYPOINT ["java", "-jar", "/app/ts-mod-api.jar"]

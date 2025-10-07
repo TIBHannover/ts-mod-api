@@ -47,6 +47,11 @@ public class CrossOriginResourceSharingFilter implements Filter{
             httpResponse.addHeader("Access-Control-Allow-Credentials", "true");
         }
         
+        if ("OPTIONS".equalsIgnoreCase(httpRequest.getMethod())) {
+            httpResponse.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+        
         chain.doFilter(request, response);
 	}
 }

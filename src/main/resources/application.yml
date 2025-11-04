@@ -9,7 +9,6 @@ springdoc:
   use-root-path: false
   swagger-ui:
     enabled: true
-    path: /swagger-ui/index.html
 
 server:
   port: 8080

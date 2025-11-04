@@ -18,15 +18,15 @@ import jakarta.servlet.ServletContext;
 
 @Configuration
 public class SwaggerConfig {
-	private String MOD_SERVER_URL = "http://localhost:8080";
+	//private String MOD_SERVER_URL = "http://localhost:8080";
 	private final String description = "This Application Programming Interface (API) has been developed to promote interoperability of Ontology Catalogues in the European Open Science Cloud (EOSC) ecosystem and beyond.";
 	private final String title = "MOD API";
 
 	@Bean
 	public OpenAPI customAPI(ServletContext context) {
-		String serverUrl = context.getContextPath().equals("") ? MOD_SERVER_URL : context.getContextPath();
+		//String serverUrl = context.getContextPath().equals("") ? MOD_SERVER_URL : context.getContextPath();
 		return new OpenAPI(SpecVersion.V31)
-				.addServersItem(new Server().url(serverUrl))
+				//.addServersItem(new Server().url(serverUrl))
 				.info(new Info()
 						.title(title)
 						.description(description)

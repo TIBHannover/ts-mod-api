@@ -27,7 +27,7 @@ public class SwaggerConfig {
 	public OpenAPI customAPI(ServletContext context) {
 		String serverUrl = context.getContextPath().equals("") ? MOD_SERVER_URL : context.getContextPath();
 		return new OpenAPI(SpecVersion.V31)
-				.addServersItem(new Server().url(serverUrl))
+				//.addServersItem(new Server().url(serverUrl))
 				.info(new Info()
 						.title(title)
 						.description(description)

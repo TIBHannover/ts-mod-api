@@ -6,7 +6,6 @@ spring:
 
   # Swagger UI configurations via springdoc
 springdoc:
-  use-root-path: false
   swagger-ui:
     enabled: true
 
